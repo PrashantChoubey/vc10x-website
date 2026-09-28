@@ -315,7 +315,7 @@ document.querySelectorAll("form.sub").forEach(f => {
       const r = await fetch("/api/subscribe", {method:"POST", headers:{"Content-Type":"application/json"},
         body: JSON.stringify({form: f.dataset.form, email, website: f.website.value, ...UTM})});
       if (!r.ok) throw new Error(r.status);
-      msg.textContent = "Subscribed. Check your inbox for a welcome email.";
+      msg.textContent = "Subscribed. New issues will land in your inbox.";
       f.email.value = "";
     } catch(err) {
       msg.textContent = "That didn't go through. Try again in a moment."; msg.classList.add("err");
