@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VC10X | Conversations with the people who allocate capital</title>
+<meta name="description" content="300+ conversations with GPs, LPs and family office principals on how capital is raised, allocated and protected. Podcast and newsletter hosted by Prashant Choubey.">
+<link rel="canonical" href="https://vc10x.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VC10X">
+<meta property="og:url" content="https://vc10x.com/">
+<meta property="og:title" content="VC10X">
+<meta property="og:description" content="Conversations with the people who allocate capital. 300+ episodes with GPs, LPs and family offices.">
+<meta property="og:image" content="https://vc10x.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@ChoubeySahab">
+<meta name="twitter:image" content="https://vc10x.com/og.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎙️</text></svg>">
+<!-- Analytics: paste your Plausible or Google Analytics snippet here -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FFFFFF; --panel:#F6F6F6; --ink:#000000; --muted:#5C5C5C; --line:#D9D9D9;
+  --green:#000000; --green-deep:#000000; --on-deep:#FFFFFF; --on-deep-muted:#B3B3B3;
+  --brass:#3FDCFF; --flag:#C0392B; --on-green:#FFFFFF;
+  --serif:"Newsreader", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --sans:"Hanken Grotesk", "Helvetica Neue", Arial, system-ui, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#000000; --panel:#111111; --ink:#FFFFFF; --muted:#A6A6A6; --line:#2B2B2B;
+    --green:#FFFFFF; --green-deep:#161616; --on-deep:#FFFFFF; --on-deep-muted:#B3B3B3;
+    --brass:#3FDCFF; --flag:#FF7A6B; --on-green:#000000;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#000000; --panel:#111111; --ink:#FFFFFF; --muted:#A6A6A6; --line:#2B2B2B;
+    --green:#FFFFFF; --green-deep:#161616; --on-deep:#FFFFFF; --on-deep-muted:#B3B3B3;
+    --brass:#3FDCFF; --flag:#FF7A6B; --on-green:#000000;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 20px);scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;margin:0}
+p{margin:0}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;box-shadow:0 0 0 5px var(--brass)}
+
+header.site{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;padding:24px 0 18px;border-bottom:1px solid var(--line)}
+.mark{font-family:var(--serif);font-weight:600;font-size:24px;text-decoration:none}
+nav ul{list-style:none;margin:0;padding:0;display:flex;gap:8px 22px;flex-wrap:wrap}
+nav a{text-decoration:none;font-size:15px;color:var(--muted)}
+nav a:hover{color:var(--ink)}
+nav a.here{color:var(--ink);font-weight:600}
+
+.hero{padding:88px 0 80px;max-width:820px}
+.hero h1{font-size:clamp(44px,7.4vw,86px);line-height:1;letter-spacing:-.025em}
+.hero .lede{font-family:var(--serif);font-size:clamp(20px,2.3vw,24px);line-height:1.45;margin-top:28px;max-width:34em}
+.listen{margin-top:22px;font-size:15px;color:var(--muted)}
+.listen a{color:var(--ink);text-underline-offset:3px}
+
+form.sub{display:flex;gap:10px;flex-wrap:wrap;margin-top:36px;max-width:520px}
+form.sub input[type=email]{flex:1 1 240px;padding:14px 16px;border:1px solid var(--line);border-radius:6px;background:var(--panel);font:inherit;color:inherit}
+.btn{display:inline-block;background:var(--green);color:var(--on-green);border:0;border-radius:6px;padding:14px 24px;font:inherit;font-weight:600;font-size:16px;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.6;cursor:wait}
+.formmsg{flex-basis:100%;font-size:14px;min-height:1.3em;color:var(--muted)}
+.formmsg.err{color:var(--flag)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+section{padding:72px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;margin-bottom:36px}
+.sec-head h2{font-size:clamp(30px,4vw,42px);line-height:1.1}
+.sec-head p{color:var(--muted);max-width:30em}
+
+/* Popular uploads */
+.uploads{display:grid;gap:36px}
+.vid{text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:14px}
+.thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;border:1px solid var(--ink)}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb::after{content:"";position:absolute;left:0;bottom:0;height:4px;width:0;background:var(--brass);transition:width .25s}
+.vid:hover .thumb::after,.vid:focus-visible .thumb::after{width:100%}
+.play{position:absolute;left:14px;bottom:16px;width:40px;height:40px;border-radius:50%;background:#000;border:1px solid rgba(255,255,255,.6)}
+.play::before{content:"";position:absolute;left:15px;top:12px;border-left:13px solid #fff;border-top:8px solid transparent;border-bottom:8px solid transparent}
+.vid h3{font-size:19px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em}
+.vid .meta{font-size:14px;color:var(--muted);margin-top:6px}
+.vid.feat{padding-bottom:36px;border-bottom:1px solid var(--line)}
+.vid.feat h3{font-size:clamp(26px,3.2vw,38px);line-height:1.15;-webkit-line-clamp:4}
+.vid.feat .play{width:56px;height:56px;left:20px;bottom:22px}
+.vid.feat .play::before{left:21px;top:17px;border-left-width:18px;border-top-width:11px;border-bottom-width:11px}
+.grid6{display:grid;grid-template-columns:1fr;gap:32px 24px}
+@media (min-width:560px){.grid6{grid-template-columns:1fr 1fr}}
+@media (min-width:880px){.grid6{grid-template-columns:repeat(3,1fr)}.vid.feat{display:grid;grid-template-columns:1.5fr 1fr;gap:40px;align-items:center}}
+
+.paths{display:grid;grid-template-columns:1fr;gap:0}
+.path{padding:26px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr;gap:8px}
+.path:first-child{border-top:1px solid var(--line)}
+.path h3{font-size:26px}
+.path p{color:var(--muted);max-width:38em}
+.path a{font-weight:600;text-underline-offset:3px}
+@media (min-width:820px){.path{grid-template-columns:260px 1fr 220px;align-items:baseline;gap:32px}.path a{justify-self:end}}
+
+.audit-band{background:var(--green-deep);color:var(--on-deep);border-top:0}
+.band-head{max-width:40em;margin-bottom:48px}
+.audit-pair{display:grid;grid-template-columns:1fr;gap:56px}
+@media (min-width:820px){.audit-pair{grid-template-columns:1fr 1fr;gap:64px}}
+.audit-card h3{font-size:clamp(26px,3vw,32px);line-height:1.15;margin-top:30px}
+.audit-card p{font-size:17px;margin-top:10px}
+.audit-band h2{font-size:clamp(34px,5vw,56px);line-height:1.02}
+.audit-band p{color:var(--on-deep-muted);margin-top:18px;max-width:30em;font-size:18px}
+.audit-band .btn{background:#fff;color:#000;margin-top:28px}
+.audit-band :focus-visible{outline-color:#fff;box-shadow:0 0 0 5px var(--brass)}
+.pillar.hi .fill{background:var(--brass)}
+.pillars{display:flex;align-items:flex-end;gap:14px;height:150px;border-bottom:6px solid var(--on-deep);padding:0 4px}
+.pillar{flex:1;display:flex;flex-direction:column;height:100%;justify-content:flex-end}
+.cap{height:10px;margin:0 -6px;background:var(--on-deep)}
+.shaft{flex:1;position:relative;border-left:1px solid var(--on-deep-muted);border-right:1px solid var(--on-deep-muted)}
+.fill{position:absolute;left:0;right:0;bottom:0;background:#FFFFFF}
+.plabels{display:flex;gap:14px;margin-top:14px;padding:0 4px}
+.plabels div{flex:1;text-align:center;font-size:12px;line-height:1.3;color:var(--on-deep-muted)}
+
+.eps{list-style:none;margin:0;padding:0}
+.ep{display:grid;grid-template-columns:1fr;gap:4px;padding:20px 0;border-bottom:1px solid var(--line)}
+.ep:first-child{border-top:1px solid var(--line)}
+.ep time{font-size:14px;color:var(--muted)}
+.ep > div > a{font-family:var(--serif);font-size:22px;line-height:1.3;text-decoration:none}
+.ep .dek{color:var(--muted);margin-top:6px;max-width:44em;font-size:16px}
+.ep img{width:100%;max-width:180px;aspect-ratio:16/10;object-fit:cover;border-radius:3px;display:none}
+.ep > div > a:hover{text-decoration:underline;text-underline-offset:3px}
+@media (min-width:820px){.ep{grid-template-columns:140px 1fr 180px;gap:28px;align-items:start}.ep time{padding-top:4px}.ep img{display:block}}
+.eps-note{color:var(--muted);margin-top:18px;font-size:15px}
+
+.news{display:grid;grid-template-columns:1fr;gap:36px}
+@media (min-width:820px){.news{grid-template-columns:1fr 1fr;align-items:start}}
+.news h2{font-size:clamp(30px,4vw,42px);line-height:1.1}
+.news ul{margin:18px 0 0;padding-left:20px;color:var(--ink)}
+.news li{margin:6px 0}
+
+.about{display:grid;grid-template-columns:1fr;gap:28px}
+@media (min-width:820px){.about{grid-template-columns:260px 1fr}}
+.about p{max-width:38em;margin-bottom:14px}
+.about .muted{color:var(--muted)}
+
+footer{padding:40px 0 56px;border-top:1px solid var(--line);font-size:14px;color:var(--muted);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer a{margin-right:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="site">
+    <a class="mark" href="/">VC10X</a>
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="#popular">Popular</a></li>
+        <li><a href="#latest">Latest</a></li>
+        <li><a href="#audits">Audits</a></li>
+        <li><a href="#newsletter">Newsletter</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <h1>The people who allocate capital, on the record.</h1>
+    <p class="lede">Over 300 conversations with GPs, LPs and family office principals whose firms manage more than $3 trillion. How capital actually gets raised, allocated and protected, told by the people doing it.</p>
+    <form class="sub" data-form="home-hero" novalidate>
+      <label class="hp" aria-hidden="true">Leave this empty <input name="website" tabindex="-1" autocomplete="off"></label>
+      <input type="email" name="email" placeholder="Your work email" aria-label="Email address" autocomplete="email" required>
+      <button class="btn" type="submit">Get the newsletter</button>
+      <p class="formmsg" role="status"></p>
+    </form>
+    <p class="listen">Or listen on <a href="https://www.youtube.com/@VC10X" target="_blank" rel="noopener">YouTube</a>, <a href="https://podcasts.apple.com/us/podcast/id1632806986" target="_blank" rel="noopener">Apple Podcasts</a> or <a href="https://open.spotify.com/show/7F7KEhXNhTx1bKTBFgzv3k" target="_blank" rel="noopener">Spotify</a>.</p>
+  </div>
+</div>
+
+<section id="popular">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Popular uploads</h2>
+      <p><a href="https://www.youtube.com/@VC10X" target="_blank" rel="noopener">All videos on YouTube</a></p>
+    </div>
+    <div class="uploads" id="uploads"></div>
+  </div>
+</section>
+
+<section id="start">
+  <div class="wrap">
+    <div class="sec-head"><h2>Start where you sit</h2></div>
+    <div class="paths">
+      <div class="path">
+        <h3>Fund managers</h3>
+        <p>How LPs actually decide, what gets a fund to first close, and how the best GPs source what everyone else misses.</p>
+        <a href="/fundraising-audit/">Take the Fundraising Audit</a>
+      </div>
+      <div class="path">
+        <h3>CIOs and allocators</h3>
+        <p>Allocation frameworks, liquidity under stress, and where experienced allocators are still finding returns others aren't.</p>
+        <a href="#latest">Read recent issues</a>
+      </div>
+      <div class="path">
+        <h3>Families</h3>
+        <p>Succession, governance, next-gen readiness and security. Start with a scored view of where your family is exposed.</p>
+        <a href="/audit/">Take the Family Gap Audit</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="audit-band" id="audits">
+  <div class="wrap">
+    <div class="band-head">
+      <h2>Score yourself in seven minutes</h2>
+      <p>Twenty questions each. You get a score out of 100, the red flags in your answers, and what to fix first.</p>
+    </div>
+    <div class="audit-pair">
+      <div class="audit-card">
+        <div class="pillars" aria-hidden="true"><div class="pillar"><div class="cap"></div><div class="shaft"><div class="fill" style="height:70%"></div></div></div><div class="pillar hi"><div class="cap"></div><div class="shaft"><div class="fill" style="height:40%"></div></div></div><div class="pillar"><div class="cap"></div><div class="shaft"><div class="fill" style="height:58%"></div></div></div><div class="pillar"><div class="cap"></div><div class="shaft"><div class="fill" style="height:82%"></div></div></div><div class="pillar"><div class="cap"></div><div class="shaft"><div class="fill" style="height:48%"></div></div></div></div><div class="plabels" aria-hidden="true"><div>Track record</div><div>Pipeline</div><div>Materials</div><div>Terms</div><div>Process</div></div>
+        <h3>The Fundraising Readiness Audit</h3>
+        <p>For fund managers. Are you ready for the questions LPs ask before they commit?</p>
+        <a class="btn" href="/fundraising-audit/">Take the Fundraising Audit</a>
+      </div>
+      <div class="audit-card">
+        <div class="pillars" aria-hidden="true"><div class="pillar"><div class="cap"></div><div class="shaft"><div class="fill" style="height:78%"></div></div></div><div class="pillar"><div class="cap"></div><div class="shaft"><div class="fill" style="height:52%"></div></div></div><div class="pillar hi"><div class="cap"></div><div class="shaft"><div class="fill" style="height:34%"></div></div></div><div class="pillar"><div class="cap"></div><div class="shaft"><div class="fill" style="height:66%"></div></div></div><div class="pillar"><div class="cap"></div><div class="shaft"><div class="fill" style="height:44%"></div></div></div></div><div class="plabels" aria-hidden="true"><div>Succession</div><div>Governance</div><div>Next gen</div><div>Investments</div><div>Security</div></div>
+        <h3>The Family Gap Audit</h3>
+        <p>For family principals and their offices. Where is your family exposed?</p>
+        <a class="btn" href="/audit/">Take the Family Gap Audit</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="latest">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Latest from the newsletter</h2>
+      <p id="archive-wrap">Every issue, the week it's published.</p>
+    </div>
+    <ul class="eps" id="issues"><li class="ep"><time>&nbsp;</time><span class="muted">Loading the latest issues</span></li></ul>
+  </div>
+</section>
+
+<section id="newsletter">
+  <div class="wrap news">
+    <div>
+      <h2>The VC10X newsletter</h2>
+      <p style="margin-top:16px;color:var(--muted);max-width:30em">What 300+ conversations with allocators taught us, distilled for the people making the same decisions.</p>
+      <ul>
+        <li>What LPs say about funds after the meeting ends</li>
+        <li>How CIOs and family offices are positioning portfolios now</li>
+        <li>New tools like our fundraising and family audits, before anyone else</li>
+      </ul>
+    </div>
+    <form class="sub" data-form="home-newsletter" novalidate style="margin-top:6px">
+      <label class="hp" aria-hidden="true">Leave this empty <input name="website" tabindex="-1" autocomplete="off"></label>
+      <input type="email" name="email" placeholder="Your work email" aria-label="Email address" autocomplete="email" required>
+      <button class="btn" type="submit">Subscribe</button>
+      <p class="formmsg" role="status"></p>
+    </form>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about">
+    <h2>Hosted by Prashant Choubey</h2>
+    <div>
+      <p>Prashant started VC10X to get the people who allocate capital to explain how they actually do it: how they build a thesis, run diligence, size risk, and decide who gets the money.</p>
+      <p>He also runs <a href="https://podcast10x.com" target="_blank" rel="noopener">Podcast10x</a>, which produces podcasts for venture firms.</p>
+      <p class="muted">Follow him on <a href="https://www.linkedin.com/in/choubeysahab" target="_blank" rel="noopener">LinkedIn</a> and <a href="https://x.com/ChoubeySahab" target="_blank" rel="noopener">X</a>.</p>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <footer>
+    <span>© <span id="yr">2026</span> VC10X</span>
+    <span>
+      <a href="https://www.youtube.com/@VC10X" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://podcasts.apple.com/us/podcast/id1632806986" target="_blank" rel="noopener">Apple Podcasts</a>
+      <a href="https://open.spotify.com/show/7F7KEhXNhTx1bKTBFgzv3k" target="_blank" rel="noopener">Spotify</a>
+      <a href="https://www.linkedin.com/in/choubeysahab" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://x.com/ChoubeySahab" target="_blank" rel="noopener">X</a>
+    </span>
+  </footer>
+</div>
+
+<script>
+document.getElementById("yr").textContent = new Date().getFullYear();
+
+const UTM = (() => {
+  try {
+    const q = new URLSearchParams(location.search), u = {};
+    ["utm_source","utm_medium","utm_campaign","utm_content"].forEach(k => { if (q.get(k)) u[k] = q.get(k).slice(0,100); });
+    if (!u.utm_source && document.referrer && !document.referrer.includes(location.host)) u.referrer = document.referrer.slice(0,200);
+    return u;
+  } catch(e) { return {}; }
+})();
+
+document.querySelectorAll("form.sub").forEach(f => {
+  f.addEventListener("submit", async e => {
+    e.preventDefault();
+    const msg = f.querySelector(".formmsg"), btn = f.querySelector("button"), email = f.email.value.trim();
+    msg.classList.remove("err");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = "Enter a valid email address, like name@firm.com."; msg.classList.add("err"); return; }
+    btn.disabled = true; const label = btn.textContent; btn.textContent = "Subscribing";
+    try {
+      const r = await fetch("/api/subscribe", {method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({form: f.dataset.form, email, website: f.website.value, ...UTM})});
+      if (!r.ok) throw new Error(r.status);
+      msg.textContent = "Subscribed. Check your inbox for a welcome email.";
+      f.email.value = "";
+    } catch(err) {
+      msg.textContent = "That didn't go through. Try again in a moment."; msg.classList.add("err");
+    }
+    btn.disabled = false; btn.textContent = label;
+  });
+});
+
+/* ---------- Popular uploads: edit this list to change the videos (first one is featured) ---------- */
+const POPULAR = [
+  "https://youtu.be/k9AfBERVJiY",
+  "https://youtu.be/qiFqn8hyoyc",
+  "https://youtu.be/BBQTelWHMUM",
+  "https://youtu.be/i0-wFDp_Vkw",
+  "https://youtu.be/4dkMXTfotAA",
+  "https://youtu.be/QJUeDhrTr9I",
+  "https://youtu.be/F266WKCXiL4"
+];
+
+(function renderPopular(){
+  const box = document.getElementById("uploads");
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const idOf = u => { const m = String(u).match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([A-Za-z0-9_-]{11})/); return m ? m[1] : null; };
+  const ids = POPULAR.map(idOf).filter(Boolean);
+  if (!ids.length) { document.getElementById("popular").remove(); return; }
+  const card = (id, feat) => `<a class="vid${feat ? " feat" : ""}" href="https://www.youtube.com/watch?v=${id}" target="_blank" rel="noopener" data-id="${id}">
+      <div class="thumb"><img src="https://i.ytimg.com/vi/${id}/hqdefault.jpg" alt="" loading="${feat ? "eager" : "lazy"}"><span class="play" aria-hidden="true"></span></div>
+      <div><h3 class="t"></h3><p class="meta">Watch on YouTube</p></div>
+    </a>`;
+  box.innerHTML = card(ids[0], true) + (ids.length > 1 ? `<div class="grid6">${ids.slice(1).map(id => card(id, false)).join("")}</div>` : "");
+
+  // Upgrade to the sharper thumbnail where YouTube has one.
+  box.querySelectorAll(".vid").forEach(a => {
+    const img = a.querySelector("img"), hi = new Image();
+    hi.onload = () => { if (hi.naturalWidth > 200) img.src = hi.src; };
+    hi.src = `https://i.ytimg.com/vi/${a.dataset.id}/maxresdefault.jpg`;
+  });
+
+  // Titles come from YouTube via /api/popular, so they stay in sync if you rename a video.
+  fetch("/api/popular?ids=" + ids.join(","))
+    .then(r => r.ok ? r.json() : {videos: []})
+    .then(({videos = []}) => videos.forEach(v => {
+      const a = box.querySelector(`[data-id="${v.id}"]`);
+      if (a && v.title) { a.querySelector(".t").textContent = v.title; a.setAttribute("aria-label", v.title); }
+    }))
+    .catch(() => {});
+})();
+
+(async function loadIssues(){
+  const list = document.getElementById("issues");
+  const fmt = d => new Date(d).toLocaleDateString("en-GB", {day:"numeric", month:"short", year:"numeric"});
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  try {
+    const r = await fetch("/api/issues");
+    if (!r.ok) throw new Error(r.status);
+    const { issues, archive } = await r.json();
+    if (!issues || !issues.length) throw new Error("empty");
+    list.innerHTML = issues.map(it => `<li class="ep">
+        <time datetime="${esc(it.date)}">${fmt(it.date)}</time>
+        <div><a href="${esc(it.url)}" target="_blank" rel="noopener">${esc(it.title)}</a>${it.subtitle ? `<p class="dek">${esc(it.subtitle)}</p>` : ""}</div>
+        ${it.image ? `<img src="${esc(it.image)}" alt="" loading="lazy">` : "<span></span>"}
+      </li>`).join("");
+    if (archive) document.getElementById("archive-wrap").innerHTML = `<a href="${esc(archive)}" target="_blank" rel="noopener">Read the full archive</a>`;
+  } catch(e) {
+    list.innerHTML = `<li class="ep"><time>&nbsp;</time><div><p>New issues every week. <a href="#newsletter">Subscribe</a> to get them in your inbox.</p></div><span></span></li>`;
+  }
+})();
+</script>
+</body>
+</html>

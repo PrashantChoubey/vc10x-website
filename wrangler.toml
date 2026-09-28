@@ -1,0 +1,5 @@
+# Used only for local testing and CLI deploys (npx wrangler pages dev / deploy).
+# Deploying through the Cloudflare dashboard with Git doesn't need this file.
+name = "vc10x-website"
+pages_build_output_dir = "."
+compatibility_date = "2026-09-01"

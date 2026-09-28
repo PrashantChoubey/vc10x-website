@@ -1,0 +1,3 @@
+# Copy to .dev.vars for local testing with `npx wrangler pages dev`. Never commit .dev.vars.
+BEEHIIV_API_KEY=your_beehiiv_api_key
+BEEHIIV_PUBLICATION_ID=pub_xxxxxxxx
