@@ -174,7 +174,7 @@ footer a{margin-right:16px}
     <p class="lede">Over 300 conversations with GPs, LPs and family office principals whose firms manage more than $3 trillion. How capital actually gets raised, allocated and protected, told by the people doing it.</p>
     <form class="sub" data-form="home-hero" novalidate>
       <label class="hp" aria-hidden="true">Leave this empty <input name="website" tabindex="-1" autocomplete="off"></label>
-      <input type="email" name="email" placeholder="Your work email" aria-label="Email address" autocomplete="email" required>
+      <input type="email" name="email" placeholder="Your email" aria-label="Email address" autocomplete="email" required>
       <button class="btn" type="submit">Get the newsletter</button>
       <p class="formmsg" role="status"></p>
     </form>
@@ -261,7 +261,7 @@ footer a{margin-right:16px}
     </div>
     <form class="sub" data-form="home-newsletter" novalidate style="margin-top:6px">
       <label class="hp" aria-hidden="true">Leave this empty <input name="website" tabindex="-1" autocomplete="off"></label>
-      <input type="email" name="email" placeholder="Your work email" aria-label="Email address" autocomplete="email" required>
+      <input type="email" name="email" placeholder="Your email" aria-label="Email address" autocomplete="email" required>
       <button class="btn" type="submit">Subscribe</button>
       <p class="formmsg" role="status"></p>
     </form>
@@ -309,7 +309,7 @@ document.querySelectorAll("form.sub").forEach(f => {
     e.preventDefault();
     const msg = f.querySelector(".formmsg"), btn = f.querySelector("button"), email = f.email.value.trim();
     msg.classList.remove("err");
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = "Enter a valid email address, like name@firm.com."; msg.classList.add("err"); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = "Enter a valid email address, like name@example.com."; msg.classList.add("err"); return; }
     btn.disabled = true; const label = btn.textContent; btn.textContent = "Subscribing";
     try {
       const r = await fetch("/api/subscribe", {method:"POST", headers:{"Content-Type":"application/json"},
