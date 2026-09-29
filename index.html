@@ -64,6 +64,12 @@ nav a.here{color:var(--ink);font-weight:600}
 
 .hero{padding:88px 0 80px;max-width:820px}
 .hero h1{font-size:clamp(44px,7.4vw,86px);line-height:1;letter-spacing:-.025em}
+.stats{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:16px clamp(28px,6vw,64px);margin:36px 0 0;padding:26px 0 0;border-top:1px solid var(--line);max-width:640px}
+.stats div{display:flex;flex-direction:column;gap:8px;margin:0}
+.stats dt{font-size:14px;line-height:1.35;color:var(--muted);max-width:11em}
+.stats dd{order:-1;margin:0;font-family:var(--serif);font-weight:500;font-size:clamp(34px,5vw,48px);line-height:1;letter-spacing:-.02em}
+.proof{flex-basis:100%;font-size:15px;color:var(--muted)}
+.proof b{color:var(--ink);font-weight:600}
 .hero .lede{font-family:var(--serif);font-size:clamp(20px,2.3vw,24px);line-height:1.45;margin-top:28px;max-width:34em}
 .listen{margin-top:22px;font-size:15px;color:var(--muted)}
 .listen a{color:var(--ink);text-underline-offset:3px}
@@ -182,7 +188,12 @@ footer a{margin-right:16px}
 
   <div class="hero">
     <h1>The people who allocate capital, on the record.</h1>
-    <p class="lede">Over 300 conversations with asset managers, allocators and family office principals whose firms manage more than $3 trillion. How capital actually gets raised, allocated and protected, told by the people doing it.</p>
+    <p class="lede">Conversations with asset managers, allocators and family office principals about how capital actually gets raised, allocated and protected.</p>
+    <dl class="stats">
+      <div><dt>published episodes</dt><dd>300+</dd></div>
+      <div><dt>managed by our guests' firms</dt><dd>$3T+</dd></div>
+      <div><dt>average newsletter open rate</dt><dd>55%+</dd></div>
+    </dl>
     <form class="sub" data-form="home-hero" novalidate>
       <label class="hp" aria-hidden="true">Leave this empty <input name="website" tabindex="-1" autocomplete="off"></label>
       <input type="email" name="email" placeholder="Your email" aria-label="Email address" autocomplete="email" required>
@@ -314,6 +325,7 @@ footer a{margin-right:16px}
       <input type="email" name="email" placeholder="Your email" aria-label="Email address" autocomplete="email" required>
       <button class="btn" type="submit">Subscribe</button>
       <p class="formmsg" role="status"></p>
+      <p class="proof"><b>Read, not just received.</b> Our issues average a 55%+ open rate.</p>
     </form>
   </div>
 </section>
