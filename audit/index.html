@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>The Family Gap Audit | VC10X</title>
+<title>The Family Gap Audit for Family Offices | VC10X</title>
 <meta name="description" content="Twenty questions on succession, governance, next-gen readiness, investments and security. A scored view of where your family is exposed.">
 <link rel="canonical" href="https://vc10x.com/audit/">
 <meta property="og:type" content="website">
@@ -20,6 +20,9 @@
 <meta name="twitter:image" content="https://vc10x.com/audit/og.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "WebApplication", "name": "The Family Gap Audit", "url": "https://vc10x.com/audit/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "VC10X", "url": "https://vc10x.com/"}}
+</script>
 <!-- Analytics: paste your Plausible or Google Analytics snippet here -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -135,6 +138,14 @@ footer{margin-top:64px;font-size:13px;color:var(--muted)}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .btn:disabled{opacity:.6;cursor:wait}
 @media (min-width:760px){.intro-grid{grid-template-columns:1.25fr 1fr;align-items:end}}
+.learn{margin-top:80px;padding-top:44px;border-top:1px solid var(--line)}
+.learn section + section{margin-top:44px}
+.learn p{margin-top:12px;max-width:38em}
+.learn dl{margin:18px 0 0}
+.learn dt{font-family:var(--serif);font-size:21px;font-weight:500;margin-top:18px}
+.learn dd{margin:4px 0 0;color:var(--muted);max-width:38em}
+.learn ul{margin:14px 0 0;padding-left:20px}
+.learn li{margin:6px 0}
 </style>
 </head>
 <body>
@@ -144,6 +155,42 @@ footer{margin-top:64px;font-size:13px;color:var(--muted)}
     <small>For family principals and their offices</small>
   </header>
   <main id="app" aria-live="polite"></main>
+  <div class="learn" id="learn">
+    <section>
+      <h2>The five areas where families are most often exposed</h2>
+      <p>Twenty multiple-choice questions, four in each area. Each area gets its own score, so you can see exactly where to start.</p>
+      <dl>
+        <dt>Succession and continuity</dt><dd>If the principal were unavailable tomorrow, this is what decides whether the family keeps operating or freezes.</dd>
+        <dt>Governance</dt><dd>Most families don't lose wealth to bad markets. They lose it to decisions no one had the authority to make, or disputes no one had a way to settle.</dd>
+        <dt>Next-gen readiness</dt><dd>Heirs who first see the portfolio at the reading of the will inherit assets without the judgement to hold them.</dd>
+        <dt>Investment architecture</dt><dd>Without a written policy, allocation drifts toward whatever the last good pitch was, and concentration builds quietly.</dd>
+        <dt>Privacy and security</dt><dd>Visibility is the risk. The more the public can piece together about the family, the easier it is to target.</dd>
+      </dl>
+    </section>
+    <section>
+      <h2>How the score works</h2>
+      <p>Every answer is worth zero to three points. Your total is shown out of 100, with a red flag for any answer that would stop a conversation on its own.</p>
+      <ul>
+        <li><b>80 to 100:</b> Institutional</li>
+        <li><b>60 to 79:</b> Developing</li>
+        <li><b>40 to 59:</b> Fragile</li>
+        <li><b>Below 40:</b> Exposed</li>
+      </ul>
+      <p>Your answers stay in your browser. We don't store them.</p>
+    </section>
+    <section>
+      <h2>Who it's for</h2>
+      <p>Family principals, next-generation family members and the people who run their family offices. It works best when several family members take it on their own and compare answers. Where you disagree is usually where the real gap is.</p>
+    </section>
+    <section>
+      <h2>Related from VC10X</h2>
+      <ul>
+        <li><a href="/#latest">The VC10X newsletter</a>: how family offices and CIOs are positioning portfolios now.</li>
+        <li><a href="/fundraising-audit/">The Fundraising Readiness Audit</a>, for venture fund managers.</li>
+        <li><a href="/">VC10X</a>: 300+ conversations with asset managers, allocators and family office principals.</li>
+      </ul>
+    </section>
+  </div>
   <footer>Self-reported and indicative. This audit is a starting point for conversations with your family and advisors, not legal, tax or investment advice.</footer>
 </div>
 
@@ -463,7 +510,7 @@ function report(){
 }
 
 function restart(){ const lead = S.lead; S = {stage:"intro", i:0, a:Array(QUESTIONS.length).fill(null), lead}; save(); render(); }
-function render(){ ({intro, q:question, teaser, report})[S.stage](); }
+function render(){ ({intro, q:question, teaser, report})[S.stage](); document.getElementById("learn").hidden = S.stage !== "intro"; }
 render();
 </script>
 </body>

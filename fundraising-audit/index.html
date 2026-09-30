@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>The Fundraising Readiness Audit | VC10X</title>
+<title>Fundraising Readiness Audit for VC Fund Managers | VC10X</title>
 <meta name="description" content="Twenty questions for venture fund managers on track record, LP pipeline, materials, terms and process. Find out if you are ready to raise.">
 <link rel="canonical" href="https://vc10x.com/fundraising-audit/">
 <meta property="og:type" content="website">
@@ -20,6 +20,9 @@
 <meta name="twitter:image" content="https://vc10x.com/fundraising-audit/og.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "WebApplication", "name": "The Fundraising Readiness Audit", "url": "https://vc10x.com/fundraising-audit/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "VC10X", "url": "https://vc10x.com/"}}
+</script>
 <!-- Analytics: paste your Plausible or Google Analytics snippet here -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -135,6 +138,14 @@ footer{margin-top:64px;font-size:13px;color:var(--muted)}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .btn:disabled{opacity:.6;cursor:wait}
 @media (min-width:760px){.intro-grid{grid-template-columns:1.25fr 1fr;align-items:end}}
+.learn{margin-top:80px;padding-top:44px;border-top:1px solid var(--line)}
+.learn section + section{margin-top:44px}
+.learn p{margin-top:12px;max-width:38em}
+.learn dl{margin:18px 0 0}
+.learn dt{font-family:var(--serif);font-size:21px;font-weight:500;margin-top:18px}
+.learn dd{margin:4px 0 0;color:var(--muted);max-width:38em}
+.learn ul{margin:14px 0 0;padding-left:20px}
+.learn li{margin:6px 0}
 </style>
 </head>
 <body>
@@ -144,6 +155,42 @@ footer{margin-top:64px;font-size:13px;color:var(--muted)}
     <small>For venture fund managers</small>
   </header>
   <main id="app" aria-live="polite"></main>
+  <div class="learn" id="learn">
+    <section>
+      <h2>The five things LPs test before they commit</h2>
+      <p>Twenty multiple-choice questions, four in each area. Each area gets its own score, so you can see exactly where to start.</p>
+      <dl>
+        <dt>Track record and edge</dt><dd>LPs underwrite people. If they can't see exactly what you did and why it will repeat, they can't back it.</dd>
+        <dt>LP pipeline</dt><dd>Most raises stall on pipeline, not on the pitch. You need far more qualified conversations than feels reasonable.</dd>
+        <dt>Materials and diligence</dt><dd>Diligence speed signals how you'll run the fund. A slow, incomplete data room reads as a slow, incomplete firm.</dd>
+        <dt>Terms and economics</dt><dd>Terms and fee runway tell an LP whether you'll still be standing in year three, and whether your interests line up with theirs.</dd>
+        <dt>Process and momentum</dt><dd>Momentum closes funds. Without a date and a minimum, every LP has a reason to wait for the next one to commit.</dd>
+      </dl>
+    </section>
+    <section>
+      <h2>How the score works</h2>
+      <p>Every answer is worth zero to three points. Your total is shown out of 100, with a red flag for any answer that would stop a conversation on its own.</p>
+      <ul>
+        <li><b>80 to 100:</b> Ready to raise</li>
+        <li><b>60 to 79:</b> Nearly ready</li>
+        <li><b>40 to 59:</b> Not yet</li>
+        <li><b>Below 40:</b> Rebuild the plan</li>
+      </ul>
+      <p>Your answers stay in your browser. We don't store them.</p>
+    </section>
+    <section>
+      <h2>Who it's for</h2>
+      <p>Venture fund managers preparing to raise, especially emerging managers on Fund I or II. It's most useful three to six months before your first LP meetings, when there's still time to fix what it finds. Ask each partner to take it separately, then compare scores.</p>
+    </section>
+    <section>
+      <h2>Related from VC10X</h2>
+      <ul>
+        <li><a href="/fund-economics-calculator/">Fund economics calculator</a>: model your management fees, GP commit and the return you need before carry pays out.</li>
+        <li><a href="/#latest">The VC10X newsletter</a>: what LPs say about funds after the meeting ends.</li>
+        <li><a href="/audit/">The Family Gap Audit</a>, for family principals and their offices.</li>
+      </ul>
+    </section>
+  </div>
   <footer>Self-reported and indicative. This audit is a starting point for conversations with your partners and advisors, not legal, tax or investment advice.</footer>
 </div>
 
@@ -460,7 +507,7 @@ function report(){
 }
 
 function restart(){ const lead = S.lead; S = {stage:"intro", i:0, a:Array(QUESTIONS.length).fill(null), lead}; save(); render(); }
-function render(){ ({intro, q:question, teaser, report})[S.stage](); }
+function render(){ ({intro, q:question, teaser, report})[S.stage](); document.getElementById("learn").hidden = S.stage !== "intro"; }
 render();
 </script>
 </body>
