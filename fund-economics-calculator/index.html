@@ -85,6 +85,11 @@ button,input,select{font:inherit;color:inherit}
 .unit input{width:100%;min-width:0;border:0;background:transparent;padding:10px 8px;text-align:right;font-variant-numeric:tabular-nums}
 .unit input:focus{outline:none}
 .unit:has(input:focus-visible){box-shadow:0 0 0 3px var(--brass)}
+.unit select{width:100%;border:0;background:transparent;padding:10px 6px;font-size:14px;cursor:pointer}
+.unit select:focus{outline:none}
+.field.wide{grid-template-columns:1fr 150px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
 .hide{display:none}
 .note{font-size:13px;color:var(--muted);margin-top:6px}
 
@@ -183,6 +188,7 @@ footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);font-si
         <fieldset class="group" style="margin-bottom:0">
           <legend>GP commit</legend>
           <div class="field"><label for="gp">GP commit</label><div class="unit"><input id="gp" inputmode="decimal" value="2"><span>%</span></div></div>
+          <div class="field wide"><label for="gpfund">Paid by</label><div class="unit"><select id="gpfund"><option value="cash">Partners' cash</option><option value="waiver">Fee waiver</option></select></div></div>
           <div class="field"><label for="partners">Partners sharing it</label><div class="unit"><input id="partners" inputmode="numeric" value="2"></div></div>
         </fieldset>
         <p class="err no-print" id="inerr" role="alert"></p>
@@ -192,7 +198,7 @@ footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);font-si
         <dl class="kpis">
           <div class="kpi"><dt>Management fees over the fund's life</dt><dd id="k-fees"></dd><p id="k-fees-p"></p></div>
           <div class="kpi"><dt>Fee income per year</dt><dd id="k-yr"></dd><p id="k-yr-p"></p></div>
-          <div class="kpi"><dt>GP commit the partners must fund</dt><dd id="k-gp"></dd><p id="k-gp-p"></p></div>
+          <div class="kpi"><dt id="k-gp-t">GP commit the partners must fund</dt><dd id="k-gp"></dd><p id="k-gp-p"></p></div>
           <div class="kpi"><dt>Fund must return before carry pays out</dt><dd id="k-be"></dd><p id="k-be-p"></p></div>
         </dl>
 
@@ -200,6 +206,7 @@ footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);font-si
           <h3>Fee income by year</h3>
           <p class="muted" id="chart-cap"></p>
           <div class="chart" id="chart"><div class="tip" id="tip"></div></div>
+          <div class="legend hide" id="legend"><span><i style="background:var(--ink)"></i>Fee income kept by the manager</span><span><i style="background:var(--brass)"></i>Waived into the GP commit</span></div>
           <details>
             <summary>Show as a table</summary>
             <table id="feetable"></table>
@@ -249,6 +256,7 @@ footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);font-si
         <h2>How much should GPs commit?</h2>
         <p>LPs want the partners to have real money in the fund. A GP commit of 1% to 2% of fund size is a common reference point, but LPs look at it relative to the partners' own wealth, not just the percentage.</p>
         <p>The commitment is called over time alongside LP capital, so plan for the cash across the investment period, not on day one. Some LPs will ask where it comes from, and whether any of it is funded by waiving management fees.</p>
+        <p>With a fee waiver, the partners give up part of the management fee and it goes into the fund as their commitment. The partners put in no cash, and LPs effectively pay for it through their fees. It helps when the team can't write a large check, but some LPs see it as a weaker signal because no new money is at risk.</p>
       </section>
       <section>
         <h2>When does carry start paying out?</h2>
@@ -263,6 +271,7 @@ footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);font-si
           <li>No recycling of fees or proceeds, and no fund expenses beyond the management fee.</li>
           <li>A whole-fund waterfall. With a hurdle, the preferred return compounds on LP capital for the years you enter, with a full GP catch-up.</li>
           <li>The GP commit pays no carry and shares returns like LP capital.</li>
+          <li>A fee waiver is taken evenly across the investment period and treated like cash for returns. In practice, waiver interests are often paid only out of fund profits.</li>
         </ul>
         <p class="muted">This is a planning tool, not legal, tax or investment advice. Your LPA governs the real numbers.</p>
       </section>
@@ -307,6 +316,7 @@ const UTM = (() => {
 try {
   const h = new URLSearchParams(location.hash.slice(1));
   IDS.forEach(k => { if (h.has(k) && isFinite(parseFloat(h.get(k)))) $(k).value = h.get(k); });
+  if (h.get("gpfund") === "waiver") $("gpfund").value = "waiver";
 } catch(e) {}
 
 const money = m => {           // m is in $M
@@ -329,6 +339,7 @@ function read(){
   });
   v.life = Math.round(v.life); v.ip = Math.round(v.ip); v.partners = Math.round(v.partners);
   if (v.ip > v.life) v.ip = v.life;
+  v.waiver = $("gpfund").value === "waiver";
   return {v, errs};
 }
 
@@ -340,6 +351,12 @@ function model(v){
   const fees = years.reduce((s, r) => s + r.fee, 0);
   const investable = Math.max(0, v.size - fees);
   const gp = v.size * v.gp / 100, lpCap = v.size - gp;
+  // Fee waiver: the GP commit is funded by giving up management fees, spread evenly over the
+  // investment period, with any shortfall taken from later years. LPs still pay the full fee.
+  let left = v.waiver ? gp : 0;
+  years.forEach(r => { r.waived = r.y <= v.ip ? Math.min(r.fee, gp / v.ip, left) : 0; left -= r.waived; });
+  years.forEach(r => { if (r.y > v.ip) { r.waived = Math.min(r.fee, left); left -= r.waived; } r.kept = r.fee - r.waived; });
+  const waived = gp - Math.max(0, left), unfunded = Math.max(0, left);
   const h = v.hurdle / 100, pref = lpCap * (Math.pow(1 + h, v.hyears) - 1);
   const threshold = v.size + (lpCap > 0 ? pref * v.size / lpCap : 0); // distributions before any carry; the GP commit takes its pro-rata share of profit
   const c = v.carry / 100, lpShare = 1 - v.gp / 100;
@@ -351,12 +368,12 @@ function model(v){
     return {m, proceeds, carry, perPartner: carry / v.partners, lpNet};
   };
   const beMultiple = investable > 0 ? threshold / investable : Infinity;
-  return {years, fees, investable, gp, pref, threshold, beMultiple, rows: MULTIPLES.map(at), at};
+  return {years, fees, investable, gp, waived, unfunded, pref, threshold, beMultiple, rows: MULTIPLES.map(at), at};
 }
 
 function chart(v, M){
   const W = 640, H = 230, pad = {l:48, r:4, t:14, b:50};
-  const max = Math.max(...M.years.map(r => r.fee)) || 1;
+  const max = Math.max(...M.years.map(r => r.fee)) || 1, W8 = v.waiver && M.waived > 0;
   const step = niceStep(max / 4), top = Math.ceil(max / step) * step;
   const iw = W - pad.l - pad.r, ih = H - pad.t - pad.b, bw = iw / M.years.length;
   const y = f => pad.t + ih - (f / top) * ih;
@@ -368,7 +385,14 @@ function chart(v, M){
   M.years.forEach((r, i) => {
     const w = Math.max(2, Math.min(bw * 0.62, 36)), x = pad.l + i * bw + (bw - w) / 2, yt = y(r.fee), hgt = pad.t + ih - yt;
     const rr = Math.min(4, w/2, hgt);
-    s += `<path d="M${x},${pad.t+ih} V${yt+rr} Q${x},${yt} ${x+rr},${yt} H${x+w-rr} Q${x+w},${yt} ${x+w},${yt+rr} V${pad.t+ih} Z" fill="var(--ink)"/>`;
+    const yk = y(r.kept), top1 = W8 && r.waived > 0 ? yk : yt;
+    if (W8 && r.waived > 0) {
+      // waived slice sits on top with the rounded end; a 2px surface gap separates it from the kept slice
+      s += `<path d="M${x},${yk-1} V${yt+rr} Q${x},${yt} ${x+rr},${yt} H${x+w-rr} Q${x+w},${yt} ${x+w},${yt+rr} V${yk-1} Z" fill="var(--brass)"/>`;
+      if (r.kept > 0) s += `<rect x="${x}" y="${yk+1}" width="${w}" height="${Math.max(0, pad.t+ih-yk-1)}" fill="var(--ink)"/>`;
+    } else {
+      s += `<path d="M${x},${pad.t+ih} V${yt+rr} Q${x},${yt} ${x+rr},${yt} H${x+w-rr} Q${x+w},${yt} ${x+w},${yt+rr} V${pad.t+ih} Z" fill="var(--ink)"/>`;
+    }
     s += `<rect x="${pad.l + i*bw}" y="${pad.t}" width="${bw}" height="${ih}" fill="transparent" data-i="${i}"/>`;
     if (M.years.length <= 12 || r.y % 2 === 1) s += `<text class="ax" x="${x + w/2}" y="${pad.t+ih+16}" text-anchor="middle">${r.y}</text>`;
   });
@@ -382,7 +406,7 @@ function chart(v, M){
   box.querySelectorAll("rect[data-i]").forEach(el => {
     const show = () => {
       const r = M.years[+el.dataset.i], b = box.getBoundingClientRect(), e = el.getBoundingClientRect();
-      tip.textContent = `Year ${r.y}: ${money(r.fee)} (${pct(r.rate, 2)})`;
+      tip.textContent = r.waived > 0 ? `Year ${r.y}: ${money(r.kept)} kept, ${money(r.waived)} waived` : `Year ${r.y}: ${money(r.fee)} (${pct(r.rate, 2)})`;
       tip.style.left = (e.left - b.left + e.width/2) + "px";
       tip.style.top = (y(r.fee) / H * b.height - 8) + "px";
       tip.style.opacity = 1;
@@ -401,23 +425,36 @@ function render(){
   const M = model(v);
 
   $("k-fees").textContent = money(M.fees);
-  $("k-fees-p").innerHTML = `<b>${pct(M.fees / v.size)}</b> of the fund. That leaves <b>${money(M.investable)}</b> to invest.`;
-  $("k-yr").textContent = money(v.size * v.fee1 / 100);
-  $("k-yr-p").innerHTML = v.ip < v.life
-    ? `For the first ${v.ip} years, then <b>${money(v.size * v.fee2 / 100)}</b> a year for the last ${v.life - v.ip}.`
-    : `Every year for ${v.life} years.`;
+  const W = v.waiver && M.gp > 0, y1 = M.years[0], yl = M.years[M.years.length - 1];
+  $("k-fees-p").innerHTML = `<b>${pct(M.fees / v.size)}</b> of the fund. That leaves <b>${money(M.investable)}</b> to invest.` +
+    (W ? ` The manager keeps <b>${money(M.fees - M.waived)}</b> after the waiver.` : "");
+  $("k-yr").textContent = money(y1.kept);
+  $("k-yr-p").innerHTML = (W ? `After waiving <b>${money(y1.waived)}</b> a year into the GP commit. ` : "") + (v.ip < v.life
+    ? `For the first ${v.ip} years, then <b>${money(yl.kept)}</b> a year for the last ${v.life - v.ip}.`
+    : `Every year for ${v.life} years.`);
+  $("k-gp-t").textContent = W ? "GP commit, funded by fee waiver" : "GP commit the partners must fund";
   $("k-gp").textContent = money(M.gp);
-  $("k-gp-p").innerHTML = `<b>${money(M.gp / v.partners)}</b> per partner across ${v.partners} partner${v.partners > 1 ? "s" : ""}. If it's called evenly over the investment period, about <b>${money(M.gp / v.partners / v.ip)}</b> per partner a year.`;
+  $("k-gp-p").innerHTML = M.gp <= 0
+    ? `No GP commit. Most LPs expect the partners to have their own money in the fund, often 1% to 2% of fund size, and will ask why there isn't any.`
+    : W
+    ? `The partners put in <b>$0</b> of their own cash. Instead they give up <b>${money(M.waived)}</b> of management fees, so the LPs' fee payments fund it.` +
+      (M.unfunded > 0 ? ` Fees aren't large enough to cover the rest: <b>${money(M.unfunded)}</b> still needs cash.` : ` Some LPs push back on waivers because no new money is at risk.`)
+    : `<b>${money(M.gp / v.partners)}</b> per partner across ${v.partners} partner${v.partners > 1 ? "s" : ""}. If it's called evenly over the investment period, about <b>${money(M.gp / v.partners / v.ip)}</b> per partner a year.`;
   $("k-be").textContent = isFinite(M.beMultiple) ? money(M.threshold) : "n/a";
   $("k-be-p").innerHTML = isFinite(M.beMultiple)
     ? `A <b>${mult(M.beMultiple)}</b> gross multiple on the ${money(M.investable)} you invest${M.pref > 0 ? `, including a ${money(M.pref)} preferred return to LPs` : ""}. Every dollar LPs paid in, fees included, comes back first.`
     : `Fees use up the whole fund, so nothing is invested.`;
 
-  $("chart-cap").textContent = `${money(M.fees)} in total over ${v.life} years.`;
+  $("chart-cap").textContent = W ? `${money(M.fees)} in total over ${v.life} years, of which ${money(M.waived)} is waived into the GP commit.` : `${money(M.fees)} in total over ${v.life} years.`;
+  $("legend").classList.toggle("hide", !W);
   chart(v, M);
-  $("feetable").innerHTML = `<thead><tr><th>Year</th><th>Fee rate</th><th>Fee income</th></tr></thead><tbody>` +
-    M.years.map(r => `<tr><td>Year ${r.y}</td><td>${pct(r.rate, 2)}</td><td>${money(r.fee)}</td></tr>`).join("") +
-    `<tr><td><b>Total</b></td><td></td><td><b>${money(M.fees)}</b></td></tr></tbody>`;
+  $("feetable").innerHTML = W
+    ? `<thead><tr><th>Year</th><th>Fee rate</th><th>Fee charged</th><th>Waived</th><th>Kept</th></tr></thead><tbody>` +
+      M.years.map(r => `<tr><td>Year ${r.y}</td><td>${pct(r.rate, 2)}</td><td>${money(r.fee)}</td><td>${money(r.waived)}</td><td>${money(r.kept)}</td></tr>`).join("") +
+      `<tr><td><b>Total</b></td><td></td><td><b>${money(M.fees)}</b></td><td><b>${money(M.waived)}</b></td><td><b>${money(M.fees - M.waived)}</b></td></tr></tbody>`
+    : `<thead><tr><th>Year</th><th>Fee rate</th><th>Fee income</th></tr></thead><tbody>` +
+      M.years.map(r => `<tr><td>Year ${r.y}</td><td>${pct(r.rate, 2)}</td><td>${money(r.fee)}</td></tr>`).join("") +
+      `<tr><td><b>Total</b></td><td></td><td><b>${money(M.fees)}</b></td></tr></tbody>`;
 
   const rows = M.rows.slice();
   if (isFinite(M.beMultiple)) rows.push({...M.at(M.beMultiple), be:true});
@@ -425,13 +462,14 @@ function render(){
   $("carrytable").innerHTML = `<thead><tr><th>Gross multiple</th><th>Fund returns</th><th>Total carry</th><th>Carry per partner</th><th>LP net multiple</th></tr></thead><tbody>` +
     rows.map(r => `<tr${r.be ? ' class="be"' : ""}><td>${mult(r.m)}${r.be ? " <span class=\"muted\">carry line</span>" : ""}</td><td>${money(r.proceeds)}</td><td>${money(r.carry)}</td><td>${money(r.perPartner)}</td><td>${mult(r.lpNet)}</td></tr>`).join("") + `</tbody>`;
 
-  $("printed").textContent = `${money(v.size)} fund · ${v.fee1}% fee, ${v.fee2}% after year ${v.ip} · ${v.carry}% carry${v.hurdle > 0 ? `, ${v.hurdle}% hurdle` : ""} · ${v.gp}% GP commit · vc10x.com/fund-economics-calculator`;
-  const hash = new URLSearchParams(); IDS.forEach(k => hash.set(k, v[k]));
+  $("printed").textContent = `${money(v.size)} fund · ${v.fee1}% fee, ${v.fee2}% after year ${v.ip} · ${v.carry}% carry${v.hurdle > 0 ? `, ${v.hurdle}% hurdle` : ""} · ${v.gp}% GP commit${W ? " via fee waiver" : ""} · vc10x.com/fund-economics-calculator`;
+  const hash = new URLSearchParams(); IDS.forEach(k => hash.set(k, v[k])); if (v.waiver) hash.set("gpfund", "waiver");
   history.replaceState(null, "", "#" + hash);
   return {v, M};
 }
 
 IDS.forEach(k => $(k).addEventListener("input", render));
+$("gpfund").addEventListener("change", render);
 render();
 
 /* ---------- Save, export and the email ask ---------- */
@@ -442,12 +480,12 @@ function csv(){
   L.push(["VC10X fund economics calculator"], ["vc10x.com/fund-economics-calculator/"], []);
   L.push(["Inputs"], ["Fund size ($M)", v.size], ["Fund life (years)", v.life], ["Investment period (years)", v.ip],
          ["Management fee, investment period (%)", v.fee1], ["Management fee, after (%)", v.fee2], ["Carry (%)", v.carry],
-         ["Hurdle (%)", v.hurdle], ["Years capital is out (for hurdle)", v.hyears], ["GP commit (%)", v.gp], ["Partners", v.partners], []);
+         ["Hurdle (%)", v.hurdle], ["Years capital is out (for hurdle)", v.hyears], ["GP commit (%)", v.gp], ["GP commit paid by", v.waiver ? "Management fee waiver" : "Partners' cash"], ["Partners", v.partners], []);
   L.push(["Summary ($M)"], ["Total management fees", M.fees.toFixed(3)], ["Investable capital", M.investable.toFixed(3)],
-         ["GP commit", M.gp.toFixed(3)], ["GP commit per partner", (M.gp / v.partners).toFixed(3)],
+         ["GP commit", M.gp.toFixed(3)], ["Fees waived into GP commit", M.waived.toFixed(3)], ["GP commit per partner", (M.gp / v.partners).toFixed(3)],
          ["Distributions before carry", M.threshold.toFixed(3)], ["Gross multiple to reach carry", isFinite(M.beMultiple) ? M.beMultiple.toFixed(3) : ""], []);
-  L.push(["Year", "Fee rate (%)", "Fee income ($M)"]);
-  M.years.forEach(r => L.push([r.y, (r.rate*100).toFixed(2), r.fee.toFixed(3)]));
+  L.push(["Year", "Fee rate (%)", "Fee charged ($M)", "Waived into GP commit ($M)", "Fee kept ($M)"]);
+  M.years.forEach(r => L.push([r.y, (r.rate*100).toFixed(2), r.fee.toFixed(3), r.waived.toFixed(3), r.kept.toFixed(3)]));
   L.push([]);
   L.push(["Gross multiple", "Fund returns ($M)", "Total carry ($M)", "Carry per partner ($M)", "LP net multiple"]);
   M.rows.forEach(r => L.push([r.m, r.proceeds.toFixed(3), r.carry.toFixed(3), r.perPartner.toFixed(3), r.lpNet.toFixed(3)]));
