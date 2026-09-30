@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vc10x.com/sitemap.xml
