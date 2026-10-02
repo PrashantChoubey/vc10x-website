@@ -10,6 +10,9 @@ All tools are free. Audit answers and calculator inputs stay in the visitor's br
 - [The LP Fit Audit](https://vc10x.com/lp-fit-audit/): Fourteen questions that rank eight LP types (angels, family offices, funds of funds, endowments, pensions and sovereigns, corporates, wealth platforms, DFIs) by fit for a venture fund.
 - [The Fundraising Readiness Audit](https://vc10x.com/fundraising-audit/): Twenty questions that score a venture fund manager's readiness to raise across track record, LP pipeline, materials, terms and process.
 - [The Family Gap Audit](https://vc10x.com/audit/): Twenty questions that score a family or family office on succession, governance, next-gen readiness, investment architecture, and privacy and security.
+- [The Family Office Readiness Audit](https://vc10x.com/family-office-readiness/): Twelve questions that rank a wealth manager, multi-family office, outsourced family office and single-family office by fit for a family, with an estimated annual cost for each.
+- [The Liquidity Event Readiness Audit](https://vc10x.com/liquidity-event-audit/): Twenty questions for founders and family business owners selling a company, covering pre-sale tax and estate planning, advisors, a deployment plan, family, and privacy.
+- [Advisor Fee Calculator](https://vc10x.com/advisor-fee-calculator/): Shows the dollars paid to a wealth manager over time, the growth given up, and what a lower or flat fee would change.
 
 ## Podcast and newsletter
 

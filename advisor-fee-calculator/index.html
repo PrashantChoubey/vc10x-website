@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Advisor Fee Calculator: What Does Your Wealth Manager Really Cost? | VC10X</title>
+<meta name="description" content="Free advisor fee calculator. See the dollars you pay your wealth manager over 10, 20 or 30 years, the growth you give up, and what a lower or flat fee would change.">
+<link rel="canonical" href="https://vc10x.com/advisor-fee-calculator/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VC10X">
+<meta property="og:url" content="https://vc10x.com/advisor-fee-calculator/">
+<meta property="og:title" content="Advisor Fee Calculator">
+<meta property="og:description" content="What does your wealth manager really cost? Fees, lost growth, and what a lower or flat fee would change. Free, no sign-up to use.">
+<meta property="og:image" content="https://vc10x.com/advisor-fee-calculator/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@ChoubeySahab">
+<meta name="twitter:title" content="Advisor Fee Calculator">
+<meta name="twitter:description" content="What does your wealth manager really cost over 20 years? Fees, lost growth and alternatives.">
+<meta name="twitter:image" content="https://vc10x.com/advisor-fee-calculator/og.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "@id": "https://vc10x.com/advisor-fee-calculator/#app", "name": "Advisor Fee Calculator", "url": "https://vc10x.com/advisor-fee-calculator/", "applicationCategory": "FinanceApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@id": "https://vc10x.com/#org"}, "author": {"@id": "https://vc10x.com/#prashant"}, "dateModified": "2026-10-03"}, {"@type": "FAQPage", "@id": "https://vc10x.com/advisor-fee-calculator/#faq", "mainEntity": [{"@type": "Question", "name": "How much should I pay a financial advisor?", "acceptedAnswer": {"@type": "Answer", "text": "Around 1% of assets a year is common for smaller portfolios, often falling on a sliding scale as assets grow. Larger families often pay less as a percentage, or a flat or retainer fee. What matters is the total cost, including fund and product fees, and what you get for it."}}, {"@type": "Question", "name": "How much does a 1% advisory fee cost over 20 years?", "acceptedAnswer": {"@type": "Answer", "text": "On $1M growing at 6% a year before fees, a 1% annual fee leaves you with about $2.62M after 20 years instead of about $3.21M, roughly 18% less. The gap widens the longer the money compounds."}}, {"@type": "Question", "name": "Is a flat fee better than a percentage of assets?", "acceptedAnswer": {"@type": "Answer", "text": "It can be for larger portfolios, because a flat fee doesn't rise as your assets grow. Compare the total cost over time, and check what services each option includes."}}, {"@type": "Question", "name": "What fees should I ask my wealth manager about?", "acceptedAnswer": {"@type": "Answer", "text": "The advisory fee, fund and product expense ratios, platform or custody fees, performance fees on private funds, and any commissions or revenue sharing. Ask for the total in dollars, in writing."}}, {"@type": "Question", "name": "Are advisory fees negotiable?", "acceptedAnswer": {"@type": "Answer", "text": "Often, especially for larger portfolios or when you consolidate assets with one firm. Fee schedules commonly step down as assets grow, so ask where your breakpoints are."}}]}, {"@type": "Organization", "@id": "https://vc10x.com/#org", "name": "VC10X", "url": "https://vc10x.com/", "logo": "https://vc10x.com/apple-touch-icon.png", "description": "Podcast and newsletter with 300+ conversations with asset managers, allocators and family office principals on how capital is raised, allocated and protected.", "founder": {"@id": "https://vc10x.com/#prashant"}, "sameAs": ["https://www.youtube.com/@VC10X", "https://podcasts.apple.com/us/podcast/id1632806986", "https://open.spotify.com/show/7F7KEhXNhTx1bKTBFgzv3k"]}, {"@type": "Person", "@id": "https://vc10x.com/#prashant", "name": "Prashant Choubey", "jobTitle": "Host, VC10X", "url": "https://vc10x.com/#about", "worksFor": {"@id": "https://vc10x.com/#org"}, "sameAs": ["https://www.linkedin.com/in/choubeysahab", "https://x.com/ChoubeySahab", "https://podcast10x.com"]}]}
+</script>
+<!-- Analytics: paste your Plausible or Google Analytics snippet here -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FFFFFF; --panel:#F6F6F6; --ink:#000000; --muted:#5C5C5C; --line:#D9D9D9;
+  --green:#000000; --brass:#3FDCFF; --flag:#C0392B; --on-green:#FFFFFF;
+  --serif:"Newsreader", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --sans:"Hanken Grotesk", "Helvetica Neue", Arial, system-ui, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#000000; --panel:#111111; --ink:#FFFFFF; --muted:#A6A6A6; --line:#2B2B2B;
+    --green:#FFFFFF; --brass:#3FDCFF; --flag:#FF7A6B; --on-green:#000000;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#000000; --panel:#111111; --ink:#FFFFFF; --muted:#A6A6A6; --line:#2B2B2B;
+  --green:#FFFFFF; --brass:#3FDCFF; --flag:#FF7A6B; --on-green:#000000;
+}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-underline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 22px 64px}
+header.bar{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:48px}
+.mark{font-family:var(--serif);font-weight:600;font-size:20px;text-decoration:none}
+.bar small{color:var(--muted);font-size:14px}
+h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;margin:0}
+h1{font-size:clamp(38px,5.4vw,56px);line-height:1.04;max-width:16em}
+h2{font-size:clamp(26px,3.4vw,34px);line-height:1.15}
+h3{font-size:21px;line-height:1.25}
+p{margin:0}
+.lede{font-family:var(--serif);font-size:21px;line-height:1.5;max-width:36em;margin-top:20px}
+.muted{color:var(--muted)}
+button,input,select{font:inherit;color:inherit}
+.btn{display:inline-block;background:var(--green);color:var(--on-green);border:0;border-radius:6px;padding:13px 22px;font-weight:600;font-size:16px;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.6;cursor:wait}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;box-shadow:0 0 0 5px var(--brass)}
+
+.calc{display:grid;grid-template-columns:1fr;gap:40px;margin-top:44px}
+@media (min-width:900px){.calc{grid-template-columns:320px 1fr;gap:56px;align-items:start}.inputs{position:sticky;top:20px}}
+
+.inputs{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--brass);border-radius:4px;padding:22px}
+.inputs h2{font-size:22px;margin-bottom:16px}
+.group{border:0;margin:0 0 18px;padding:0}
+.group legend{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:0;margin-bottom:10px}
+.field{display:grid;grid-template-columns:1fr 112px;gap:10px;align-items:center;margin-bottom:10px}
+.field label{font-size:15px;line-height:1.3}
+.field label small{display:block;font-size:13px;color:var(--muted)}
+.unit{display:flex;align-items:center;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.unit:focus-within{border-color:var(--ink)}
+.unit span{padding:0 8px;color:var(--muted);font-size:14px}
+.unit input{width:100%;min-width:0;border:0;background:transparent;padding:10px 8px;text-align:right;font-variant-numeric:tabular-nums}
+.unit input:focus{outline:none}
+.unit:has(input:focus-visible){box-shadow:0 0 0 3px var(--brass)}
+.unit select{width:100%;border:0;background:transparent;padding:10px 6px;font-size:14px;cursor:pointer}
+.unit select:focus{outline:none}
+.field.wide{grid-template-columns:1fr 150px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.hide{display:none}
+.note{font-size:13px;color:var(--muted);margin-top:6px}
+
+.kpis{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid var(--line)}
+.kpi{padding:22px 0;border-bottom:1px solid var(--line)}
+.kpi dt{font-size:14px;color:var(--muted)}
+.kpi dd{margin:6px 0 0;font-family:var(--serif);font-weight:500;font-size:clamp(34px,4.4vw,46px);line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpi p{margin-top:8px;font-size:15px;color:var(--muted);max-width:30em}
+.kpi p b{color:var(--ink);font-weight:600}
+@media (min-width:640px){.kpis{grid-template-columns:1fr 1fr;column-gap:36px}}
+
+.block{margin-top:44px}
+.block > p.muted{margin-top:6px;font-size:15px;max-width:40em}
+.chart{position:relative;margin-top:18px}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart .ax{font:12px var(--sans);fill:var(--muted)}
+.chart .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--paper);font-size:13px;padding:6px 9px;border-radius:4px;white-space:nowrap;transform:translate(-50%,-100%);opacity:0;transition:opacity .12s}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15px;margin-top:16px}
+th,td{padding:10px 8px;text-align:right;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left;padding-left:0}
+th{font-weight:600;font-size:13px;color:var(--muted)}
+tr.be td{background:var(--panel);font-weight:600}
+details{margin-top:14px;font-size:15px}
+summary{cursor:pointer;color:var(--muted)}
+
+.export{margin-top:44px;padding:24px;border:1px solid var(--line);border-radius:4px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.gate{margin-top:20px;padding-top:20px;border-top:1px solid var(--line)}
+.gate .row{display:grid;grid-template-columns:1fr;gap:12px}
+@media (min-width:640px){.gate .row{grid-template-columns:1fr 1fr 1fr}}
+.gate label{display:grid;gap:6px;font-size:14px;font-weight:600}
+.gate input:not([type=checkbox]),.gate select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.check{display:flex !important;gap:10px;align-items:flex-start;font-weight:400 !important;color:var(--muted);margin:14px 0}
+.err{color:var(--flag);font-size:14px;min-height:1.2em;margin-bottom:8px}
+.fine{font-size:13px;color:var(--muted);margin-top:10px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+.guide{margin-top:88px;padding-top:56px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr;gap:44px}
+@media (min-width:900px){.guide{grid-template-columns:1fr 1fr;column-gap:56px}}
+.guide p{margin-top:12px;max-width:36em}
+.guide ul{margin:12px 0 0;padding-left:20px;max-width:36em}
+.guide li{margin:6px 0}
+.cta{margin-top:72px;padding:36px;background:var(--panel);border-radius:4px}
+.cta p{margin-top:10px;max-width:36em;color:var(--muted)}
+.sub{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;max-width:520px}
+.sub input[type=email]{flex:1 1 220px;padding:13px 14px;border:1px solid var(--line);border-radius:6px;background:var(--paper)}
+.formmsg{flex-basis:100%;font-size:14px;min-height:1.3em;color:var(--muted)}
+.formmsg.err{color:var(--flag)}
+footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+
+.print-only{display:none}
+@media print{
+  body{font-size:12px;background:#fff;color:#000}
+  .no-print,.export,.guide,.cta,footer,.chart .tip{display:none !important}
+  .print-only{display:block}
+  .calc{display:block;margin-top:16px}
+  .inputs{position:static;border:1px solid #999;padding:12px}
+  .kpi dd{font-size:26px}
+  .block{margin-top:20px;break-inside:avoid}
+  h1{font-size:28px}
+}
+.faq h3{font-family:var(--serif);font-size:21px;font-weight:500;margin-top:26px;line-height:1.3}
+.faq p{margin-top:8px;max-width:38em;color:var(--muted)}
+.updated{margin-top:44px;font-size:14px;color:var(--muted)}
+.updated a{color:inherit}
+.guide-faq{margin-top:72px;padding-top:44px;border-top:1px solid var(--line)}
+.guide-faq h2{font-size:clamp(26px,3.4vw,34px)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <a class="mark" href="/">VC10X</a>
+    <small>For families and investors</small>
+  </header>
+
+  <main>
+    <h1>Advisor fee calculator</h1>
+    <p class="lede no-print">What is your wealth manager really costing you? Enter your portfolio, return and fees to see the dollars you pay, the growth you give up, and what a lower or flat fee would change.</p>
+    <p class="print-only muted" id="printed"></p>
+
+    <div class="calc">
+      <form class="inputs" id="f" autocomplete="off" onsubmit="return false">
+        <h2>Your portfolio</h2>
+        <fieldset class="group">
+          <legend>Portfolio</legend>
+          <div class="field"><label for="port">Portfolio today</label><div class="unit"><span>$</span><input id="port" inputmode="decimal" value="10"><span>M</span></div></div>
+          <div class="field"><label for="ret">Return before fees<small>a year</small></label><div class="unit"><input id="ret" inputmode="decimal" value="6"><span>%</span></div></div>
+          <div class="field"><label for="years">Time horizon</label><div class="unit"><input id="years" inputmode="numeric" value="20"><span>yrs</span></div></div>
+        </fieldset>
+        <fieldset class="group">
+          <legend>What you pay now</legend>
+          <div class="field"><label for="fee">Advisory fee<small>a year, % of assets</small></label><div class="unit"><input id="fee" inputmode="decimal" value="1"><span>%</span></div></div>
+          <div class="field"><label for="exp">Fund and product costs<small>a year, % of assets</small></label><div class="unit"><input id="exp" inputmode="decimal" value="0.25"><span>%</span></div></div>
+        </fieldset>
+        <fieldset class="group" style="margin-bottom:0">
+          <legend>Compare with</legend>
+          <div class="field wide"><label for="mode">Alternative</label><div class="unit"><select id="mode"><option value="pct">Lower % fee</option><option value="flat">Flat annual fee</option><option value="none">No advisory fee</option></select></div></div>
+          <div class="field" id="altrow"><label for="alt">Alternative fee<small>a year, % of assets</small></label><div class="unit"><input id="alt" inputmode="decimal" value="0.5"><span>%</span></div></div>
+          <div class="field hide" id="flatrow"><label for="flat">Flat fee<small>a year</small></label><div class="unit"><span>$</span><input id="flat" inputmode="decimal" value="50"><span>K</span></div></div>
+        </fieldset>
+        <p class="err no-print" id="inerr" role="alert"></p>
+      </form>
+
+      <div id="out" aria-live="polite">
+        <dl class="kpis">
+          <div class="kpi"><dt>Fees you'll pay</dt><dd id="k-paid"></dd><p id="k-paid-p"></p></div>
+          <div class="kpi"><dt>What fees cost you, including lost growth</dt><dd id="k-lost"></dd><p id="k-lost-p"></p></div>
+          <div class="kpi"><dt>Fees this year</dt><dd id="k-yr"></dd><p id="k-yr-p"></p></div>
+          <div class="kpi"><dt id="k-alt-t">With the alternative</dt><dd id="k-alt"></dd><p id="k-alt-p"></p></div>
+        </dl>
+
+        <section class="block">
+          <h3>Portfolio value over time</h3>
+          <p class="muted" id="chart-cap"></p>
+          <div class="chart" id="chart"><div class="tip" id="tip"></div></div>
+          <div class="legend"><span><i style="background:var(--ink)"></i>Your current fees</span><span><i style="background:var(--brass)"></i><span id="lg-alt">Alternative</span></span></div>
+          <details>
+            <summary>Show as a table</summary>
+            <table id="valtable"></table>
+          </details>
+        </section>
+
+        <section class="export no-print">
+          <h3>Save this comparison</h3>
+          <p class="muted" style="margin-top:6px;font-size:15px">Download the year-by-year values and fees, or save a PDF to take to your next advisor review.</p>
+          <div class="actions">
+            <button class="btn" type="button" data-act="csv">Download spreadsheet (CSV)</button>
+            <button class="btn ghost" type="button" data-act="pdf">Save as PDF</button>
+            <button class="btn ghost" type="button" id="copy">Copy link to this scenario</button>
+          </div>
+          <p class="fine" id="copied" role="status"></p>
+          <div class="gate" id="gate" hidden>
+            <h3 style="font-size:19px">Where should we send updates?</h3>
+            <p class="muted" style="font-size:15px;margin-top:4px">Your download starts right after. You'll only be asked once.</p>
+            <div class="hp" aria-hidden="true"><label>Leave this empty <input id="website" tabindex="-1" autocomplete="off"></label></div>
+            <div class="row" style="margin-top:14px">
+              <label>First name<input id="nm" autocomplete="given-name"></label>
+              <label>Email<input id="em" type="email" autocomplete="email"></label>
+              <label>You are<select id="rl"><option value="">Choose one</option><option>Family principal</option><option>Founder after a sale</option><option>Family office executive</option><option>Advisor to families</option><option>Individual investor</option></select></label>
+            </div>
+            <label class="check"><input type="checkbox" id="ok" checked> Send me the VC10X newsletter: how families and their offices actually invest. Unsubscribe any time.</label>
+            <p class="err" id="gerr" role="alert"></p>
+            <button class="btn" type="button" id="unlock">Continue to download</button>
+            <p class="fine">Your numbers stay in your browser. We never see or store them.</p>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="guide">
+      <section>
+        <h2>How advisory fees compound</h2>
+        <p>A fee charged as a percentage of assets is taken every year, from a portfolio that would otherwise have kept growing. The dollars you pay are only part of the cost. The growth those dollars would have earned is the rest, and over 20 or 30 years it can be larger than the fees themselves.</p>
+      </section>
+      <section>
+        <h2>Percentage or flat fee?</h2>
+        <p>A percentage fee rises as your portfolio grows, even if the work doesn't. A flat or retainer fee stays the same, which usually favours larger portfolios. Many firms also step their percentage down at higher asset levels, so ask where your breakpoints are.</p>
+      </section>
+      <section>
+        <h2>What to ask your advisor</h2>
+        <ul>
+          <li>What is my total annual cost in dollars, including fund and product fees?</li>
+          <li>Are you paid anything by the funds or products you recommend?</li>
+          <li>Do you act as a fiduciary on all of my assets?</li>
+          <li>Where are the breakpoints in your fee schedule?</li>
+        </ul>
+      </section>
+      <section>
+        <h2>What this calculator assumes</h2>
+        <ul>
+          <li>A steady return each year, before fees. Real returns vary, and so will the gap.</li>
+          <li>Fees are charged once a year on the portfolio's value after that year's growth.</li>
+          <li>No withdrawals, contributions or taxes.</li>
+          <li>A flat fee stays the same every year, and can't exceed the portfolio's value.</li>
+        </ul>
+        <p class="muted">This is a planning tool, not investment advice. Your advisory agreement governs the real numbers.</p>
+      </section>
+    </div>
+
+    <div class="guide-faq no-print">
+    <section class="faq">
+      <h2>Frequently asked questions</h2>
+      <h3>How much should I pay a financial advisor?</h3>
+      <p>Around 1% of assets a year is common for smaller portfolios, often falling on a sliding scale as assets grow. Larger families often pay less as a percentage, or a flat or retainer fee. What matters is the total cost, including fund and product fees, and what you get for it.</p>
+      <h3>How much does a 1% advisory fee cost over 20 years?</h3>
+      <p>On $1M growing at 6% a year before fees, a 1% annual fee leaves you with about $2.62M after 20 years instead of about $3.21M, roughly 18% less. The gap widens the longer the money compounds.</p>
+      <h3>Is a flat fee better than a percentage of assets?</h3>
+      <p>It can be for larger portfolios, because a flat fee doesn't rise as your assets grow. Compare the total cost over time, and check what services each option includes.</p>
+      <h3>What fees should I ask my wealth manager about?</h3>
+      <p>The advisory fee, fund and product expense ratios, platform or custody fees, performance fees on private funds, and any commissions or revenue sharing. Ask for the total in dollars, in writing.</p>
+      <h3>Are advisory fees negotiable?</h3>
+      <p>Often, especially for larger portfolios or when you consolidate assets with one firm. Fee schedules commonly step down as assets grow, so ask where your breakpoints are.</p>
+    </section>
+    <p class="updated">From <a href="/">VC10X</a>, hosted by <a href="/#about">Prashant Choubey</a>. Updated <time datetime="2026-10-03">3 October 2026</time>.</p>
+    </div>
+
+    <div class="cta no-print">
+      <h2>How families actually invest</h2>
+      <p>Every week, the VC10X newsletter shares how families, family offices and CIOs structure, staff and invest, from 300+ conversations with allocators.</p>
+      <form class="sub" id="nl" novalidate>
+        <label class="hp" aria-hidden="true">Leave this empty <input name="website" tabindex="-1" autocomplete="off"></label>
+        <input type="email" name="email" placeholder="Your email" aria-label="Email address" autocomplete="email" required>
+        <button class="btn" type="submit">Get the newsletter</button>
+        <p class="formmsg" role="status"></p>
+      </form>
+      <p style="margin-top:18px"><a href="/family-office-readiness/">Take the Family Office Readiness Audit</a> to see whether a wealth manager, multi-family office or your own office fits your family best.</p>
+    </div>
+  </main>
+
+  <footer>© <span id="yr">2026</span> <a href="/">VC10X</a>. Indicative only. Not legal, tax or investment advice.</footer>
+</div>
+
+<script>
+const SUBSCRIBE_ENDPOINT = "/api/subscribe";
+const FORM_NAME = "advisor-fee-calculator";
+const LEAD_KEY = "vc10x-lead";
+const IDS = ["port","ret","years","fee","exp","alt","flat"];
+const LIMITS = {port:[0.01,100000],ret:[-10,30],years:[1,50],fee:[0,5],exp:[0,5],alt:[0,5],flat:[0,100000]};
+const $ = id => document.getElementById(id);
+$("yr").textContent = new Date().getFullYear();
+
+const UTM = (() => {
+  try {
+    const q = new URLSearchParams(location.search), u = {};
+    ["utm_source","utm_medium","utm_campaign","utm_content"].forEach(k => { if (q.get(k)) u[k] = q.get(k).slice(0,100); });
+    if (!Object.keys(u).length && document.referrer && !document.referrer.includes(location.host)) u.referrer = document.referrer.slice(0,200);
+    return u;
+  } catch(e) { return {}; }
+})();
+
+// Scenario lives in the URL hash so a comparison can be saved or shared as a link.
+try {
+  const h = new URLSearchParams(location.hash.slice(1));
+  IDS.forEach(k => { if (h.has(k) && isFinite(parseFloat(h.get(k)))) $(k).value = h.get(k); });
+  if (["pct","flat","none"].includes(h.get("mode"))) $("mode").value = h.get("mode");
+} catch(e) {}
+
+const money = m => {           // m is in $M
+  const a = Math.abs(m), s = m < 0 ? "-" : "";
+  if (a < 0.0005) return "$0";
+  if (a >= 1000) return s + "$" + (a/1000).toFixed(a >= 10000 ? 0 : 2) + "B";
+  if (a >= 1) return s + "$" + (a >= 100 ? a.toFixed(0) : a.toFixed(a >= 10 ? 1 : 2)) + "M";
+  return s + "$" + Math.round(a*1000) + "K";
+};
+const pct = (v, d=1) => (v*100).toFixed(d) + "%";
+
+function read(){
+  const v = {}, errs = [];
+  IDS.forEach(k => {
+    let n = parseFloat(String($(k).value).replace(/[, $%]/g,""));
+    const [lo, hi] = LIMITS[k];
+    if (!isFinite(n)) { n = lo; errs.push(k); }
+    v[k] = Math.min(hi, Math.max(lo, n));
+  });
+  v.years = Math.round(v.years);
+  v.mode = $("mode").value;
+  return {v, errs};
+}
+
+// One path per fee scenario. feeFn returns the advisory fee in $M for a year, given the value after growth.
+function path(v, feeFn){
+  let V = v.port, adv = 0, prod = 0; const rows = [{y:0, value:V, fee:0}];
+  for (let y = 1; y <= v.years; y++) {
+    V = V * (1 + v.ret/100);
+    const a = Math.min(V, feeFn(V)), p = Math.min(V - a, V * v.exp/100);
+    V -= a + p; adv += a; prod += p;
+    rows.push({y, value:V, fee:a + p, adv:a, prod:p});
+  }
+  return {end:V, adv, prod, total:adv + prod, rows};
+}
+function model(v){
+  const cur = path(v, V => V * v.fee/100);
+  const alt = path(v, v.mode === "pct" ? (V => V * v.alt/100) : v.mode === "flat" ? (() => v.flat/1000) : (() => 0));
+  const gross = v.port * Math.pow(1 + v.ret/100, v.years);
+  return {cur, alt, gross};
+}
+
+function chart(v, M){
+  const W = 640, H = 240, pad = {l:56, r:10, t:14, b:34};
+  const all = M.cur.rows.concat(M.alt.rows).map(r => r.value);
+  const max = Math.max(...all) || 1, step = niceStep(max / 4), top = Math.ceil(max / step) * step;
+  const iw = W - pad.l - pad.r, ih = H - pad.t - pad.b, n = v.years;
+  const x = y => pad.l + (y / n) * iw, y = val => pad.t + ih - (val / top) * ih;
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Portfolio value each year under your current fees and the alternative">`;
+  for (let g = 0; g <= top + 1e-9; g += step) {
+    s += `<line x1="${pad.l}" x2="${W-pad.r}" y1="${y(g)}" y2="${y(g)}" stroke="var(--line)" stroke-width="1"/>`;
+    s += `<text class="ax" x="${pad.l-8}" y="${y(g)+4}" text-anchor="end">${money(g)}</text>`;
+  }
+  const tickEvery = n <= 10 ? 1 : n <= 25 ? 5 : 10;
+  for (let t = 0; t <= n; t += tickEvery) s += `<text class="ax" x="${x(t)}" y="${H-12}" text-anchor="middle">${t}</text>`;
+  s += `<text class="ax" x="${W-pad.r}" y="${H}" text-anchor="end">Years</text>`;
+  const line = (rows, color) => `<path d="${rows.map((r,i) => (i ? "L" : "M") + x(r.y).toFixed(1) + "," + y(r.value).toFixed(1)).join(" ")}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+  s += line(M.alt.rows, "var(--brass)") + line(M.cur.rows, "var(--ink)");
+  s += `<line id="xh" x1="0" x2="0" y1="${pad.t}" y2="${pad.t+ih}" stroke="var(--muted)" stroke-width="1" opacity="0"/>`;
+  s += `<circle id="d1" r="4" fill="var(--ink)" stroke="var(--paper)" stroke-width="2" opacity="0"/><circle id="d2" r="4" fill="var(--brass)" stroke="var(--paper)" stroke-width="2" opacity="0"/>`;
+  s += `<rect x="${pad.l}" y="${pad.t}" width="${iw}" height="${ih}" fill="transparent" id="hit"/></svg>`;
+  const box = $("chart"), tip = $("tip");
+  box.innerHTML = s; box.appendChild(tip);
+  const svg = box.querySelector("svg"), hit = box.querySelector("#hit");
+  const show = ev => {
+    const p = ev.touches ? ev.touches[0] : ev, b = svg.getBoundingClientRect();
+    const sx = (p.clientX - b.left) / b.width * W;
+    const yr = Math.max(0, Math.min(n, Math.round((sx - pad.l) / iw * n)));
+    const c = M.cur.rows[yr], a = M.alt.rows[yr];
+    svg.querySelector("#xh").setAttribute("x1", x(yr)); svg.querySelector("#xh").setAttribute("x2", x(yr)); svg.querySelector("#xh").setAttribute("opacity", 1);
+    [["#d1", c], ["#d2", a]].forEach(([id, r]) => { const d = svg.querySelector(id); d.setAttribute("cx", x(yr)); d.setAttribute("cy", y(r.value)); d.setAttribute("opacity", 1); });
+    tip.textContent = `Year ${yr}: ${money(c.value)} now · ${money(a.value)} alternative`;
+    tip.style.left = Math.min(b.width - 90, Math.max(90, x(yr) / W * b.width)) + "px";
+    tip.style.top = (y(Math.max(c.value, a.value)) / H * b.height - 10) + "px";
+    tip.style.opacity = 1;
+  };
+  hit.addEventListener("mousemove", show);
+  hit.addEventListener("touchstart", show, {passive:true});
+  hit.addEventListener("mouseleave", () => { tip.style.opacity = 0; ["#xh","#d1","#d2"].forEach(id => svg.querySelector(id).setAttribute("opacity", 0)); });
+}
+function niceStep(x){ const p = Math.pow(10, Math.floor(Math.log10(x || 1))); const n = x / p; return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10) * p; }
+
+function altLabel(v){ return v.mode === "pct" ? `A ${v.alt}% fee` : v.mode === "flat" ? `A flat ${money(v.flat/1000)} fee` : "No advisory fee"; }
+
+function render(){
+  const {v, errs} = read();
+  $("inerr").textContent = errs.length ? "Some fields aren't numbers, so we used the lowest allowed value." : "";
+  $("altrow").classList.toggle("hide", v.mode !== "pct");
+  $("flatrow").classList.toggle("hide", v.mode !== "flat");
+  const M = model(v), lost = M.gross - M.cur.end, y1 = M.cur.rows[1], yl = M.cur.rows[v.years];
+
+  $("k-paid").textContent = money(M.cur.total);
+  $("k-paid-p").innerHTML = `Over ${v.years} years: <b>${money(M.cur.adv)}</b> in advisory fees and <b>${money(M.cur.prod)}</b> in fund and product costs.`;
+  $("k-lost").textContent = money(lost);
+  $("k-lost-p").innerHTML = `Your portfolio ends at <b>${money(M.cur.end)}</b> instead of <b>${money(M.gross)}</b> with no fees, <b>${pct(lost / M.gross)}</b> less.`;
+  $("k-yr").textContent = money(y1.fee);
+  $("k-yr-p").innerHTML = `Rising to <b>${money(yl.fee)}</b> a year by year ${v.years}, as fees grow with the portfolio.`;
+  const diff = M.alt.end - M.cur.end;
+  $("k-alt-t").textContent = altLabel(v);
+  $("k-alt").textContent = (diff >= 0 ? "+" : "") + money(diff);
+  $("k-alt-p").innerHTML = diff >= 0
+    ? `More after ${v.years} years. You'd pay <b>${money(M.alt.total)}</b> in total fees instead of ${money(M.cur.total)}.`
+    : `Less after ${v.years} years. The alternative costs more than what you pay now at this portfolio size.`;
+  $("lg-alt").textContent = altLabel(v);
+  $("chart-cap").textContent = `${money(v.port)} growing at ${v.ret}% a year before fees, over ${v.years} years.`;
+  chart(v, M);
+
+  const step = v.years <= 10 ? 1 : 5, ys = [];
+  for (let y = step; y < v.years; y += step) ys.push(y); ys.push(v.years);
+  $("valtable").innerHTML = `<thead><tr><th>Year</th><th>Value now</th><th>Fees that year</th><th>Alternative value</th><th>Difference</th></tr></thead><tbody>` +
+    ys.map(y => { const c = M.cur.rows[y], a = M.alt.rows[y]; return `<tr><td>Year ${y}</td><td>${money(c.value)}</td><td>${money(c.fee)}</td><td>${money(a.value)}</td><td>${money(a.value - c.value)}</td></tr>`; }).join("") + `</tbody>`;
+
+  $("printed").textContent = `${money(v.port)} · ${v.ret}% return before fees · ${v.years} years · ${v.fee}% advisory + ${v.exp}% product costs vs ${altLabel(v).toLowerCase()} · vc10x.com/advisor-fee-calculator`;
+  const hash = new URLSearchParams(); IDS.forEach(k => hash.set(k, v[k])); hash.set("mode", v.mode);
+  history.replaceState(null, "", "#" + hash);
+  return {v, M};
+}
+IDS.forEach(k => $(k).addEventListener("input", render));
+$("mode").addEventListener("change", render);
+render();
+
+/* ---------- Save, export and the email ask ---------- */
+function csv(){
+  const {v, M} = render();
+  const q = s => `"${String(s).replace(/"/g,'""')}"`;
+  const L = [["VC10X advisor fee calculator"], ["vc10x.com/advisor-fee-calculator/"], [],
+    ["Inputs"], ["Portfolio today ($M)", v.port], ["Return before fees (%)", v.ret], ["Years", v.years],
+    ["Advisory fee (%)", v.fee], ["Fund and product costs (%)", v.exp], ["Alternative", altLabel(v)], [],
+    ["Summary ($M)"], ["Ending value, current fees", M.cur.end.toFixed(3)], ["Ending value, no fees", M.gross.toFixed(3)],
+    ["Ending value, alternative", M.alt.end.toFixed(3)], ["Total fees, current", M.cur.total.toFixed(3)], ["Total fees, alternative", M.alt.total.toFixed(3)], [],
+    ["Year", "Value, current ($M)", "Advisory fee ($M)", "Product costs ($M)", "Value, alternative ($M)", "Fees, alternative ($M)"]];
+  M.cur.rows.slice(1).forEach((c, i) => { const a = M.alt.rows[i + 1]; L.push([c.y, c.value.toFixed(3), c.adv.toFixed(3), c.prod.toFixed(3), a.value.toFixed(3), a.fee.toFixed(3)]); });
+  L.push([], ["Indicative only. Not investment advice."]);
+  const blob = new Blob([L.map(r => r.map(q).join(",")).join("\n")], {type:"text/csv"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = `advisor-fees-${v.port}M.csv`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+const ACTIONS = {csv, pdf: () => window.print()};
+const lead = () => { try { return JSON.parse(localStorage.getItem(LEAD_KEY)); } catch(e) { return null; } };
+let pending = null;
+document.querySelectorAll("[data-act]").forEach(b => b.addEventListener("click", () => {
+  const act = b.dataset.act;
+  if (lead()) return ACTIONS[act]();
+  pending = act;
+  $("gate").hidden = false;
+  $("unlock").textContent = act === "csv" ? "Continue to download" : "Continue to PDF";
+  $("nm").focus();
+}));
+$("unlock").addEventListener("click", async () => {
+  const nm = $("nm").value.trim(), em = $("em").value.trim(), rl = $("rl").value, er = $("gerr"), btn = $("unlock");
+  if (!nm) { er.textContent = "Add your first name to continue."; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { er.textContent = "Enter a valid email address, like name@example.com."; return; }
+  if (!rl) { er.textContent = "Choose the option that describes you best."; return; }
+  er.textContent = "";
+  const ok = $("ok").checked;
+  if (ok) {
+    btn.disabled = true; const label = btn.textContent; btn.textContent = "One moment";
+    try {
+      await fetch(SUBSCRIBE_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({form: FORM_NAME, email: em, firstName: nm, role: rl, website: $("website").value, ...UTM})});
+    } catch(e) { /* never block the download on a network error */ }
+    btn.disabled = false; btn.textContent = label;
+  }
+  try { localStorage.setItem(LEAD_KEY, JSON.stringify({ok, t: Date.now()})); } catch(e) {}
+  $("gate").hidden = true;
+  if (pending) ACTIONS[pending]();
+});
+$("copy").addEventListener("click", async () => {
+  render();
+  try { await navigator.clipboard.writeText(location.href); $("copied").textContent = "Link copied. It opens with these numbers filled in."; }
+  catch(e) { $("copied").textContent = "Copy this link: " + location.href; }
+});
+$("nl").addEventListener("submit", async e => {
+  e.preventDefault();
+  const f = e.target, msg = f.querySelector(".formmsg"), btn = f.querySelector("button"), email = f.email.value.trim();
+  msg.classList.remove("err");
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = "Enter a valid email address, like name@example.com."; msg.classList.add("err"); return; }
+  btn.disabled = true;
+  try {
+    const r = await fetch(SUBSCRIBE_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({form: FORM_NAME + "-footer", email, website: f.website.value, ...UTM})});
+    if (!r.ok) throw new Error(r.status);
+    msg.textContent = "Subscribed. New issues will land in your inbox."; f.email.value = "";
+  } catch(err) { msg.textContent = "That didn't go through. Try again in a moment."; msg.classList.add("err"); }
+  btn.disabled = false;
+});
+</script>
+</body>
+</html>
