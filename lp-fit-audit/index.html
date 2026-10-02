@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LP Fit Audit: Which LPs Should Your Venture Fund Raise From? | VC10X</title>
+<meta name="description" content="Fourteen questions on your fund, track record, network and strategy. See which of eight LP types fit your venture fund best, from angels and family offices to endowments, funds of funds and DFIs.">
+<link rel="canonical" href="https://vc10x.com/lp-fit-audit/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VC10X">
+<meta property="og:url" content="https://vc10x.com/lp-fit-audit/">
+<meta property="og:title" content="The LP Fit Audit">
+<meta property="og:description" content="Which LPs should you raise from? Eight LP types ranked by fit for your fund, with a playbook for your best three. Five minutes.">
+<meta property="og:image" content="https://vc10x.com/lp-fit-audit/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The LP Fit Audit">
+<meta name="twitter:description" content="Which LPs should you raise from? Eight LP types ranked by fit for your fund.">
+<meta name="twitter:image" content="https://vc10x.com/lp-fit-audit/og.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "WebApplication", "name": "The LP Fit Audit", "url": "https://vc10x.com/lp-fit-audit/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "VC10X", "url": "https://vc10x.com/"}}
+</script>
+<!-- Analytics: paste your Plausible or Google Analytics snippet here -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FFFFFF; --panel:#F6F6F6; --ink:#000000; --muted:#5C5C5C; --line:#D9D9D9;
+  --green:#000000; --green-soft:#F2F2F2; --brass:#3FDCFF; --flag:#C0392B; --flag-soft:#FBE9E7;
+  --on-green:#FFFFFF;
+  --serif:"Newsreader", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --sans:"Hanken Grotesk", "Helvetica Neue", Arial, system-ui, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#000000; --panel:#111111; --ink:#FFFFFF; --muted:#A6A6A6; --line:#2B2B2B;
+  --green:#FFFFFF; --green-soft:#1C1C1C; --brass:#3FDCFF; --flag:#FF7A6B; --flag-soft:#3A1512;
+  --on-green:#000000;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#000000; --panel:#111111; --ink:#FFFFFF; --muted:#A6A6A6; --line:#2B2B2B;
+  --green:#FFFFFF; --green-soft:#1C1C1C; --brass:#3FDCFF; --flag:#FF7A6B; --flag-soft:#3A1512;
+  --on-green:#000000;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:28px 22px 64px}
+header.bar{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:40px}
+.mark{font-family:var(--serif);font-weight:600;font-size:20px;letter-spacing:.01em;color:var(--ink);text-decoration:none}
+.bar small{color:var(--muted);font-size:14px}
+h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;margin:0}
+h1{font-size:clamp(38px,5.4vw,52px);line-height:1.04}
+h2{font-size:clamp(26px,4vw,34px);line-height:1.15}
+h3{font-size:22px;line-height:1.25}
+p{margin:0}
+.lede{font-family:var(--serif);font-size:21px;line-height:1.5;color:var(--ink);max-width:36em;margin-top:22px}
+.muted{color:var(--muted)}
+button,input,select{font:inherit;color:inherit}
+.btn{display:inline-block;background:var(--green);color:var(--on-green);border:0;border-radius:6px;padding:14px 26px;font-weight:600;font-size:16px;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;box-shadow:0 0 0 5px var(--brass)}
+
+/* Scorecard: one row per area, 0-100 scale in quartile segments */
+.scard{font-variant-numeric:tabular-nums}
+.shead{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-bottom:8px;border-bottom:1px solid var(--ink)}
+.srow{display:grid;grid-template-columns:1fr auto;gap:8px 12px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line)}
+.srow .lab{font-size:14px;line-height:1.3}
+.srow .val{font-size:15px;font-weight:600}
+.srow .bar{grid-column:1/-1;position:relative;height:6px;border-radius:3px;overflow:hidden;background:repeating-linear-gradient(90deg,var(--line) 0 calc(25% - 2px),transparent calc(25% - 2px) 25%)}
+.srow .fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:3px;background:var(--ink);transition:width 1s cubic-bezier(.2,.7,.2,1)}
+.srow.weak .fill{background:var(--brass)}
+.srow .flag{display:inline-block;margin-left:8px;padding:1px 6px;border-radius:3px;background:var(--brass);color:#000;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;vertical-align:1px}
+.sfoot{display:flex;justify-content:space-between;margin-top:8px;font-size:11px;color:var(--muted)}
+@media (prefers-reduced-motion: reduce){.srow .fill{transition:none}}
+
+.intro-grid{display:grid;grid-template-columns:1fr;gap:48px;margin-top:8px}
+.facts{display:flex;flex-wrap:wrap;gap:10px 28px;margin:28px 0 32px;color:var(--muted);font-size:15px}
+.facts span b{color:var(--ink);font-weight:600}
+
+/* Question screen */
+.progress{display:flex;gap:6px;margin-bottom:10px}
+.progress div{flex:1;height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--brass);width:0;transition:width .3s}
+.qmeta{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-bottom:34px}
+.qtext{font-family:var(--serif);font-size:clamp(24px,3.6vw,31px);line-height:1.25;font-weight:500;max-width:28em}
+.qhint{margin-top:12px;color:var(--muted);font-size:15px;max-width:40em}
+.options{list-style:none;padding:0;margin:30px 0 0;display:grid;gap:10px}
+.opt{width:100%;text-align:left;display:flex;gap:14px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:16px 18px;cursor:pointer;font-size:16px;line-height:1.45}
+.opt:hover{border-color:var(--green)}
+.opt .dot{flex:none;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--muted);margin-top:2px}
+.opt[aria-checked="true"]{border-color:var(--green);background:var(--green-soft)}
+.opt[aria-checked="true"] .dot{border-color:var(--green);background:radial-gradient(var(--green) 45%,transparent 50%)}
+.qnav{display:flex;justify-content:space-between;margin-top:28px}
+.link{background:none;border:0;padding:6px 0;color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-size:15px}
+.link:disabled{opacity:.35;cursor:default}
+
+/* Results */
+.score-row{display:flex;align-items:flex-end;gap:22px;flex-wrap:wrap;margin:10px 0 8px}
+.score{font-family:var(--serif);font-size:clamp(88px,16vw,132px);line-height:.85;font-weight:500;letter-spacing:-.03em}
+.score small{font-size:.28em;color:var(--muted);letter-spacing:0;margin-left:4px}
+.tier{padding-bottom:10px}
+.tier h2{font-size:30px}
+.tier p{color:var(--muted);max-width:26em;margin-top:6px}
+.flagcount{display:inline-block;margin-top:30px;background:var(--flag-soft);color:var(--flag);padding:8px 14px;border-radius:4px;font-weight:600;font-size:15px}
+section.block{margin-top:52px}
+.gate{margin-top:44px;background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--brass);border-radius:4px;padding:28px}
+.gate ul{margin:16px 0 22px;padding-left:20px;color:var(--ink)}
+.gate li{margin:4px 0}
+.field{display:grid;gap:6px;margin-bottom:14px}
+.field label{font-size:14px;font-weight:600}
+.field input,.field select{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--muted);margin:4px 0 20px}
+.check input{margin-top:4px}
+.err{color:var(--flag);font-size:14px;margin-bottom:10px;min-height:1em}
+.fine{font-size:13px;color:var(--muted);margin-top:14px}
+.flags{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:10px}
+.flags li{border-left:3px solid var(--flag);padding:6px 0 6px 16px}
+.plan{display:grid;gap:34px;margin-top:22px}
+.plan ol{margin:12px 0 0;padding-left:22px}
+.plan li{margin:8px 0;max-width:40em}
+.plan .why{color:var(--muted);margin-top:6px;max-width:40em}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.pitch{margin-top:56px;padding-top:28px;border-top:1px solid var(--line)}
+footer{margin-top:64px;font-size:13px;color:var(--muted)}
+.hidden{display:none}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.btn:disabled{opacity:.6;cursor:wait}
+@media (min-width:760px){.intro-grid{grid-template-columns:1.25fr 1fr;align-items:end}}
+.learn{margin-top:80px;padding-top:44px;border-top:1px solid var(--line)}
+.learn section + section{margin-top:44px}
+.learn p{margin-top:12px;max-width:38em}
+.learn dl{margin:18px 0 0}
+.learn dt{font-family:var(--serif);font-size:21px;font-weight:500;margin-top:18px}
+.learn dd{margin:4px 0 0;color:var(--muted);max-width:38em}
+.learn ul{margin:14px 0 0;padding-left:20px}
+.learn li{margin:6px 0}
+a.btn{text-decoration:none}
+.fitcard{padding:28px 0;border-top:1px solid var(--line)}
+.fitcard:first-child{border-top:0;padding-top:8px}
+.fitcard .rank{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.fitcard h2{margin-top:6px}
+.fitcard h3{font-family:var(--sans);font-size:15px;font-weight:600;margin-top:22px}
+.fitcard p{margin-top:8px;max-width:40em}
+.fitcard p.why{color:var(--muted)}
+.fitcard ol{margin:10px 0 0;padding-left:22px}
+.fitcard li{margin:6px 0;max-width:40em}
+.facts2{display:flex;gap:12px 40px;flex-wrap:wrap;margin:18px 0 0}
+.facts2 dt{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.facts2 dd{margin:4px 0 0;font-weight:600}
+.caveat{border-left:3px solid var(--brass);padding-left:12px;color:var(--muted);font-size:15px;margin-top:18px !important}
+.flags.soft li{border-left-color:var(--line);color:var(--muted)}
+.flags.soft li b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <a class="mark" href="/">VC10X</a>
+    <small>For venture fund managers</small>
+  </header>
+  <main id="app" aria-live="polite"></main>
+  <div class="learn" id="learn">
+    <section>
+      <h2>The eight LP types we rank</h2>
+      <p>Fourteen questions on your fund, track record, network, strategy, operations and timing. Each answer counts toward the LP types it matters to, and you get a ranked fit score for each.</p>
+      <dl>
+        <dt>Angels, operators and founders</dt><dd>Back people they know. Fast, flexible, and the most common first money into a Fund I.</dd>
+        <dt>Family offices</dt><dd>Flexible mandates and long horizons. Many back emerging managers for access, co-investment and learning.</dd>
+        <dt>Funds of funds and emerging manager programs</dt><dd>Their mandate is backing Fund I to III managers, so being early isn't held against you.</dd>
+        <dt>Endowments and foundations</dt><dd>Long-term capital that prizes differentiated, hard-to-access managers, and often re-ups for decades.</dd>
+        <dt>Pensions, insurers and sovereign funds</dt><dd>The largest pools of capital, but they need big checks that stay a small share of each fund.</dd>
+        <dt>Corporates and strategic LPs</dt><dd>Invest for insight and deal flow in their sector as much as for returns.</dd>
+        <dt>Wealth platforms, RIAs and feeder funds</dt><dd>Pool many individual investors into one LP line, giving you scale without dozens of small checks.</dd>
+        <dt>Development finance and government-backed LPs</dt><dd>Anchor funds in emerging markets and specific regions, often with development or ecosystem goals.</dd>
+      </dl>
+    </section>
+    <section>
+      <h2>Why LP fit matters</h2>
+      <p>Most raises stall because managers pitch the wrong LPs, not because the pitch is bad. A Fund I that spends six months in endowment diligence, or a $300M fund chasing $100K checks, burns time and relationships it will need later.</p>
+      <p>Knowing which LP types fit your fund today tells you where to spend the first hundred meetings, and which relationships to start building now for your next fund.</p>
+    </section>
+    <section>
+      <h2>Who it's for</h2>
+      <p>General partners and emerging managers planning a raise, from Fund I onward. It's most useful before you build your LP target list. Placement agents and advisors can use it to pressure-test a client's plan.</p>
+    </section>
+    <section>
+      <h2>Related from VC10X</h2>
+      <ul>
+        <li><a href="/fundraising-audit/">The Fundraising Readiness Audit</a>: are you ready for the questions LPs ask before they commit?</li>
+        <li><a href="/fund-economics-calculator/">Fund economics calculator</a>: model your fees, GP commit and the return you need before carry pays out.</li>
+        <li><a href="/#latest">The VC10X newsletter</a>: what LPs say about funds after the meeting ends.</li>
+      </ul>
+    </section>
+  </div>
+  <footer>Indicative only. Check sizes and timelines are typical ranges, not rules, and every LP has its own mandate. Not legal, tax or investment advice.</footer>
+</div>
+
+<script>
+const SUBSCRIBE_ENDPOINT = "/api/subscribe";
+
+/* ---------- LP types ---------- */
+const TYPES = [
+  {id:"ang", name:"Angels, operators and founders", short:"Angels and operators", check:"Often $25K to $500K", speed:"Weeks to a few months",
+   why:"Back people they know. Fast, flexible, and the most common first money into a Fund I.",
+   test:"Whether they trust you personally, and whether the fund gives them access they can't get on their own.",
+   how:["Start with founders you've backed and operators who've seen your judgement up close.",
+        "Set a clear minimum and a close date so small checks don't drag on.",
+        "Check investor-count and accreditation limits with fund counsel before you start. Dozens of small LPs add up quickly."]},
+  {id:"fo", name:"Family offices", short:"Family offices", check:"Often $250K to $5M", speed:"One to six months",
+   why:"Flexible mandates and long horizons. Many back emerging managers for access, co-investment and learning.",
+   test:"Thesis fit with the family's interests, your access, and whether you'll be a good partner for ten years.",
+   how:["Lead with introductions from families you already know. Family offices refer each other.",
+        "Offer co-investment where you can. It's often what tips the decision.",
+        "There's usually one decision-maker. Find out who it is in the first meeting."]},
+  {id:"fof", name:"Funds of funds and emerging manager programs", short:"Funds of funds", check:"Often $1M to $10M", speed:"Three to nine months",
+   why:"Their mandate is backing Fund I to III managers, so being early isn't held against you.",
+   test:"Attributable track record, a repeatable sourcing edge, and a portfolio construction model that matches your fund size.",
+   how:["Find the programs that invest at your fund size and stage, and qualify them before the first call.",
+        "Have a complete due diligence questionnaire and data room ready. They run an institutional process.",
+        "Ask what a typical first check looks like and whether they anchor."]},
+  {id:"endow", name:"Endowments and foundations", short:"Endowments", check:"Often $5M to $25M", speed:"Six to eighteen months",
+   why:"Long-term capital that prizes differentiated, hard-to-access managers, and often re-ups for decades.",
+   test:"Realized results you can be credited for, team stability, and why your strategy earns a place next to managers they already hold.",
+   how:["Build the relationship a fund before you need the money. Many meet you on Fund I and invest in Fund II or III.",
+        "Send a short quarterly update to the staff you've met, including the ones who passed.",
+        "Make your edge specific: a sector, a network or a stage others can't reach."]},
+  {id:"inst", name:"Pensions, insurers and sovereign funds", short:"Pensions and sovereigns", check:"Often $25M and up", speed:"Nine to eighteen months",
+   why:"The largest pools of capital, but they need big checks that stay a small share of each fund.",
+   test:"Fund size, several funds of history, institutional operations and approval from their consultant.",
+   how:["Usually a Fund III or later conversation. Before that, reach them through funds of funds or separately managed accounts.",
+        "Get to know the consultants and gatekeepers they rely on.",
+        "Expect side letters, detailed reporting standards and ESG questionnaires."]},
+  {id:"corp", name:"Corporates and strategic LPs", short:"Corporates", check:"Often $1M to $10M", speed:"Three to twelve months",
+   why:"Invest for insight and deal flow in their sector as much as for returns.",
+   test:"How closely your thesis tracks their strategy, and what information and access they'll get.",
+   how:["Target companies whose roadmap your portfolio touches.",
+        "Agree up front what information they receive, and protect founders from conflicts.",
+        "Find a champion beyond corporate development. Budgets move when strategy changes."]},
+  {id:"wealth", name:"Wealth platforms, RIAs and feeder funds", short:"Wealth platforms", check:"Often $1M to $20M, pooled", speed:"Three to nine months",
+   why:"Pool many individual investors into one LP line, giving you scale without dozens of small checks.",
+   test:"Brand, track record, and a story an advisor can explain to a client in two minutes.",
+   how:["Usually works once you have a recognizable name or strong prior fund numbers.",
+        "Expect platform fees and minimums, and model what they cost you.",
+        "Prepare client-ready materials, not just an LP deck."]},
+  {id:"dfi", name:"Development finance and government-backed LPs", short:"DFIs and public LPs", check:"Often $5M to $30M", speed:"Six to eighteen months",
+   why:"Anchor funds in emerging markets and specific regions, often with development or ecosystem goals.",
+   test:"Fit with their regional and impact mandate, governance standards, and whether their check will bring in other LPs.",
+   how:["Check each institution's mandate for your region, stage and sector before you apply.",
+        "Have an ESG policy and impact reporting ready.",
+        "Expect a long, documented process, and plan your first close around it."]}
+];
+
+/* ---------- Questions: each option adds points to the LP types it matters to ---------- */
+const QUESTIONS = [
+  {t:"Your fund", q:"Which fund are you raising?",
+   o:["Fund I","Fund II","Fund III","Fund IV or later"],
+   w:[{ang:3,fo:2,fof:2,corp:1},{fo:2,fof:3,endow:1,corp:1,wealth:1,ang:1,dfi:1},{fof:2,endow:3,wealth:2,inst:1,fo:1,dfi:1},{endow:3,inst:3,wealth:2,fof:1,dfi:1}]},
+  {t:"Your fund", q:"What's your target fund size?",
+   o:["Under $25M","$25M to $75M","$75M to $200M","Over $200M"],
+   w:[{ang:3,fo:2},{fo:2,fof:2,ang:1,corp:1,dfi:1},{fof:2,endow:2,fo:1,wealth:1,corp:1,dfi:2},{inst:3,endow:2,wealth:2,dfi:1}]},
+  {t:"Track record", q:"What track record can LPs attribute to you?",
+   hint:"Results you can be credited for, with references who'll confirm your role.",
+   o:["Realized exits with money returned to investors","Strong markups, few exits yet","An angel or operator record","Nothing attributable yet"],
+   w:[{endow:2,inst:2,fof:2,wealth:2,dfi:1},{fof:2,fo:1,endow:1,dfi:1},{ang:2,fo:1,fof:1},{ang:2,corp:1,fo:1}]},
+  {t:"Network", q:"Where are your strongest warm relationships?",
+   o:["Founders and operators","Family offices and wealthy individuals","Institutional LPs, consultants or funds of funds","Corporates in my sector"],
+   w:[{ang:3},{fo:3,ang:1,wealth:1},{fof:2,endow:2,inst:1},{corp:3}]},
+  {t:"Network", q:"Have LPs backed you, or a fund you were part of, before?",
+   o:["Yes, institutional LPs","Yes, family offices or individuals","Only friends and family","No"],
+   w:[{endow:2,fof:2,inst:1},{fo:2,wealth:1},{ang:2},{ang:1,fo:1}]},
+  {t:"Network", q:"How many LPs could you onboard and serve well?",
+   hint:"Every LP means onboarding, reporting and relationship time.",
+   o:["Fewer than 15, with larger checks","15 to 50","50 to 100","More than 100, through a platform or feeder"],
+   w:[{endow:1,inst:2,fof:1,dfi:1},{fo:2,fof:1,corp:1},{ang:2,fo:1},{wealth:3,ang:1}]},
+  {t:"Strategy", q:"How would you describe your strategy?",
+   o:["Sector specialist in an area large corporates care about","Sector specialist","Generalist with a regional or network edge","Generalist"],
+   w:[{corp:3,fof:1},{endow:2,fof:2,fo:1},{fo:2,ang:1,fof:1,dfi:1},{ang:1,fo:1,wealth:1}]},
+  {t:"Strategy", q:"What stage do you invest in?",
+   o:["Pre-seed and seed","Series A","Growth","Multi-stage"],
+   w:[{ang:2,fo:1,fof:2},{fof:1,endow:2,fo:1},{inst:2,wealth:2,fo:1},{inst:2,endow:1,wealth:1}]},
+  {t:"Strategy", q:"Where do you invest?",
+   o:["United States","Europe","India or other emerging markets","Global"],
+   w:[{endow:1,fof:1,ang:1},{dfi:2,fo:1,fof:1},{dfi:3,fo:1},{inst:1,wealth:1,fo:1}]},
+  {t:"Strategy", q:"Is impact part of your strategy?",
+   o:["Core to the thesis, with measured outcomes","We have a formal ESG policy","Informally","No"],
+   w:[{dfi:3,fo:2,endow:1},{inst:2,dfi:1,endow:1},{fo:1},{ang:1,corp:1}]},
+  {t:"Operations", q:"How institutional is your operation?",
+   hint:"Fund administrator, auditor, fund counsel, compliance policies and a completed due diligence questionnaire.",
+   o:["All in place","Most in place","Some in place","Not yet"],
+   w:[{endow:2,inst:3,fof:2,dfi:2},{fof:2,endow:1,fo:1,dfi:1},{fo:2,ang:1},{ang:3}]},
+  {t:"Operations", q:"What does your team look like?",
+   o:["Three or more partners with shared history","Two partners","A solo GP with a strong personal brand","A solo GP"],
+   w:[{endow:2,inst:2,fof:1},{fof:2,fo:1},{ang:2,wealth:1,fo:1},{ang:2,fo:1}]},
+  {t:"Operations", q:"What can you offer LPs beyond returns?",
+   o:["Co-investment rights","Sector insight and deal flow","Access to founders and my network","Nothing specific yet"],
+   w:[{fo:3,inst:1,endow:1},{corp:3},{ang:2,fo:1},{}]},
+  {t:"Timing", q:"When do you need a first close?",
+   o:["Within six months","In six to twelve months","In twelve to eighteen months","No fixed date"],
+   w:[{ang:2,fo:2,corp:1},{fo:1,fof:2,corp:1,wealth:1},{endow:2,inst:1,dfi:2},{endow:1,inst:1,dfi:1}]}
+];
+const TOPICS = [...new Set(QUESTIONS.map(q => q.t))];
+
+// Hard limits that a high raw score can't overcome. Each returns a reason when it applies.
+const CAPS = {
+  inst: (a) => (a[0] === 0 || a[1] <= 1) && {cap:25, why:"Most pensions and sovereign funds need a larger fund and several funds of history before they invest directly. Reach them later, or through a fund of funds."},
+  endow: (a) => a[0] === 0 && a[2] !== 0 && {cap:45, why:"Endowments rarely back a Fund I without realized results you can be credited for. Start the relationship now for Fund II or III."},
+  dfi: (a) => a[8] === 0 && {cap:20, why:"Development finance and government-backed LPs mostly invest in emerging markets and specific regions, not US-only funds."},
+  wealth: (a) => a[2] === 3 && {cap:30, why:"Wealth platforms need a track record or a name advisors can explain to their clients."},
+  ang: (a) => a[1] === 3 && {cap:40, why:"At this fund size, individual checks can't carry the raise on their own."}
+};
+const FIT = [
+  {min:65, name:"Strong fit"},
+  {min:45, name:"Possible fit"},
+  {min:0,  name:"Not yet"}
+];
+
+/* ---------- State ---------- */
+const KEY = "vc10x-lp-fit-audit";
+let S = {stage:"intro", i:0, a:Array(QUESTIONS.length).fill(null), lead:null};
+try { const saved = JSON.parse(localStorage.getItem(KEY)); if (saved && saved.a && saved.a.length===QUESTIONS.length) S = saved; } catch(e){}
+(function captureUTM(){
+  try {
+    const q = new URLSearchParams(location.search), u = {};
+    ["utm_source","utm_medium","utm_campaign","utm_content"].forEach(k => { if (q.get(k)) u[k] = q.get(k).slice(0,100); });
+    if (Object.keys(u).length) S.utm = u;
+    if (!S.utm && document.referrer && !document.referrer.includes(location.host)) S.utm = {referrer: document.referrer.slice(0,200)};
+  } catch(e){}
+})();
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+
+const $app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fitName = v => FIT.find(f => v >= f.min).name;
+
+function results(){
+  const got = {}, max = {};
+  TYPES.forEach(t => { got[t.id] = 0; max[t.id] = 0; });
+  QUESTIONS.forEach((q, k) => {
+    TYPES.forEach(t => { max[t.id] += Math.max(0, ...q.w.map(w => w[t.id] || 0)); });
+    const ans = S.a[k]; if (ans == null) return;
+    Object.entries(q.w[ans]).forEach(([id, pts]) => got[id] += pts);
+  });
+  const fit = {}, limits = {};
+  TYPES.forEach(t => {
+    let v = max[t.id] ? Math.round(got[t.id] / max[t.id] * 100) : 0;
+    const c = CAPS[t.id] && CAPS[t.id](S.a);
+    if (c && v > c.cap) { v = c.cap; limits[t.id] = c.why; } else if (c) limits[t.id] = c.why;
+    fit[t.id] = v;
+  });
+  const ranked = [...TYPES].sort((x, y) => fit[y.id] - fit[x.id]);
+  return {fit, limits, ranked, top: ranked.slice(0, 3), rest: ranked.slice(3)};
+}
+
+function scoreHTML(list, fit, {labels=true, mark=[], note=""} = {}){
+  const rows = list.map(t => {
+    const v = fit ? fit[t.id] : 0, top = mark.includes(t.id);
+    return `<div class="srow${top ? " weak" : ""}"><span class="lab">${esc(t.name)}${top ? `<span class="flag">Best fit</span>` : ""}</span><span class="val">${fit && labels ? v : "–"}</span><span class="bar" aria-hidden="true"><span class="fill" data-w="${v}"></span></span></div>`;
+  }).join("");
+  return `<div class="scard"><div class="shead"><span>LP type</span><span>Fit / 100</span></div>${rows}<p class="sfoot"><span>${note}</span><span>0 · 25 · 50 · 75 · 100</span></p></div>`;
+}
+function raise(){
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    document.querySelectorAll(".srow .fill").forEach(f => f.style.width = f.dataset.w + "%");
+  }));
+}
+const SAMPLE = {fo:78, ang:71, fof:66, corp:49, endow:38, wealth:27, dfi:20, inst:14};
+const SAMPLE_ORDER = ["fo","ang","fof","corp","endow","wealth","dfi","inst"].map(id => TYPES.find(t => t.id === id));
+
+/* ---------- Screens ---------- */
+function intro(){
+  const started = S.a.some(x => x != null);
+  $app.innerHTML = `
+  <div class="intro-grid">
+    <div>
+      <h1>The LP Fit Audit</h1>
+      <p class="lede">Which LPs should you raise from? Fourteen questions on your fund, track record, network, strategy and operations. At the end you get eight LP types ranked by fit, and a playbook for your best three.</p>
+      <div class="facts"><span><b>5 minutes</b> to complete</span><span><b>8 LP types</b> ranked</span><span>Answers stay in your browser</span></div>
+      <button class="btn" id="go">${started ? "Continue the audit" : "Start the audit"}</button>
+      ${started ? `<button class="link" id="reset" style="margin-left:18px">Start over</button>` : ""}
+    </div>
+    <div>${scoreHTML(SAMPLE_ORDER, SAMPLE, {mark:["fo"], note:"Sample report"})}</div>
+  </div>`;
+  raise();
+  document.getElementById("go").onclick = () => { S.stage = "q"; S.i = Math.max(0, S.a.findIndex(x => x == null)); save(); render(); };
+  const r = document.getElementById("reset"); if (r) r.onclick = restart;
+}
+
+function question(){
+  const q = QUESTIONS[S.i];
+  const bars = TOPICS.map(t => {
+    const idx = QUESTIONS.map((qq, k) => qq.t === t ? k : -1).filter(k => k >= 0);
+    const done = idx.filter(k => S.a[k] != null).length;
+    return `<div><i style="width:${done / idx.length * 100}%"></i></div>`;
+  }).join("");
+  $app.innerHTML = `
+    <div class="progress" aria-hidden="true">${bars}</div>
+    <div class="qmeta"><span>${esc(q.t)}</span><span>Question ${S.i + 1} of ${QUESTIONS.length}</span></div>
+    <p class="qtext" id="qt">${esc(q.q)}</p>
+    ${q.hint ? `<p class="qhint">${esc(q.hint)}</p>` : ""}
+    <ul class="options" role="radiogroup" aria-labelledby="qt">
+      ${q.o.map((t, k) => `<li><button class="opt" role="radio" aria-checked="${S.a[S.i] === k}" data-k="${k}"><span class="dot"></span><span>${esc(t)}</span></button></li>`).join("")}
+    </ul>
+    <div class="qnav">
+      <button class="link" id="back" ${S.i === 0 ? "disabled" : ""}>Previous question</button>
+      ${S.a[S.i] != null ? `<button class="link" id="next">${S.i === QUESTIONS.length - 1 ? "See my LP fit" : "Next question"}</button>` : ""}
+    </div>`;
+  document.querySelectorAll(".opt").forEach(b => b.onclick = () => {
+    S.a[S.i] = +b.dataset.k; save();
+    document.querySelectorAll(".opt").forEach(x => x.setAttribute("aria-checked", x === b));
+    setTimeout(advance, 260);
+  });
+  document.getElementById("back").onclick = () => { if (S.i > 0) { S.i--; save(); render(); } };
+  const n = document.getElementById("next"); if (n) n.onclick = advance;
+  const first = document.querySelector('.opt[aria-checked="true"]') || document.querySelector(".opt");
+  first && first.focus({preventScroll:true});
+}
+function advance(){
+  if (S.i < QUESTIONS.length - 1) { S.i++; }
+  else { const m = S.a.findIndex(x => x == null); if (m >= 0) { S.i = m; } else { S.stage = S.lead ? "report" : "teaser"; } }
+  save(); render(); window.scrollTo(0, 0);
+}
+
+function headline(R){
+  const t = R.top[0];
+  return `
+    <p class="muted">Your best-fit LP type</p>
+    <div class="score-row">
+      <div class="score">${R.fit[t.id]}<small>/100</small></div>
+      <div class="tier"><h2>${esc(t.name)}</h2><p>${esc(t.why)}</p></div>
+    </div>`;
+}
+
+function teaser(){
+  const R = results();
+  $app.innerHTML = `
+    ${headline(R)}
+    <section class="block">${scoreHTML(R.ranked, R.fit, {labels:false, mark:[R.top[0].id], note:"Unlock to see each fit score"})}</section>
+    <div class="gate">
+      <h3>Unlock your full LP plan</h3>
+      <ul>
+        <li>Fit scores for all eight LP types</li>
+        <li>A playbook for your top three: typical check sizes, timelines, what they'll test and how to approach them</li>
+        <li>Why the others aren't a fit yet, and what would change that</li>
+      </ul>
+      <div class="hp" aria-hidden="true"><label for="website">Leave this empty</label><input id="website" tabindex="-1" autocomplete="off"></div>
+      <div class="field"><label for="nm">First name</label><input id="nm" autocomplete="given-name"></div>
+      <div class="field"><label for="em">Email</label><input id="em" type="email" autocomplete="email"></div>
+      <div class="field"><label for="rl">You are</label>
+        <select id="rl"><option value="">Choose one</option><option>General or managing partner</option><option>Emerging manager, Fund I or II</option><option>Investment team member</option><option>Placement agent or advisor</option></select></div>
+      <label class="check"><input type="checkbox" id="ok" checked> Send me the VC10X newsletter. Unsubscribe any time.</label>
+      <p class="err" id="er" role="alert"></p>
+      <button class="btn" id="unlock">Unlock my LP plan</button>
+      <p class="fine">We never share your answers. Your individual responses are not stored on our servers.</p>
+    </div>`;
+  raise();
+  document.getElementById("unlock").onclick = async () => {
+    const nm = document.getElementById("nm").value.trim(), em = document.getElementById("em").value.trim(), rl = document.getElementById("rl").value;
+    const er = document.getElementById("er"), btn = document.getElementById("unlock");
+    if (!nm) { er.textContent = "Add your first name to continue."; return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { er.textContent = "Enter a valid email address, like name@fund.com."; return; }
+    if (!rl) { er.textContent = "Choose the option that describes you best."; return; }
+    er.textContent = "";
+    const ok = document.getElementById("ok").checked;
+    S.lead = {nm, em, rl, ok, t: Date.now()};
+    if (ok) {
+      btn.disabled = true; btn.textContent = "Unlocking your plan";
+      try {
+        await fetch(SUBSCRIBE_ENDPOINT, {
+          method: "POST", headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            form: "lp-fit-audit", email: em, firstName: nm, role: rl,
+            score: R.fit[R.top[0].id], tier: R.top[0].short,
+            website: document.getElementById("website").value,
+            ...(S.utm || {})
+          })
+        });
+      } catch(e) { /* Never block the report on a network error */ }
+    }
+    S.stage = "report"; save(); render(); window.scrollTo(0, 0);
+  };
+}
+
+function report(){
+  const R = results();
+  const card = (t, k) => `
+    <div class="fitcard">
+      <p class="rank">${k + 1}. ${fitName(R.fit[t.id])} · ${R.fit[t.id]}/100</p>
+      <h2>${esc(t.name)}</h2>
+      <p class="why">${esc(t.why)}</p>
+      <dl class="facts2"><div><dt>Typical check</dt><dd>${esc(t.check)}</dd></div><div><dt>Time to commit</dt><dd>${esc(t.speed)}</dd></div></dl>
+      <h3>What they'll test</h3>
+      <p>${esc(t.test)}</p>
+      <h3>How to approach them</h3>
+      <ol>${t.how.map(h => `<li>${esc(h)}</li>`).join("")}</ol>
+      ${R.limits[t.id] ? `<p class="caveat">${esc(R.limits[t.id])}</p>` : ""}
+    </div>`;
+  $app.innerHTML = `
+    <p class="muted">LP plan for ${esc(S.lead.nm)}</p>
+    ${headline(R).replace('<p class="muted">Your best-fit LP type</p>', "")}
+    <section class="block">
+      <h3 style="margin-bottom:18px">All eight LP types, ranked</h3>
+      ${scoreHTML(R.ranked, R.fit, {mark:[R.top[0].id]})}
+    </section>
+    <section class="block">
+      <h3>Your top three</h3>
+      <div class="plan">${R.top.map(card).join("")}</div>
+    </section>
+    <section class="block">
+      <h3>Not a fit yet</h3>
+      <ul class="flags soft">${R.rest.map(t => `<li><b>${esc(t.short)}</b> · ${R.fit[t.id]}/100. ${esc(R.limits[t.id] || "Few of your answers match what this LP type looks for today. Revisit after your next fund or a change in strategy.")}</li>`).join("")}</ul>
+    </section>
+    <section class="block">
+      <h3>Take this further</h3>
+      <p class="muted" style="margin-top:8px;max-width:36em">Once you know who to raise from, check you're ready for their questions, and model the fund economics they'll ask about.</p>
+      <div class="actions">
+        <a class="btn" href="/fundraising-audit/">Take the Fundraising Audit</a>
+        <a class="btn ghost" href="/fund-economics-calculator/">Open the fund calculator</a>
+      </div>
+      <div class="actions" style="margin-top:14px">
+        <button class="link" id="share">Copy the audit link</button>
+        <button class="link" id="again">Retake the audit</button>
+      </div>
+      <p class="fine" id="copied" role="status"></p>
+    </section>
+    <div class="pitch">
+      <h3>From the VC10X newsletter</h3>
+      <p style="margin-top:8px;max-width:36em">What LPs actually say about funds after the meeting ends, drawn from 300+ VC10X conversations with allocators. ${S.lead.ok ? "You're subscribed as " + esc(S.lead.em) + "." : ""}</p>
+    </div>`;
+  raise();
+  document.getElementById("again").onclick = restart;
+  document.getElementById("share").onclick = async () => {
+    const msg = document.getElementById("copied");
+    try { await navigator.clipboard.writeText(location.href.split("#")[0]); msg.textContent = "Link copied. Send it to your partners."; }
+    catch(e){ msg.textContent = "Copy this link: " + location.href.split("#")[0]; }
+  };
+}
+
+function restart(){ const lead = S.lead; S = {stage:"intro", i:0, a:Array(QUESTIONS.length).fill(null), lead}; save(); render(); }
+function render(){ ({intro, q:question, teaser, report})[S.stage](); document.getElementById("learn").hidden = S.stage !== "intro"; }
+render();
+</script>
+</body>
+</html>
