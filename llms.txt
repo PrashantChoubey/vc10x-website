@@ -26,4 +26,6 @@ All tools are free. Audit answers and calculator inputs stay in the visitor's br
 
 ## About
 
+- [About VC10X](https://vc10x.com/about/): Mission, what VC10X includes (conversations, newsletter, tools), the founder, and how guests are selected. Guests never pay to appear.
+
 - Host: Prashant Choubey ([LinkedIn](https://www.linkedin.com/in/choubeysahab), [X](https://x.com/ChoubeySahab)). He also runs [Podcast10x](https://podcast10x.com), which produces podcasts for venture firms.
