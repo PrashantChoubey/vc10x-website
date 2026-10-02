@@ -21,7 +21,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "WebApplication", "name": "The Fundraising Readiness Audit", "url": "https://vc10x.com/fundraising-audit/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "VC10X", "url": "https://vc10x.com/"}}
+{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "The Fundraising Readiness Audit", "url": "https://vc10x.com/fundraising-audit/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@id": "https://vc10x.com/#org"}, "@id": "https://vc10x.com/fundraising-audit/#app", "author": {"@id": "https://vc10x.com/#prashant"}, "dateModified": "2026-10-03"}, {"@type": "FAQPage", "@id": "https://vc10x.com/fundraising-audit/#faq", "mainEntity": [{"@type": "Question", "name": "What do LPs look for in a first-time fund manager?", "acceptedAnswer": {"@type": "Answer", "text": "A track record they can attribute to you, a clear and specific edge, a portfolio construction model that matches the fund size, institutional operations, and a credible plan to reach first close."}}, {"@type": "Question", "name": "How long does it take to raise a venture fund?", "acceptedAnswer": {"@type": "Answer", "text": "For emerging managers, raises often take 12 to 24 months from first meeting to final close, and longer in slow markets. Setting a first close date and minimum, and planning backwards from them, keeps the process moving."}}, {"@type": "Question", "name": "What is an anchor LP?", "acceptedAnswer": {"@type": "Answer", "text": "An investor who commits a meaningful share of the fund early. Other LPs look for who committed first, so an anchor often unlocks the rest of the raise, sometimes in exchange for better terms."}}, {"@type": "Question", "name": "What should be in a venture fund data room?", "acceptedAnswer": {"@type": "Answer", "text": "Deal-level track record detail, references, a draft LPA, team bios, compliance policies and a completed due diligence questionnaire. Having it ready before the first meeting signals how you'll run the fund."}}, {"@type": "Question", "name": "What is the ILPA due diligence questionnaire?", "acceptedAnswer": {"@type": "Answer", "text": "A standard questionnaire published by the Institutional Limited Partners Association. Many institutional LPs use it to compare managers, so completing it in advance saves time in diligence."}}]}, {"@type": "Organization", "@id": "https://vc10x.com/#org", "name": "VC10X", "url": "https://vc10x.com/", "logo": "https://vc10x.com/apple-touch-icon.png", "description": "Podcast and newsletter with 300+ conversations with asset managers, allocators and family office principals on how capital is raised, allocated and protected.", "founder": {"@id": "https://vc10x.com/#prashant"}, "sameAs": ["https://www.youtube.com/@VC10X", "https://podcasts.apple.com/us/podcast/id1632806986", "https://open.spotify.com/show/7F7KEhXNhTx1bKTBFgzv3k"]}, {"@type": "Person", "@id": "https://vc10x.com/#prashant", "name": "Prashant Choubey", "jobTitle": "Host, VC10X", "url": "https://vc10x.com/#about", "worksFor": {"@id": "https://vc10x.com/#org"}, "sameAs": ["https://www.linkedin.com/in/choubeysahab", "https://x.com/ChoubeySahab", "https://podcast10x.com"]}]}
 </script>
 <!-- Analytics: paste your Plausible or Google Analytics snippet here -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -144,6 +144,10 @@ footer{margin-top:64px;font-size:13px;color:var(--muted)}
 .learn dd{margin:4px 0 0;color:var(--muted);max-width:38em}
 .learn ul{margin:14px 0 0;padding-left:20px}
 .learn li{margin:6px 0}
+.faq h3{font-family:var(--serif);font-size:21px;font-weight:500;margin-top:26px;line-height:1.3}
+.faq p{margin-top:8px;max-width:38em;color:var(--muted)}
+.updated{margin-top:44px;font-size:14px;color:var(--muted)}
+.updated a{color:inherit}
 </style>
 </head>
 <body>
@@ -180,6 +184,19 @@ footer{margin-top:64px;font-size:13px;color:var(--muted)}
       <h2>Who it's for</h2>
       <p>Venture fund managers preparing to raise, especially emerging managers on Fund I or II. It's most useful three to six months before your first LP meetings, when there's still time to fix what it finds. Ask each partner to take it separately, then compare scores.</p>
     </section>
+    <section class="faq">
+      <h2>Frequently asked questions</h2>
+      <h3>What do LPs look for in a first-time fund manager?</h3>
+      <p>A track record they can attribute to you, a clear and specific edge, a portfolio construction model that matches the fund size, institutional operations, and a credible plan to reach first close.</p>
+      <h3>How long does it take to raise a venture fund?</h3>
+      <p>For emerging managers, raises often take 12 to 24 months from first meeting to final close, and longer in slow markets. Setting a first close date and minimum, and planning backwards from them, keeps the process moving.</p>
+      <h3>What is an anchor LP?</h3>
+      <p>An investor who commits a meaningful share of the fund early. Other LPs look for who committed first, so an anchor often unlocks the rest of the raise, sometimes in exchange for better terms.</p>
+      <h3>What should be in a venture fund data room?</h3>
+      <p>Deal-level track record detail, references, a draft LPA, team bios, compliance policies and a completed due diligence questionnaire. Having it ready before the first meeting signals how you&#x27;ll run the fund.</p>
+      <h3>What is the ILPA due diligence questionnaire?</h3>
+      <p>A standard questionnaire published by the Institutional Limited Partners Association. Many institutional LPs use it to compare managers, so completing it in advance saves time in diligence.</p>
+    </section>
     <section>
       <h2>Related from VC10X</h2>
       <ul>
@@ -189,6 +206,7 @@ footer{margin-top:64px;font-size:13px;color:var(--muted)}
         <li><a href="/audit/">The Family Gap Audit</a>, for family principals and their offices.</li>
       </ul>
     </section>
+    <p class="updated">From <a href="/">VC10X</a>, hosted by <a href="/#about">Prashant Choubey</a>. Updated <time datetime="2026-10-03">3 October 2026</time>.</p>
   </div>
   <footer>Self-reported and indicative. This audit is a starting point for conversations with your partners and advisors, not legal, tax or investment advice.</footer>
 </div>

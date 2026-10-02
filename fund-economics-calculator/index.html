@@ -22,7 +22,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"Venture Fund Economics Calculator","url":"https://vc10x.com/fund-economics-calculator/","applicationCategory":"FinanceApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"VC10X","url":"https://vc10x.com/"}}
+{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Venture Fund Economics Calculator", "url": "https://vc10x.com/fund-economics-calculator/", "applicationCategory": "FinanceApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@id": "https://vc10x.com/#org"}, "@id": "https://vc10x.com/fund-economics-calculator/#app", "author": {"@id": "https://vc10x.com/#prashant"}, "dateModified": "2026-10-03"}, {"@type": "FAQPage", "@id": "https://vc10x.com/fund-economics-calculator/#faq", "mainEntity": [{"@type": "Question", "name": "What is a typical management fee for a venture capital fund?", "acceptedAnswer": {"@type": "Answer", "text": "Around 2% a year of committed capital during the investment period is the most common reference point, often stepping down afterwards. Some smaller funds charge more because their fixed costs are high relative to fund size, and some larger funds charge less."}}, {"@type": "Question", "name": "How much of a venture fund goes to management fees?", "acceptedAnswer": {"@type": "Answer", "text": "On a 10-year fund charging 2% for the first five years and 1.5% after, fees add up to 17.5% of commitments, leaving about 82.5% to invest. Step-downs to invested capital, fee offsets and recycling of proceeds change the total."}}, {"@type": "Question", "name": "What is a GP commitment, and how much is typical?", "acceptedAnswer": {"@type": "Answer", "text": "It's the partners' own money in the fund. A GP commit of 1% to 2% of fund size is a common reference point, but LPs judge it against the partners' personal wealth, not just the percentage."}}, {"@type": "Question", "name": "What is a management fee waiver?", "acceptedAnswer": {"@type": "Answer", "text": "The partners give up part of their management fee and it goes into the fund as their commitment instead of cash. It helps teams that can't write a large check, but some LPs see it as a weaker signal because no new money is at risk."}}, {"@type": "Question", "name": "When does carried interest start paying out?", "acceptedAnswer": {"@type": "Answer", "text": "In a whole-fund (European) waterfall, LPs get back everything they paid in, including fees, plus any preferred return before the GPs receive carry. Deal-by-deal (American) waterfalls can pay carry earlier, usually with a clawback."}}, {"@type": "Question", "name": "What is a hurdle rate in a venture fund?", "acceptedAnswer": {"@type": "Answer", "text": "A preferred return LPs receive before carry is paid, often 8% a year in funds that use one. Many US venture funds have no hurdle. Where there is one, a catch-up usually lets the GPs recover their full share of profits once it's cleared."}}]}, {"@type": "Organization", "@id": "https://vc10x.com/#org", "name": "VC10X", "url": "https://vc10x.com/", "logo": "https://vc10x.com/apple-touch-icon.png", "description": "Podcast and newsletter with 300+ conversations with asset managers, allocators and family office principals on how capital is raised, allocated and protected.", "founder": {"@id": "https://vc10x.com/#prashant"}, "sameAs": ["https://www.youtube.com/@VC10X", "https://podcasts.apple.com/us/podcast/id1632806986", "https://open.spotify.com/show/7F7KEhXNhTx1bKTBFgzv3k"]}, {"@type": "Person", "@id": "https://vc10x.com/#prashant", "name": "Prashant Choubey", "jobTitle": "Host, VC10X", "url": "https://vc10x.com/#about", "worksFor": {"@id": "https://vc10x.com/#org"}, "sameAs": ["https://www.linkedin.com/in/choubeysahab", "https://x.com/ChoubeySahab", "https://podcast10x.com"]}]}
 </script>
 <!-- Analytics: paste your Plausible or Google Analytics snippet here -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -151,6 +151,12 @@ footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);font-si
   .block{margin-top:20px;break-inside:avoid}
   h1{font-size:28px}
 }
+.faq h3{font-family:var(--serif);font-size:21px;font-weight:500;margin-top:26px;line-height:1.3}
+.faq p{margin-top:8px;max-width:38em;color:var(--muted)}
+.updated{margin-top:44px;font-size:14px;color:var(--muted)}
+.updated a{color:inherit}
+.guide-faq{margin-top:72px;padding-top:44px;border-top:1px solid var(--line)}
+.guide-faq h2{font-size:clamp(26px,3.4vw,34px)}
 </style>
 </head>
 <body>
@@ -275,6 +281,25 @@ footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);font-si
         </ul>
         <p class="muted">This is a planning tool, not legal, tax or investment advice. Your LPA governs the real numbers.</p>
       </section>
+    </div>
+
+    <div class="guide-faq no-print">
+    <section class="faq">
+      <h2>Frequently asked questions</h2>
+      <h3>What is a typical management fee for a venture capital fund?</h3>
+      <p>Around 2% a year of committed capital during the investment period is the most common reference point, often stepping down afterwards. Some smaller funds charge more because their fixed costs are high relative to fund size, and some larger funds charge less.</p>
+      <h3>How much of a venture fund goes to management fees?</h3>
+      <p>On a 10-year fund charging 2% for the first five years and 1.5% after, fees add up to 17.5% of commitments, leaving about 82.5% to invest. Step-downs to invested capital, fee offsets and recycling of proceeds change the total.</p>
+      <h3>What is a GP commitment, and how much is typical?</h3>
+      <p>It&#x27;s the partners&#x27; own money in the fund. A GP commit of 1% to 2% of fund size is a common reference point, but LPs judge it against the partners&#x27; personal wealth, not just the percentage.</p>
+      <h3>What is a management fee waiver?</h3>
+      <p>The partners give up part of their management fee and it goes into the fund as their commitment instead of cash. It helps teams that can&#x27;t write a large check, but some LPs see it as a weaker signal because no new money is at risk.</p>
+      <h3>When does carried interest start paying out?</h3>
+      <p>In a whole-fund (European) waterfall, LPs get back everything they paid in, including fees, plus any preferred return before the GPs receive carry. Deal-by-deal (American) waterfalls can pay carry earlier, usually with a clawback.</p>
+      <h3>What is a hurdle rate in a venture fund?</h3>
+      <p>A preferred return LPs receive before carry is paid, often 8% a year in funds that use one. Many US venture funds have no hurdle. Where there is one, a catch-up usually lets the GPs recover their full share of profits once it&#x27;s cleared.</p>
+    </section>
+    <p class="updated">From <a href="/">VC10X</a>, hosted by <a href="/#about">Prashant Choubey</a>. Updated <time datetime="2026-10-03">3 October 2026</time>.</p>
     </div>
 
     <div class="cta no-print">

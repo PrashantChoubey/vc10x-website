@@ -21,7 +21,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "WebApplication", "name": "The LP Fit Audit", "url": "https://vc10x.com/lp-fit-audit/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "VC10X", "url": "https://vc10x.com/"}}
+{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "The LP Fit Audit", "url": "https://vc10x.com/lp-fit-audit/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@id": "https://vc10x.com/#org"}, "@id": "https://vc10x.com/lp-fit-audit/#app", "author": {"@id": "https://vc10x.com/#prashant"}, "dateModified": "2026-10-03"}, {"@type": "FAQPage", "@id": "https://vc10x.com/lp-fit-audit/#faq", "mainEntity": [{"@type": "Question", "name": "What types of LPs invest in venture capital funds?", "acceptedAnswer": {"@type": "Answer", "text": "The main types are angels and operators, family offices, funds of funds and emerging manager programs, endowments and foundations, pensions, insurers and sovereign funds, corporates, wealth platforms and RIAs, and development finance and government-backed LPs."}}, {"@type": "Question", "name": "Who invests in first-time venture funds?", "acceptedAnswer": {"@type": "Answer", "text": "Most Fund I capital typically comes from individuals such as angels, founders and operators, from family offices, and from funds of funds and emerging manager programs. Endowments and pensions rarely anchor a Fund I."}}, {"@type": "Question", "name": "How much do family offices invest in venture funds?", "acceptedAnswer": {"@type": "Answer", "text": "Often $250K to $5M per fund, though it varies widely with the family's size and mandate. Many value co-investment rights and access as much as the fund itself."}}, {"@type": "Question", "name": "Do endowments invest in emerging managers?", "acceptedAnswer": {"@type": "Answer", "text": "Some do, but many build the relationship over a fund cycle first and invest in Fund II or III, once there are realized results they can credit to the team."}}, {"@type": "Question", "name": "What is an emerging manager program?", "acceptedAnswer": {"@type": "Answer", "text": "A fund of funds or an institutional program dedicated to backing newer managers, usually Fund I to III. Being early isn't held against you, but they run an institutional diligence process."}}]}, {"@type": "Organization", "@id": "https://vc10x.com/#org", "name": "VC10X", "url": "https://vc10x.com/", "logo": "https://vc10x.com/apple-touch-icon.png", "description": "Podcast and newsletter with 300+ conversations with asset managers, allocators and family office principals on how capital is raised, allocated and protected.", "founder": {"@id": "https://vc10x.com/#prashant"}, "sameAs": ["https://www.youtube.com/@VC10X", "https://podcasts.apple.com/us/podcast/id1632806986", "https://open.spotify.com/show/7F7KEhXNhTx1bKTBFgzv3k"]}, {"@type": "Person", "@id": "https://vc10x.com/#prashant", "name": "Prashant Choubey", "jobTitle": "Host, VC10X", "url": "https://vc10x.com/#about", "worksFor": {"@id": "https://vc10x.com/#org"}, "sameAs": ["https://www.linkedin.com/in/choubeysahab", "https://x.com/ChoubeySahab", "https://podcast10x.com"]}]}
 </script>
 <!-- Analytics: paste your Plausible or Google Analytics snippet here -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -160,6 +160,10 @@ a.btn{text-decoration:none}
 .caveat{border-left:3px solid var(--brass);padding-left:12px;color:var(--muted);font-size:15px;margin-top:18px !important}
 .flags.soft li{border-left-color:var(--line);color:var(--muted)}
 .flags.soft li b{color:var(--ink)}
+.faq h3{font-family:var(--serif);font-size:21px;font-weight:500;margin-top:26px;line-height:1.3}
+.faq p{margin-top:8px;max-width:38em;color:var(--muted)}
+.updated{margin-top:44px;font-size:14px;color:var(--muted)}
+.updated a{color:inherit}
 </style>
 </head>
 <body>
@@ -193,6 +197,19 @@ a.btn{text-decoration:none}
       <h2>Who it's for</h2>
       <p>General partners and emerging managers planning a raise, from Fund I onward. It's most useful before you build your LP target list. Placement agents and advisors can use it to pressure-test a client's plan.</p>
     </section>
+    <section class="faq">
+      <h2>Frequently asked questions</h2>
+      <h3>What types of LPs invest in venture capital funds?</h3>
+      <p>The main types are angels and operators, family offices, funds of funds and emerging manager programs, endowments and foundations, pensions, insurers and sovereign funds, corporates, wealth platforms and RIAs, and development finance and government-backed LPs.</p>
+      <h3>Who invests in first-time venture funds?</h3>
+      <p>Most Fund I capital typically comes from individuals such as angels, founders and operators, from family offices, and from funds of funds and emerging manager programs. Endowments and pensions rarely anchor a Fund I.</p>
+      <h3>How much do family offices invest in venture funds?</h3>
+      <p>Often $250K to $5M per fund, though it varies widely with the family&#x27;s size and mandate. Many value co-investment rights and access as much as the fund itself.</p>
+      <h3>Do endowments invest in emerging managers?</h3>
+      <p>Some do, but many build the relationship over a fund cycle first and invest in Fund II or III, once there are realized results they can credit to the team.</p>
+      <h3>What is an emerging manager program?</h3>
+      <p>A fund of funds or an institutional program dedicated to backing newer managers, usually Fund I to III. Being early isn&#x27;t held against you, but they run an institutional diligence process.</p>
+    </section>
     <section>
       <h2>Related from VC10X</h2>
       <ul>
@@ -201,6 +218,7 @@ a.btn{text-decoration:none}
         <li><a href="/#latest">The VC10X newsletter</a>: what LPs say about funds after the meeting ends.</li>
       </ul>
     </section>
+    <p class="updated">From <a href="/">VC10X</a>, hosted by <a href="/#about">Prashant Choubey</a>. Updated <time datetime="2026-10-03">3 October 2026</time>.</p>
   </div>
   <footer>Indicative only. Check sizes and timelines are typical ranges, not rules, and every LP has its own mandate. Not legal, tax or investment advice.</footer>
 </div>

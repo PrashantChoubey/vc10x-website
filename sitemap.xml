@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://vc10x.com/</loc></url>
-  <url><loc>https://vc10x.com/fund-economics-calculator/</loc></url>
-  <url><loc>https://vc10x.com/fundraising-audit/</loc></url>
-  <url><loc>https://vc10x.com/lp-fit-audit/</loc></url>
-  <url><loc>https://vc10x.com/audit/</loc></url>
+  <url><loc>https://vc10x.com/</loc><lastmod>2026-10-03</lastmod></url>
+  <url><loc>https://vc10x.com/fund-economics-calculator/</loc><lastmod>2026-10-03</lastmod></url>
+  <url><loc>https://vc10x.com/fundraising-audit/</loc><lastmod>2026-10-03</lastmod></url>
+  <url><loc>https://vc10x.com/lp-fit-audit/</loc><lastmod>2026-10-03</lastmod></url>
+  <url><loc>https://vc10x.com/audit/</loc><lastmod>2026-10-03</lastmod></url>
 </urlset>

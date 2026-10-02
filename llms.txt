@@ -1,0 +1,23 @@
+# VC10X
+
+> VC10X is a podcast and newsletter hosted by Prashant Choubey, with 300+ conversations with asset managers, allocators and family office principals on how capital is actually raised, allocated and protected. The site also offers free tools for venture fund managers, allocators and families.
+
+All tools are free. Audit answers and calculator inputs stay in the visitor's browser.
+
+## Tools
+
+- [Venture Fund Economics Calculator](https://vc10x.com/fund-economics-calculator/): Model management fees by year, GP commit (cash or fee waiver), and the return a fund must deliver before carried interest pays out, with carry at different outcomes.
+- [The LP Fit Audit](https://vc10x.com/lp-fit-audit/): Fourteen questions that rank eight LP types (angels, family offices, funds of funds, endowments, pensions and sovereigns, corporates, wealth platforms, DFIs) by fit for a venture fund.
+- [The Fundraising Readiness Audit](https://vc10x.com/fundraising-audit/): Twenty questions that score a venture fund manager's readiness to raise across track record, LP pipeline, materials, terms and process.
+- [The Family Gap Audit](https://vc10x.com/audit/): Twenty questions that score a family or family office on succession, governance, next-gen readiness, investment architecture, and privacy and security.
+
+## Podcast and newsletter
+
+- [Homepage](https://vc10x.com/): Popular episodes, the latest newsletter issues, and what past guests say about the show.
+- [YouTube](https://www.youtube.com/@VC10X): Full video episodes.
+- [Apple Podcasts](https://podcasts.apple.com/us/podcast/id1632806986)
+- [Spotify](https://open.spotify.com/show/7F7KEhXNhTx1bKTBFgzv3k)
+
+## About
+
+- Host: Prashant Choubey ([LinkedIn](https://www.linkedin.com/in/choubeysahab), [X](https://x.com/ChoubeySahab)). He also runs [Podcast10x](https://podcast10x.com), which produces podcasts for venture firms.

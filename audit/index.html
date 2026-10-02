@@ -21,7 +21,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "WebApplication", "name": "The Family Gap Audit", "url": "https://vc10x.com/audit/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "VC10X", "url": "https://vc10x.com/"}}
+{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "The Family Gap Audit", "url": "https://vc10x.com/audit/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@id": "https://vc10x.com/#org"}, "@id": "https://vc10x.com/audit/#app", "author": {"@id": "https://vc10x.com/#prashant"}, "dateModified": "2026-10-03"}, {"@type": "FAQPage", "@id": "https://vc10x.com/audit/#faq", "mainEntity": [{"@type": "Question", "name": "What is a family office?", "acceptedAnswer": {"@type": "Answer", "text": "A private organization that manages the investments and affairs of a wealthy family. A single-family office serves one family; a multi-family office serves several."}}, {"@type": "Question", "name": "What is family governance?", "acceptedAnswer": {"@type": "Answer", "text": "The agreed way a family makes decisions together: who has authority over what, how disagreements are resolved, and how the next generation is brought in. It's often written down in a family constitution or charter."}}, {"@type": "Question", "name": "Why do family succession plans fail?", "acceptedAnswer": {"@type": "Answer", "text": "Common reasons are that no plan exists, authority isn't clear when the principal steps back, and heirs haven't been prepared to make decisions about the assets they inherit."}}, {"@type": "Question", "name": "What is an investment policy statement for a family office?", "acceptedAnswer": {"@type": "Answer", "text": "A written document that sets the family's objectives, risk tolerance, asset allocation ranges and who makes investment decisions. Without one, allocation tends to drift toward whatever the last good pitch was."}}, {"@type": "Question", "name": "How should families protect their privacy and security?", "acceptedAnswer": {"@type": "Answer", "text": "Limit what the public can piece together about the family, separate personal and family-office systems, and review who has access to accounts, documents and travel plans."}}]}, {"@type": "Organization", "@id": "https://vc10x.com/#org", "name": "VC10X", "url": "https://vc10x.com/", "logo": "https://vc10x.com/apple-touch-icon.png", "description": "Podcast and newsletter with 300+ conversations with asset managers, allocators and family office principals on how capital is raised, allocated and protected.", "founder": {"@id": "https://vc10x.com/#prashant"}, "sameAs": ["https://www.youtube.com/@VC10X", "https://podcasts.apple.com/us/podcast/id1632806986", "https://open.spotify.com/show/7F7KEhXNhTx1bKTBFgzv3k"]}, {"@type": "Person", "@id": "https://vc10x.com/#prashant", "name": "Prashant Choubey", "jobTitle": "Host, VC10X", "url": "https://vc10x.com/#about", "worksFor": {"@id": "https://vc10x.com/#org"}, "sameAs": ["https://www.linkedin.com/in/choubeysahab", "https://x.com/ChoubeySahab", "https://podcast10x.com"]}]}
 </script>
 <!-- Analytics: paste your Plausible or Google Analytics snippet here -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -144,6 +144,10 @@ footer{margin-top:64px;font-size:13px;color:var(--muted)}
 .learn dd{margin:4px 0 0;color:var(--muted);max-width:38em}
 .learn ul{margin:14px 0 0;padding-left:20px}
 .learn li{margin:6px 0}
+.faq h3{font-family:var(--serif);font-size:21px;font-weight:500;margin-top:26px;line-height:1.3}
+.faq p{margin-top:8px;max-width:38em;color:var(--muted)}
+.updated{margin-top:44px;font-size:14px;color:var(--muted)}
+.updated a{color:inherit}
 </style>
 </head>
 <body>
@@ -180,6 +184,19 @@ footer{margin-top:64px;font-size:13px;color:var(--muted)}
       <h2>Who it's for</h2>
       <p>Family principals, next-generation family members and the people who run their family offices. It works best when several family members take it on their own and compare answers. Where you disagree is usually where the real gap is.</p>
     </section>
+    <section class="faq">
+      <h2>Frequently asked questions</h2>
+      <h3>What is a family office?</h3>
+      <p>A private organization that manages the investments and affairs of a wealthy family. A single-family office serves one family; a multi-family office serves several.</p>
+      <h3>What is family governance?</h3>
+      <p>The agreed way a family makes decisions together: who has authority over what, how disagreements are resolved, and how the next generation is brought in. It&#x27;s often written down in a family constitution or charter.</p>
+      <h3>Why do family succession plans fail?</h3>
+      <p>Common reasons are that no plan exists, authority isn&#x27;t clear when the principal steps back, and heirs haven&#x27;t been prepared to make decisions about the assets they inherit.</p>
+      <h3>What is an investment policy statement for a family office?</h3>
+      <p>A written document that sets the family&#x27;s objectives, risk tolerance, asset allocation ranges and who makes investment decisions. Without one, allocation tends to drift toward whatever the last good pitch was.</p>
+      <h3>How should families protect their privacy and security?</h3>
+      <p>Limit what the public can piece together about the family, separate personal and family-office systems, and review who has access to accounts, documents and travel plans.</p>
+    </section>
     <section>
       <h2>Related from VC10X</h2>
       <ul>
@@ -188,6 +205,7 @@ footer{margin-top:64px;font-size:13px;color:var(--muted)}
         <li><a href="/">VC10X</a>: 300+ conversations with asset managers, allocators and family office principals.</li>
       </ul>
     </section>
+    <p class="updated">From <a href="/">VC10X</a>, hosted by <a href="/#about">Prashant Choubey</a>. Updated <time datetime="2026-10-03">3 October 2026</time>.</p>
   </div>
   <footer>Self-reported and indicative. This audit is a starting point for conversations with your family and advisors, not legal, tax or investment advice.</footer>
 </div>
