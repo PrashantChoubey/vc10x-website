@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Liquidity Stress Test: Unfunded Commitments and the Denominator Effect | VC10X</title>
+<meta name="description" content="Free liquidity stress test for allocators. See whether you can meet capital calls and spending after a market shock, how far your private allocation drifts, and whether you&#x27;d have to sell equities.">
+<link rel="canonical" href="https://vc10x.com/liquidity-stress-test/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VC10X">
+<meta property="og:url" content="https://vc10x.com/liquidity-stress-test/">
+<meta property="og:title" content="Liquidity Stress Test for Unfunded Commitments">
+<meta property="og:description" content="If markets fall 30%, can you still meet capital calls without selling at the bottom? Coverage, forced sales and the denominator effect. Free.">
+<meta property="og:image" content="https://vc10x.com/liquidity-stress-test/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@ChoubeySahab">
+<meta name="twitter:title" content="Liquidity Stress Test for Unfunded Commitments">
+<meta name="twitter:description" content="Can you meet capital calls after a market shock? Coverage, forced sales and the denominator effect.">
+<meta name="twitter:image" content="https://vc10x.com/liquidity-stress-test/og.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "@id": "https://vc10x.com/liquidity-stress-test/#app", "name": "Liquidity Stress Test for Unfunded Commitments", "url": "https://vc10x.com/liquidity-stress-test/", "applicationCategory": "FinanceApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@id": "https://vc10x.com/#org"}, "author": {"@id": "https://vc10x.com/#prashant"}, "dateModified": "2026-10-03"}, {"@type": "FAQPage", "@id": "https://vc10x.com/liquidity-stress-test/#faq", "mainEntity": [{"@type": "Question", "name": "What is the denominator effect?", "acceptedAnswer": {"@type": "Answer", "text": "When public markets fall faster than private valuations, which are reported with a lag, private assets become a larger share of the total portfolio. That can push the private allocation above its policy limit without any new commitments."}}, {"@type": "Question", "name": "What is a liquidity stress test?", "acceptedAnswer": {"@type": "Answer", "text": "A scenario analysis of whether a portfolio can meet its cash needs, such as capital calls and spending, after a market shock, and which assets would have to be sold to do it."}}, {"@type": "Question", "name": "What happens to capital calls and distributions in a downturn?", "acceptedAnswer": {"@type": "Answer", "text": "Distributions usually slow sharply as exits dry up, while capital calls often continue as managers keep investing. The gap between the two is what squeezes an allocator's liquidity."}}, {"@type": "Question", "name": "How much liquidity should an allocator hold against unfunded commitments?", "acceptedAnswer": {"@type": "Answer", "text": "There's no single rule. Many allocators aim to cover at least a year of expected capital calls and spending under a stressed scenario from cash and high-quality bonds, so they're never forced to sell equities at the bottom."}}, {"@type": "Question", "name": "Can I sell private fund interests if I need liquidity?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, through the secondary market, but in a downturn buyers usually demand a discount to NAV, so it's an expensive source of liquidity. Planning reserves in advance is usually cheaper."}}]}, {"@type": "Organization", "@id": "https://vc10x.com/#org", "name": "VC10X", "url": "https://vc10x.com/", "logo": "https://vc10x.com/apple-touch-icon.png", "description": "Podcast and newsletter with 300+ conversations with asset managers, allocators and family office principals on how capital is raised, allocated and protected.", "founder": {"@id": "https://vc10x.com/#prashant"}, "sameAs": ["https://www.youtube.com/@VC10X", "https://podcasts.apple.com/us/podcast/id1632806986", "https://open.spotify.com/show/7F7KEhXNhTx1bKTBFgzv3k"]}, {"@type": "Person", "@id": "https://vc10x.com/#prashant", "name": "Prashant Choubey", "jobTitle": "Host, VC10X", "url": "https://vc10x.com/#about", "worksFor": {"@id": "https://vc10x.com/#org"}, "sameAs": ["https://www.linkedin.com/in/choubeysahab", "https://x.com/ChoubeySahab", "https://podcast10x.com"]}]}
+</script>
+<!-- Analytics: paste your Plausible or Google Analytics snippet here -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FFFFFF; --panel:#F6F6F6; --ink:#000000; --muted:#5C5C5C; --line:#D9D9D9;
+  --green:#000000; --brass:#3FDCFF; --flag:#C0392B; --on-green:#FFFFFF;
+  --serif:"Newsreader", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --sans:"Hanken Grotesk", "Helvetica Neue", Arial, system-ui, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#000000; --panel:#111111; --ink:#FFFFFF; --muted:#A6A6A6; --line:#2B2B2B;
+    --green:#FFFFFF; --brass:#3FDCFF; --flag:#FF7A6B; --on-green:#000000;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#000000; --panel:#111111; --ink:#FFFFFF; --muted:#A6A6A6; --line:#2B2B2B;
+  --green:#FFFFFF; --brass:#3FDCFF; --flag:#FF7A6B; --on-green:#000000;
+}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-underline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 22px 64px}
+header.bar{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:48px}
+.mark{font-family:var(--serif);font-weight:600;font-size:20px;text-decoration:none}
+.bar small{color:var(--muted);font-size:14px}
+h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;margin:0}
+h1{font-size:clamp(38px,5.4vw,56px);line-height:1.04;max-width:16em}
+h2{font-size:clamp(26px,3.4vw,34px);line-height:1.15}
+h3{font-size:21px;line-height:1.25}
+p{margin:0}
+.lede{font-family:var(--serif);font-size:21px;line-height:1.5;max-width:36em;margin-top:20px}
+.muted{color:var(--muted)}
+button,input,select{font:inherit;color:inherit}
+.btn{display:inline-block;background:var(--green);color:var(--on-green);border:0;border-radius:6px;padding:13px 22px;font-weight:600;font-size:16px;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.6;cursor:wait}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;box-shadow:0 0 0 5px var(--brass)}
+
+.calc{display:grid;grid-template-columns:1fr;gap:40px;margin-top:44px}
+@media (min-width:900px){.calc{grid-template-columns:320px 1fr;gap:56px;align-items:start}.inputs{position:sticky;top:20px}}
+
+.inputs{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--brass);border-radius:4px;padding:22px}
+.inputs h2{font-size:22px;margin-bottom:16px}
+.group{border:0;margin:0 0 18px;padding:0}
+.group legend{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:0;margin-bottom:10px}
+.field{display:grid;grid-template-columns:1fr 112px;gap:10px;align-items:center;margin-bottom:10px}
+.field label{font-size:15px;line-height:1.3}
+.field label small{display:block;font-size:13px;color:var(--muted)}
+.unit{display:flex;align-items:center;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.unit:focus-within{border-color:var(--ink)}
+.unit span{padding:0 8px;color:var(--muted);font-size:14px}
+.unit input{width:100%;min-width:0;border:0;background:transparent;padding:10px 8px;text-align:right;font-variant-numeric:tabular-nums}
+.unit input:focus{outline:none}
+.unit:has(input:focus-visible){box-shadow:0 0 0 3px var(--brass)}
+.unit select{width:100%;border:0;background:transparent;padding:10px 6px;font-size:14px;cursor:pointer}
+.unit select:focus{outline:none}
+.field.wide{grid-template-columns:1fr 150px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.hide{display:none}
+.note{font-size:13px;color:var(--muted);margin-top:6px}
+
+.kpis{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid var(--line)}
+.kpi{padding:22px 0;border-bottom:1px solid var(--line)}
+.kpi dt{font-size:14px;color:var(--muted)}
+.kpi dd{margin:6px 0 0;font-family:var(--serif);font-weight:500;font-size:clamp(34px,4.4vw,46px);line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpi p{margin-top:8px;font-size:15px;color:var(--muted);max-width:30em}
+.kpi p b{color:var(--ink);font-weight:600}
+@media (min-width:640px){.kpis{grid-template-columns:1fr 1fr;column-gap:36px}}
+
+.block{margin-top:44px}
+.block > p.muted{margin-top:6px;font-size:15px;max-width:40em}
+.chart{position:relative;margin-top:18px}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart .ax{font:12px var(--sans);fill:var(--muted)}
+.chart .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--paper);font-size:13px;padding:6px 9px;border-radius:4px;white-space:nowrap;transform:translate(-50%,-100%);opacity:0;transition:opacity .12s}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15px;margin-top:16px}
+th,td{padding:10px 8px;text-align:right;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left;padding-left:0}
+th{font-weight:600;font-size:13px;color:var(--muted)}
+tr.be td{background:var(--panel);font-weight:600}
+details{margin-top:14px;font-size:15px}
+summary{cursor:pointer;color:var(--muted)}
+
+.export{margin-top:44px;padding:24px;border:1px solid var(--line);border-radius:4px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.gate{margin-top:20px;padding-top:20px;border-top:1px solid var(--line)}
+.gate .row{display:grid;grid-template-columns:1fr;gap:12px}
+@media (min-width:640px){.gate .row{grid-template-columns:1fr 1fr 1fr}}
+.gate label{display:grid;gap:6px;font-size:14px;font-weight:600}
+.gate input:not([type=checkbox]),.gate select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.check{display:flex !important;gap:10px;align-items:flex-start;font-weight:400 !important;color:var(--muted);margin:14px 0}
+.err{color:var(--flag);font-size:14px;min-height:1.2em;margin-bottom:8px}
+.fine{font-size:13px;color:var(--muted);margin-top:10px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+.guide{margin-top:88px;padding-top:56px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr;gap:44px}
+@media (min-width:900px){.guide{grid-template-columns:1fr 1fr;column-gap:56px}}
+.guide p{margin-top:12px;max-width:36em}
+.guide ul{margin:12px 0 0;padding-left:20px;max-width:36em}
+.guide li{margin:6px 0}
+.cta{margin-top:72px;padding:36px;background:var(--panel);border-radius:4px}
+.cta p{margin-top:10px;max-width:36em;color:var(--muted)}
+.sub{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;max-width:520px}
+.sub input[type=email]{flex:1 1 220px;padding:13px 14px;border:1px solid var(--line);border-radius:6px;background:var(--paper)}
+.formmsg{flex-basis:100%;font-size:14px;min-height:1.3em;color:var(--muted)}
+.formmsg.err{color:var(--flag)}
+footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+
+.print-only{display:none}
+@media print{
+  body{font-size:12px;background:#fff;color:#000}
+  .no-print,.export,.guide,.cta,footer,.chart .tip{display:none !important}
+  .print-only{display:block}
+  .calc{display:block;margin-top:16px}
+  .inputs{position:static;border:1px solid #999;padding:12px}
+  .kpi dd{font-size:26px}
+  .block{margin-top:20px;break-inside:avoid}
+  h1{font-size:28px}
+}
+.faq h3{font-family:var(--serif);font-size:21px;font-weight:500;margin-top:26px;line-height:1.3}
+.faq p{margin-top:8px;max-width:38em;color:var(--muted)}
+.updated{margin-top:44px;font-size:14px;color:var(--muted)}
+.updated a{color:inherit}
+.guide-faq{margin-top:72px;padding-top:44px;border-top:1px solid var(--line)}
+.guide-faq h2{font-size:clamp(26px,3.4vw,34px)}
+.tablewrap{overflow-x:auto}
+.tablewrap table{min-width:560px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <a class="mark" href="/">VC10X</a>
+    <small>For CIOs and allocators</small>
+  </header>
+
+  <main>
+    <h1>Liquidity stress test for unfunded commitments</h1>
+    <p class="lede no-print">If public markets fall, can you still meet capital calls and spending without selling at the bottom, and how far does your private allocation drift? Enter your portfolio and a shock to find out.</p>
+    <p class="print-only muted" id="printed"></p>
+
+    <div class="calc">
+      <form class="inputs" id="f" autocomplete="off" onsubmit="return false">
+        <h2>Your portfolio</h2>
+        <fieldset class="group">
+          <legend>Today</legend>
+          <div class="field"><label for="total">Total portfolio</label><div class="unit"><span>$</span><input id="total" inputmode="decimal" value="1000"><span>M</span></div></div>
+          <div class="field"><label for="cash">Cash and short-term</label><div class="unit"><input id="cash" inputmode="decimal" value="5"><span>%</span></div></div>
+          <div class="field"><label for="bonds">Bonds</label><div class="unit"><input id="bonds" inputmode="decimal" value="15"><span>%</span></div></div>
+          <div class="field"><label for="eq">Public equity</label><div class="unit"><input id="eq" inputmode="decimal" value="55"><span>%</span></div></div>
+          <div class="field"><label for="priv">Private markets NAV</label><div class="unit"><input id="priv" inputmode="decimal" value="25"><span>%</span></div></div>
+          <div class="field"><label for="unf">Unfunded commitments</label><div class="unit"><span>$</span><input id="unf" inputmode="decimal" value="150"><span>M</span></div></div>
+          <div class="field"><label for="limit">Private markets policy limit</label><div class="unit"><input id="limit" inputmode="decimal" value="30"><span>%</span></div></div>
+        </fieldset>
+        <fieldset class="group">
+          <legend>The shock</legend>
+          <div class="field"><label for="seq">Public equity fall</label><div class="unit"><input id="seq" inputmode="decimal" value="30"><span>%</span></div></div>
+          <div class="field"><label for="sbond">Bond fall</label><div class="unit"><input id="sbond" inputmode="decimal" value="5"><span>%</span></div></div>
+          <div class="field"><label for="spriv">Private markdown<small>as first reported</small></label><div class="unit"><input id="spriv" inputmode="decimal" value="10"><span>%</span></div></div>
+          <div class="field"><label for="syears">Stress lasts</label><div class="unit"><input id="syears" inputmode="numeric" value="2"><span>yrs</span></div></div>
+        </fieldset>
+        <fieldset class="group">
+          <legend>Cash flows, per year</legend>
+          <div class="field"><label for="spend">Spending or payout<small>% of portfolio</small></label><div class="unit"><input id="spend" inputmode="decimal" value="5"><span>%</span></div></div>
+          <div class="field"><label for="newc">New commitments</label><div class="unit"><span>$</span><input id="newc" inputmode="decimal" value="30"><span>M</span></div></div>
+          <div class="field"><label for="calln">Calls, normal<small>% of unfunded</small></label><div class="unit"><input id="calln" inputmode="decimal" value="25"><span>%</span></div></div>
+          <div class="field"><label for="calls">Calls, stressed</label><div class="unit"><input id="calls" inputmode="decimal" value="30"><span>%</span></div></div>
+          <div class="field"><label for="distn">Distributions, normal<small>% of private NAV</small></label><div class="unit"><input id="distn" inputmode="decimal" value="15"><span>%</span></div></div>
+          <div class="field"><label for="dists">Distributions, stressed</label><div class="unit"><input id="dists" inputmode="decimal" value="5"><span>%</span></div></div>
+        </fieldset>
+        <fieldset class="group" style="margin-bottom:0">
+          <legend>Returns after the stress</legend>
+          <div class="field"><label for="req">Public equity</label><div class="unit"><input id="req" inputmode="decimal" value="8"><span>%</span></div></div>
+          <div class="field"><label for="rbond">Bonds and cash</label><div class="unit"><input id="rbond" inputmode="decimal" value="4"><span>%</span></div></div>
+          <div class="field"><label for="rpriv">Private NAV growth</label><div class="unit"><input id="rpriv" inputmode="decimal" value="8"><span>%</span></div></div>
+          <div class="field"><label for="years">Years to test</label><div class="unit"><input id="years" inputmode="numeric" value="4"><span>yrs</span></div></div>
+        </fieldset>
+        <p class="err no-print" id="inerr" role="alert"></p>
+      </form>
+
+      <div id="out" aria-live="polite">
+        <dl class="kpis">
+          <div class="kpi"><dt>Private share after the shock</dt><dd id="k-p"></dd><p id="k-p-p"></p></div>
+          <div class="kpi"><dt>Liquidity coverage, year one</dt><dd id="k-c"></dd><p id="k-c-p"></p></div>
+          <div class="kpi"><dt>Equities you'd have to sell</dt><dd id="k-s"></dd><p id="k-s-p"></p></div>
+          <div class="kpi"><dt>Cash needed in year one</dt><dd id="k-n"></dd><p id="k-n-p"></p></div>
+        </dl>
+
+        <section class="block">
+          <h3>Allocation before and after</h3>
+          <div class="tablewrap"><table id="alloc"></table></div>
+        </section>
+
+        <section class="block">
+          <h3>Liquid reserves against cash needs</h3>
+          <p class="muted" id="chart-cap"></p>
+          <div class="chart" id="chart"><div class="tip" id="tip"></div></div>
+          <div class="legend"><span><i style="background:var(--ink)"></i>Cash and bonds, end of year</span><span><i style="background:var(--brass)"></i>Net cash needed that year</span></div>
+          <details>
+            <summary>Show year by year</summary>
+            <div class="tablewrap"><table id="yby"></table></div>
+          </details>
+        </section>
+
+        <section class="export no-print">
+          <h3>Save this stress test</h3>
+          <p class="muted" style="margin-top:6px;font-size:15px">Download the year-by-year results, or save a PDF for your investment committee.</p>
+          <div class="actions">
+            <button class="btn" type="button" data-act="csv">Download spreadsheet (CSV)</button>
+            <button class="btn ghost" type="button" data-act="pdf">Save as PDF</button>
+            <button class="btn ghost" type="button" id="copy">Copy link to this scenario</button>
+          </div>
+          <p class="fine" id="copied" role="status"></p>
+          <div class="gate" id="gate" hidden>
+            <h3 style="font-size:19px">Where should we send updates?</h3>
+            <p class="muted" style="font-size:15px;margin-top:4px">Your download starts right after. You'll only be asked once.</p>
+            <div class="hp" aria-hidden="true"><label>Leave this empty <input id="website" tabindex="-1" autocomplete="off"></label></div>
+            <div class="row" style="margin-top:14px">
+              <label>First name<input id="nm" autocomplete="given-name"></label>
+              <label>Email<input id="em" type="email" autocomplete="email"></label>
+              <label>You are<select id="rl"><option value="">Choose one</option><option>CIO or head of investments</option><option>Investment team at an endowment or foundation</option><option>Family office investment team</option><option>Pension or insurance investment team</option><option>Fund of funds or consultant</option><option>Fund manager</option></select></label>
+            </div>
+            <label class="check"><input type="checkbox" id="ok" checked> Send me the VC10X newsletter: how CIOs and allocators actually decide. Unsubscribe any time.</label>
+            <p class="err" id="gerr" role="alert"></p>
+            <button class="btn" type="button" id="unlock">Continue to download</button>
+            <p class="fine">Your numbers stay in your browser. We never see or store them.</p>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="guide">
+      <section>
+        <h2>Why allocators stress-test liquidity</h2>
+        <p>In a sell-off, three things happen at once. Public assets fall, private valuations lag, and distributions slow while capital calls keep coming. Allocators who haven't planned for it end up selling equities near the bottom, or selling fund interests at a discount, to meet commitments and spending.</p>
+      </section>
+      <section>
+        <h2>How to read the results</h2>
+        <ul>
+          <li><b>Coverage</b> is how many months of year-one net cash needs your cash and bonds can pay after the shock. Many allocators want at least twelve.</li>
+          <li><b>Equities sold</b> means cash and bonds ran out and the model had to sell public equity.</li>
+          <li><b>Private share</b> above your policy limit is the denominator effect. It can limit new commitments for several years.</li>
+        </ul>
+      </section>
+      <section>
+        <h2>What this test assumes</h2>
+        <ul>
+          <li>The shock happens at once, then the stress lasts the years you enter, with no growth in equities, bonds or private NAV.</li>
+          <li>Cash needs are paid from cash first, then bonds, then public equity. Private holdings are never sold.</li>
+          <li>Net inflows go to cash. There's no rebalancing back to target.</li>
+          <li>Spending is a percentage of the portfolio at the start of each year.</li>
+        </ul>
+        <p class="muted">This is a planning tool, not investment advice. Real crises differ in depth, length and order.</p>
+      </section>
+    </div>
+
+    <div class="guide-faq no-print">
+    <section class="faq">
+      <h2>Frequently asked questions</h2>
+      <h3>What is the denominator effect?</h3>
+      <p>When public markets fall faster than private valuations, which are reported with a lag, private assets become a larger share of the total portfolio. That can push the private allocation above its policy limit without any new commitments.</p>
+      <h3>What is a liquidity stress test?</h3>
+      <p>A scenario analysis of whether a portfolio can meet its cash needs, such as capital calls and spending, after a market shock, and which assets would have to be sold to do it.</p>
+      <h3>What happens to capital calls and distributions in a downturn?</h3>
+      <p>Distributions usually slow sharply as exits dry up, while capital calls often continue as managers keep investing. The gap between the two is what squeezes an allocator's liquidity.</p>
+      <h3>How much liquidity should an allocator hold against unfunded commitments?</h3>
+      <p>There's no single rule. Many allocators aim to cover at least a year of expected capital calls and spending under a stressed scenario from cash and high-quality bonds, so they're never forced to sell equities at the bottom.</p>
+      <h3>Can I sell private fund interests if I need liquidity?</h3>
+      <p>Yes, through the secondary market, but in a downturn buyers usually demand a discount to NAV, so it's an expensive source of liquidity. Planning reserves in advance is usually cheaper.</p>
+    </section>
+    <p class="updated">From <a href="/">VC10X</a>, hosted by <a href="/#about">Prashant Choubey</a>. Updated <time datetime="2026-10-03">3 October 2026</time>.</p>
+    </div>
+
+    <div class="cta no-print">
+      <h2>How allocators actually decide</h2>
+      <p>Every week, the VC10X newsletter shares how CIOs, endowments and family offices build portfolios, size private markets and pick managers, from 300+ conversations with allocators.</p>
+      <form class="sub" id="nl" novalidate>
+        <label class="hp" aria-hidden="true">Leave this empty <input name="website" tabindex="-1" autocomplete="off"></label>
+        <input type="email" name="email" placeholder="Your email" aria-label="Email address" autocomplete="email" required>
+        <button class="btn" type="submit">Get the newsletter</button>
+        <p class="formmsg" role="status"></p>
+      </form>
+      <p style="margin-top:18px">Plan future commitments with the <a href="/commitment-pacing-model/">commitment pacing model</a>.</p>
+    </div>
+  </main>
+
+  <footer>© <span id="yr">2026</span> <a href="/">VC10X</a>. Indicative only. Not legal, tax or investment advice.</footer>
+</div>
+
+<script>
+const SUBSCRIBE_ENDPOINT = "/api/subscribe";
+const LEAD_KEY = "vc10x-lead";
+const $ = id => document.getElementById(id);
+$("yr").textContent = new Date().getFullYear();
+const UTM = (() => {
+  try {
+    const q = new URLSearchParams(location.search), u = {};
+    ["utm_source","utm_medium","utm_campaign","utm_content"].forEach(k => { if (q.get(k)) u[k] = q.get(k).slice(0,100); });
+    if (!Object.keys(u).length && document.referrer && !document.referrer.includes(location.host)) u.referrer = document.referrer.slice(0,200);
+    return u;
+  } catch(e) { return {}; }
+})();
+const money = m => {           // m is in $M
+  if (!isFinite(m)) return "n/a";
+  const a = Math.abs(m), s = m < 0 ? "-" : "";
+  if (a < 0.0005) return "$0";
+  if (a >= 1000) return s + "$" + (a/1000).toFixed(a >= 10000 ? 0 : 2) + "B";
+  if (a >= 1) return s + "$" + (a >= 100 ? a.toFixed(0) : a.toFixed(a >= 10 ? 1 : 2)) + "M";
+  return s + "$" + Math.round(a*1000) + "K";
+};
+const pct = (v, d=1) => isFinite(v) ? (v*100).toFixed(d) + "%" : "n/a";
+const mult = v => isFinite(v) ? v.toFixed(2) + "x" : "n/a";
+function niceStep(x){ const p = Math.pow(10, Math.floor(Math.log10(x || 1))); const n = x / p; return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10) * p; }
+function readNums(ids, limits){
+  const v = {}, errs = [];
+  ids.forEach(k => {
+    let n = parseFloat(String($(k).value).replace(/[, $%]/g,""));
+    const [lo, hi] = limits[k];
+    if (!isFinite(n)) { n = lo; errs.push(k); }
+    v[k] = Math.min(hi, Math.max(lo, n));
+  });
+  return {v, errs};
+}
+function loadHash(ids, extra){
+  try {
+    const h = new URLSearchParams(location.hash.slice(1));
+    ids.forEach(k => { if (h.has(k) && isFinite(parseFloat(h.get(k)))) $(k).value = h.get(k); });
+    extra && extra(h);
+  } catch(e) {}
+}
+function saveHash(obj){ history.replaceState(null, "", "#" + new URLSearchParams(obj)); }
+function downloadCSV(rows, name){
+  const q = s => `"${String(s).replace(/"/g,'""')}"`;
+  const blob = new Blob([rows.map(r => r.map(q).join(",")).join("\n")], {type:"text/csv"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+function wireExport(formName, csv, render){
+  const ACTIONS = {csv, pdf: () => window.print()};
+  const lead = () => { try { return JSON.parse(localStorage.getItem(LEAD_KEY)); } catch(e) { return null; } };
+  let pending = null;
+  document.querySelectorAll("[data-act]").forEach(b => b.addEventListener("click", () => {
+    const act = b.dataset.act;
+    if (lead()) return ACTIONS[act]();
+    pending = act;
+    $("gate").hidden = false;
+    $("unlock").textContent = act === "csv" ? "Continue to download" : "Continue to PDF";
+    $("nm").focus();
+  }));
+  $("unlock").addEventListener("click", async () => {
+    const nm = $("nm").value.trim(), em = $("em").value.trim(), rl = $("rl").value, er = $("gerr"), btn = $("unlock");
+    if (!nm) { er.textContent = "Add your first name to continue."; return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { er.textContent = "Enter a valid email address, like name@example.com."; return; }
+    if (!rl) { er.textContent = "Choose the option that describes you best."; return; }
+    er.textContent = "";
+    const ok = $("ok").checked;
+    if (ok) {
+      btn.disabled = true; const label = btn.textContent; btn.textContent = "One moment";
+      try {
+        await fetch(SUBSCRIBE_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"},
+          body: JSON.stringify({form: formName, email: em, firstName: nm, role: rl, website: $("website").value, ...UTM})});
+      } catch(e) { /* never block the download on a network error */ }
+      btn.disabled = false; btn.textContent = label;
+    }
+    try { localStorage.setItem(LEAD_KEY, JSON.stringify({ok, t: Date.now()})); } catch(e) {}
+    $("gate").hidden = true;
+    if (pending) ACTIONS[pending]();
+  });
+  $("copy").addEventListener("click", async () => {
+    render();
+    try { await navigator.clipboard.writeText(location.href); $("copied").textContent = "Link copied. It opens with these numbers filled in."; }
+    catch(e) { $("copied").textContent = "Copy this link: " + location.href; }
+  });
+  $("nl").addEventListener("submit", async e => {
+    e.preventDefault();
+    const f = e.target, msg = f.querySelector(".formmsg"), btn = f.querySelector("button"), email = f.email.value.trim();
+    msg.classList.remove("err");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = "Enter a valid email address, like name@example.com."; msg.classList.add("err"); return; }
+    btn.disabled = true;
+    try {
+      const r = await fetch(SUBSCRIBE_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({form: formName + "-footer", email, website: f.website.value, ...UTM})});
+      if (!r.ok) throw new Error(r.status);
+      msg.textContent = "Subscribed. New issues will land in your inbox."; f.email.value = "";
+    } catch(err) { msg.textContent = "That didn't go through. Try again in a moment."; msg.classList.add("err"); }
+    btn.disabled = false;
+  });
+}
+// Line chart: series = [{rows:[{x,y}], color, dash}], shared axis. fmtY formats axis and tooltip values.
+function lineChart(box, tip, series, {xLabel="Year", fmtY, minY=0, tipText, aria}){
+  const W = 640, H = 240, pad = {l:56, r:10, t:14, b:34};
+  const xs = series[0].rows.map(r => r.x), n0 = Math.min(...xs), n1 = Math.max(...xs);
+  const vals = series.flatMap(s => s.rows.map(r => r.y));
+  const lo = Math.min(minY, ...vals), hi = Math.max(...vals) || 1;
+  const step = niceStep((hi - lo) / 4 || 1), top = Math.ceil(hi / step) * step, bot = Math.floor(lo / step) * step;
+  const iw = W - pad.l - pad.r, ih = H - pad.t - pad.b;
+  const x = v => pad.l + (v - n0) / ((n1 - n0) || 1) * iw, y = v => pad.t + ih - (v - bot) / ((top - bot) || 1) * ih;
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${aria}">`;
+  for (let g = bot; g <= top + 1e-9; g += step) {
+    s += `<line x1="${pad.l}" x2="${W-pad.r}" y1="${y(g)}" y2="${y(g)}" stroke="var(--line)" stroke-width="1"/>`;
+    s += `<text class="ax" x="${pad.l-8}" y="${y(g)+4}" text-anchor="end">${fmtY(g)}</text>`;
+  }
+  const span = n1 - n0, every = span <= 12 ? 1 : span <= 25 ? 5 : 10;
+  for (let t = n0; t <= n1; t += every) s += `<text class="ax" x="${x(t)}" y="${H-12}" text-anchor="middle">${t}</text>`;
+  s += `<text class="ax" x="${W-pad.r}" y="${H}" text-anchor="end">${xLabel}</text>`;
+  series.forEach(se => {
+    s += `<path d="${se.rows.map((r,i) => (i ? "L" : "M") + x(r.x).toFixed(1) + "," + y(r.y).toFixed(1)).join(" ")}" fill="none" stroke="${se.color}" stroke-width="2" ${se.dash ? 'stroke-dasharray="5 5"' : ""} stroke-linejoin="round" stroke-linecap="round"/>`;
+  });
+  s += `<line id="xh" x1="0" x2="0" y1="${pad.t}" y2="${pad.t+ih}" stroke="var(--muted)" stroke-width="1" opacity="0"/>`;
+  series.forEach((se, i) => { if (!se.dash) s += `<circle id="d${i}" r="4" fill="${se.color}" stroke="var(--paper)" stroke-width="2" opacity="0"/>`; });
+  s += `<rect x="${pad.l}" y="${pad.t}" width="${iw}" height="${ih}" fill="transparent" id="hit"/></svg>`;
+  box.innerHTML = s; box.appendChild(tip);
+  const svg = box.querySelector("svg"), hit = svg.querySelector("#hit");
+  const show = ev => {
+    const p = ev.touches ? ev.touches[0] : ev, b = svg.getBoundingClientRect();
+    const sx = (p.clientX - b.left) / b.width * W;
+    const xv = Math.max(n0, Math.min(n1, Math.round(n0 + (sx - pad.l) / iw * (n1 - n0))));
+    const xh = svg.querySelector("#xh"); xh.setAttribute("x1", x(xv)); xh.setAttribute("x2", x(xv)); xh.setAttribute("opacity", 1);
+    let top1 = Infinity;
+    series.forEach((se, i) => { const r = se.rows.find(r => r.x === xv); if (!r) return; top1 = Math.min(top1, y(r.y)); const d = svg.querySelector("#d" + i); if (d) { d.setAttribute("cx", x(xv)); d.setAttribute("cy", y(r.y)); d.setAttribute("opacity", 1); } });
+    tip.textContent = tipText(xv);
+    tip.style.left = Math.min(b.width - 100, Math.max(100, x(xv) / W * b.width)) + "px";
+    tip.style.top = (top1 / H * b.height - 10) + "px";
+    tip.style.opacity = 1;
+  };
+  hit.addEventListener("mousemove", show);
+  hit.addEventListener("touchstart", show, {passive:true});
+  hit.addEventListener("mouseleave", () => { tip.style.opacity = 0; svg.querySelectorAll("#xh,circle").forEach(el => el.setAttribute("opacity", 0)); });
+}
+const IDS = ["total","cash","bonds","eq","priv","unf","limit","seq","sbond","spriv","syears","spend","newc","calln","calls","distn","dists","req","rbond","rpriv","years"];
+const LIMITS = {total:[1,1e7],cash:[0,100],bonds:[0,100],eq:[0,100],priv:[0,100],unf:[0,1e7],limit:[0,100],seq:[0,90],sbond:[0,50],spriv:[0,90],syears:[0,5],spend:[0,20],newc:[0,1e6],calln:[0,100],calls:[0,100],distn:[0,100],dists:[0,100],req:[-20,30],rbond:[-10,20],rpriv:[-20,40],years:[1,10]};
+loadHash(IDS);
+
+function model(v){
+  const sum = v.cash + v.bonds + v.eq + v.priv || 1, f = k => v.total * v[k] / sum;
+  const before = {C:f("cash"), B:f("bonds"), E:f("eq"), P:f("priv")};
+  let C = before.C, B = before.B * (1 - v.sbond/100), E = before.E * (1 - v.seq/100), P = before.P * (1 - v.spriv/100), U = v.unf;
+  const after = {C, B, E, P};
+  const rows = [{y:0, C, B, E, P, U, T:C+B+E+P, need:0, sold:0}];
+  let soldTotal = 0, firstSale = null;
+  for (let y = 1; y <= v.years; y++) {
+    const stressed = y <= v.syears, T0 = C + B + E + P;
+    const calls = U * (stressed ? v.calls : v.calln) / 100;
+    const dist = P * (stressed ? v.dists : v.distn) / 100;
+    U = U - calls + v.newc;
+    if (!stressed) { E *= 1 + v.req/100; B *= 1 + v.rbond/100; C *= 1 + v.rbond/100; }
+    P = P * (stressed ? 1 : 1 + v.rpriv/100) + calls - dist;
+    const spend = T0 * v.spend/100, need = calls + spend - dist;
+    let left = need, sold = 0;
+    if (left < 0) { C -= left; left = 0; }
+    const fromC = Math.min(C, left); C -= fromC; left -= fromC;
+    const fromB = Math.min(B, left); B -= fromB; left -= fromB;
+    if (left > 0) { sold = Math.min(E, left); E -= sold; left -= sold; soldTotal += sold; if (firstSale == null) firstSale = y; }
+    rows.push({y, C, B, E, P, U, T:C+B+E+P, calls, dist, spend, need, sold, short:left});
+  }
+  return {before, after, rows, soldTotal, firstSale, sum};
+}
+
+function render(){
+  const {v, errs} = readNums(IDS, LIMITS);
+  v.years = Math.round(v.years); v.syears = Math.round(v.syears);
+  const M = model(v), r1 = M.rows[1], T0 = v.total, Ta = M.after.C + M.after.B + M.after.E + M.after.P;
+  const off = Math.abs(M.sum - 100) > 0.5;
+  $("inerr").textContent = (errs.length ? "Some fields aren't numbers, so we used the lowest allowed value. " : "") + (off ? `Your allocation adds up to ${M.sum.toFixed(1)}%, so we scaled it to 100%.` : "");
+
+  const pb = M.before.P / T0, pa = M.after.P / Ta, lim = v.limit/100;
+  $("k-p").textContent = pct(pa);
+  $("k-p-p").innerHTML = `Up from <b>${pct(pb)}</b> before the shock. ` + (pa > lim ? `That's <b>above your ${pct(lim, 0)} limit</b>, which can block new commitments.` : `Still within your ${pct(lim, 0)} limit.`) +
+    ` With unfunded commitments, exposure is <b>${pct((M.after.P + v.unf) / Ta)}</b>.` +
+    (() => { const pk = M.rows.reduce((m, r) => r.P / r.T > m.P / m.T ? r : m, M.rows[0]); return pk.y > 0 && pk.P / pk.T > pa + 0.005 ? ` As calls continue, it peaks at <b>${pct(pk.P / pk.T)}</b> in year ${pk.y}${pk.P / pk.T > lim ? ", above your limit" : ""}.` : ""; })();
+  const liq = M.after.C + M.after.B;
+  if (r1.need > 0) {
+    const months = liq / (r1.need / 12);
+    $("k-c").textContent = months >= 120 ? "120+ months" : months.toFixed(1) + " months";
+    $("k-c-p").innerHTML = `<b>${money(liq)}</b> in cash and bonds after the shock, against <b>${money(r1.need)}</b> of net cash needs in year one. ` + (months < 12 ? "Under a year of cover." : "At least a year of cover.");
+  } else {
+    $("k-c").textContent = "Covered";
+    $("k-c-p").innerHTML = `Distributions cover calls and spending in year one, with <b>${money(-r1.need)}</b> to spare.`;
+  }
+  $("k-s").textContent = money(M.soldTotal);
+  $("k-s-p").innerHTML = M.soldTotal > 0
+    ? `Cash and bonds run out in <b>year ${M.firstSale}</b>, so public equity has to be sold while it's down.` + (M.rows.some(r => r.short > 0.0005) ? " Even that isn't enough: <b>you run out of liquid assets</b>." : "")
+    : `Cash and bonds cover every year of the test without selling equities.`;
+  $("k-n").textContent = money(Math.max(0, r1.need));
+  $("k-n-p").innerHTML = `<b>${money(r1.calls)}</b> in calls plus <b>${money(r1.spend)}</b> in spending, less <b>${money(r1.dist)}</b> in distributions.`;
+
+  const row = (name, b, a, e) => `<tr><td>${name}</td><td>${money(b)}</td><td>${pct(b / T0)}</td><td>${money(a)}</td><td>${pct(a / Ta)}</td><td>${pct(e / M.rows[M.rows.length - 1].T)}</td></tr>`;
+  const L = M.rows[M.rows.length - 1];
+  $("alloc").innerHTML = `<thead><tr><th>Asset</th><th>Before</th><th>Share</th><th>After shock</th><th>Share</th><th>Year ${v.years} share</th></tr></thead><tbody>` +
+    row("Cash and short-term", M.before.C, M.after.C, L.C) + row("Bonds", M.before.B, M.after.B, L.B) +
+    row("Public equity", M.before.E, M.after.E, L.E) + row("Private markets NAV", M.before.P, M.after.P, L.P) +
+    `<tr><td><b>Total</b></td><td><b>${money(T0)}</b></td><td></td><td><b>${money(Ta)}</b></td><td></td><td></td></tr></tbody>`;
+
+  $("chart-cap").textContent = `A ${v.seq}% equity fall, with stressed cash flows for ${v.syears} year${v.syears === 1 ? "" : "s"}.`;
+  lineChart($("chart"), $("tip"), [
+    {rows: M.rows.map(r => ({x:r.y, y:r.C + r.B})), color:"var(--ink)"},
+    {rows: M.rows.map(r => ({x:r.y, y:Math.max(0, r.need)})), color:"var(--brass)"}
+  ], {xLabel:"Years after shock", fmtY: g => money(g), aria:"Liquid reserves and net cash needs by year",
+      tipText: y => { const r = M.rows[y]; return `Year ${y}: reserves ${money(r.C + r.B)} · needs ${money(Math.max(0, r.need))}`; }});
+  $("yby").innerHTML = `<thead><tr><th>Year</th><th>Calls</th><th>Distributions</th><th>Spending</th><th>Net need</th><th>Equity sold</th><th>Cash + bonds</th><th>Private share</th></tr></thead><tbody>` +
+    M.rows.slice(1).map(r => `<tr><td>${r.y}${r.y <= v.syears ? " (stress)" : ""}</td><td>${money(r.calls)}</td><td>${money(r.dist)}</td><td>${money(r.spend)}</td><td>${money(r.need)}</td><td>${money(r.sold)}</td><td>${money(r.C + r.B)}</td><td>${pct(r.P / r.T)}</td></tr>`).join("") + `</tbody>`;
+
+  $("printed").textContent = `${money(T0)} portfolio · ${v.seq}% equity fall · ${money(v.unf)} unfunded · ${v.syears}-year stress · vc10x.com/liquidity-stress-test`;
+  const h = {}; IDS.forEach(k => h[k] = v[k]); saveHash(h);
+  return {v, M};
+}
+IDS.forEach(k => $(k).addEventListener("input", render));
+render();
+
+function csv(){
+  const {v, M} = render();
+  const L = [["VC10X liquidity stress test"], ["vc10x.com/liquidity-stress-test/"], [], ["Inputs"]];
+  IDS.forEach(k => L.push([k, v[k]])); L.push([]);
+  L.push(["Year", "Calls ($M)", "Distributions ($M)", "Spending ($M)", "Net need ($M)", "Equity sold ($M)", "Cash ($M)", "Bonds ($M)", "Public equity ($M)", "Private NAV ($M)", "Unfunded ($M)", "Private share (%)"]);
+  M.rows.forEach(r => L.push([r.y, (r.calls||0).toFixed(3), (r.dist||0).toFixed(3), (r.spend||0).toFixed(3), r.need.toFixed(3), r.sold.toFixed(3), r.C.toFixed(3), r.B.toFixed(3), r.E.toFixed(3), r.P.toFixed(3), r.U.toFixed(3), (r.P / r.T * 100).toFixed(2)]));
+  L.push([], ["Year 0 is immediately after the shock. Indicative only. Not investment advice."]);
+  downloadCSV(L, `liquidity-stress-${v.total}M.csv`);
+}
+wireExport("liquidity-stress-test", csv, render);
+</script>
+</body>
+</html>

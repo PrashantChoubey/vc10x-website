@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Commitment Pacing Model for Private Markets: How Much to Commit Each Year | VC10X</title>
+<meta name="description" content="Free private markets commitment pacing model. See how much to commit to private funds each year to reach your target allocation, with projected capital calls, distributions and NAV.">
+<link rel="canonical" href="https://vc10x.com/commitment-pacing-model/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VC10X">
+<meta property="og:url" content="https://vc10x.com/commitment-pacing-model/">
+<meta property="og:title" content="Private Markets Commitment Pacing Model">
+<meta property="og:description" content="How much should you commit to private funds each year? An annual plan with projected calls, distributions and NAV. Free.">
+<meta property="og:image" content="https://vc10x.com/commitment-pacing-model/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@ChoubeySahab">
+<meta name="twitter:title" content="Private Markets Commitment Pacing Model">
+<meta name="twitter:description" content="How much to commit to private funds each year to hit your target allocation.">
+<meta name="twitter:image" content="https://vc10x.com/commitment-pacing-model/og.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "@id": "https://vc10x.com/commitment-pacing-model/#app", "name": "Private Markets Commitment Pacing Model", "url": "https://vc10x.com/commitment-pacing-model/", "applicationCategory": "FinanceApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@id": "https://vc10x.com/#org"}, "author": {"@id": "https://vc10x.com/#prashant"}, "dateModified": "2026-10-03"}, {"@type": "FAQPage", "@id": "https://vc10x.com/commitment-pacing-model/#faq", "mainEntity": [{"@type": "Question", "name": "What is a commitment pacing model?", "acceptedAnswer": {"@type": "Answer", "text": "A forecast of how much to commit to private funds each year to reach and hold a target allocation. It accounts for the fact that funds call capital over several years and start returning it before the last calls are made."}}, {"@type": "Question", "name": "Why can't I commit my whole target allocation in one year?", "acceptedAnswer": {"@type": "Answer", "text": "Commitments are called over several years and distributions begin before the last calls, so a single fund rarely has its full commitment invested at once. Allocators usually commit in steady annual vintages, which also spreads exposure across market cycles."}}, {"@type": "Question", "name": "What is the Takahashi–Alexander model?", "acceptedAnswer": {"@type": "Answer", "text": "A cash-flow model from the Yale Investments Office, published in 2002, that projects the contributions, distributions and NAV of private funds from a few inputs: contribution rates, fund life, a growth rate, and a bow factor that sets how back-ended distributions are."}}, {"@type": "Question", "name": "Why do allocators commit more than their target allocation?", "acceptedAnswer": {"@type": "Answer", "text": "Because at any time part of each commitment is still uncalled and part has already been returned. To keep invested NAV at the target, total exposure (NAV plus unfunded commitments) usually has to be well above it."}}, {"@type": "Question", "name": "How often should a pacing plan be updated?", "acceptedAnswer": {"@type": "Answer", "text": "At least once a year, and after large market moves. Public market returns, the pace of distributions and the size of the total portfolio all shift the plan."}}]}, {"@type": "Organization", "@id": "https://vc10x.com/#org", "name": "VC10X", "url": "https://vc10x.com/", "logo": "https://vc10x.com/apple-touch-icon.png", "description": "Podcast and newsletter with 300+ conversations with asset managers, allocators and family office principals on how capital is raised, allocated and protected.", "founder": {"@id": "https://vc10x.com/#prashant"}, "sameAs": ["https://www.youtube.com/@VC10X", "https://podcasts.apple.com/us/podcast/id1632806986", "https://open.spotify.com/show/7F7KEhXNhTx1bKTBFgzv3k"]}, {"@type": "Person", "@id": "https://vc10x.com/#prashant", "name": "Prashant Choubey", "jobTitle": "Host, VC10X", "url": "https://vc10x.com/#about", "worksFor": {"@id": "https://vc10x.com/#org"}, "sameAs": ["https://www.linkedin.com/in/choubeysahab", "https://x.com/ChoubeySahab", "https://podcast10x.com"]}]}
+</script>
+<!-- Analytics: paste your Plausible or Google Analytics snippet here -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FFFFFF; --panel:#F6F6F6; --ink:#000000; --muted:#5C5C5C; --line:#D9D9D9;
+  --green:#000000; --brass:#3FDCFF; --flag:#C0392B; --on-green:#FFFFFF;
+  --serif:"Newsreader", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --sans:"Hanken Grotesk", "Helvetica Neue", Arial, system-ui, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#000000; --panel:#111111; --ink:#FFFFFF; --muted:#A6A6A6; --line:#2B2B2B;
+    --green:#FFFFFF; --brass:#3FDCFF; --flag:#FF7A6B; --on-green:#000000;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#000000; --panel:#111111; --ink:#FFFFFF; --muted:#A6A6A6; --line:#2B2B2B;
+  --green:#FFFFFF; --brass:#3FDCFF; --flag:#FF7A6B; --on-green:#000000;
+}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-underline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 22px 64px}
+header.bar{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:48px}
+.mark{font-family:var(--serif);font-weight:600;font-size:20px;text-decoration:none}
+.bar small{color:var(--muted);font-size:14px}
+h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;margin:0}
+h1{font-size:clamp(38px,5.4vw,56px);line-height:1.04;max-width:16em}
+h2{font-size:clamp(26px,3.4vw,34px);line-height:1.15}
+h3{font-size:21px;line-height:1.25}
+p{margin:0}
+.lede{font-family:var(--serif);font-size:21px;line-height:1.5;max-width:36em;margin-top:20px}
+.muted{color:var(--muted)}
+button,input,select{font:inherit;color:inherit}
+.btn{display:inline-block;background:var(--green);color:var(--on-green);border:0;border-radius:6px;padding:13px 22px;font-weight:600;font-size:16px;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.6;cursor:wait}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;box-shadow:0 0 0 5px var(--brass)}
+
+.calc{display:grid;grid-template-columns:1fr;gap:40px;margin-top:44px}
+@media (min-width:900px){.calc{grid-template-columns:320px 1fr;gap:56px;align-items:start}.inputs{position:sticky;top:20px}}
+
+.inputs{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--brass);border-radius:4px;padding:22px}
+.inputs h2{font-size:22px;margin-bottom:16px}
+.group{border:0;margin:0 0 18px;padding:0}
+.group legend{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:0;margin-bottom:10px}
+.field{display:grid;grid-template-columns:1fr 112px;gap:10px;align-items:center;margin-bottom:10px}
+.field label{font-size:15px;line-height:1.3}
+.field label small{display:block;font-size:13px;color:var(--muted)}
+.unit{display:flex;align-items:center;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.unit:focus-within{border-color:var(--ink)}
+.unit span{padding:0 8px;color:var(--muted);font-size:14px}
+.unit input{width:100%;min-width:0;border:0;background:transparent;padding:10px 8px;text-align:right;font-variant-numeric:tabular-nums}
+.unit input:focus{outline:none}
+.unit:has(input:focus-visible){box-shadow:0 0 0 3px var(--brass)}
+.unit select{width:100%;border:0;background:transparent;padding:10px 6px;font-size:14px;cursor:pointer}
+.unit select:focus{outline:none}
+.field.wide{grid-template-columns:1fr 150px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.hide{display:none}
+.note{font-size:13px;color:var(--muted);margin-top:6px}
+
+.kpis{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid var(--line)}
+.kpi{padding:22px 0;border-bottom:1px solid var(--line)}
+.kpi dt{font-size:14px;color:var(--muted)}
+.kpi dd{margin:6px 0 0;font-family:var(--serif);font-weight:500;font-size:clamp(34px,4.4vw,46px);line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpi p{margin-top:8px;font-size:15px;color:var(--muted);max-width:30em}
+.kpi p b{color:var(--ink);font-weight:600}
+@media (min-width:640px){.kpis{grid-template-columns:1fr 1fr;column-gap:36px}}
+
+.block{margin-top:44px}
+.block > p.muted{margin-top:6px;font-size:15px;max-width:40em}
+.chart{position:relative;margin-top:18px}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart .ax{font:12px var(--sans);fill:var(--muted)}
+.chart .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--paper);font-size:13px;padding:6px 9px;border-radius:4px;white-space:nowrap;transform:translate(-50%,-100%);opacity:0;transition:opacity .12s}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15px;margin-top:16px}
+th,td{padding:10px 8px;text-align:right;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left;padding-left:0}
+th{font-weight:600;font-size:13px;color:var(--muted)}
+tr.be td{background:var(--panel);font-weight:600}
+details{margin-top:14px;font-size:15px}
+summary{cursor:pointer;color:var(--muted)}
+
+.export{margin-top:44px;padding:24px;border:1px solid var(--line);border-radius:4px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.gate{margin-top:20px;padding-top:20px;border-top:1px solid var(--line)}
+.gate .row{display:grid;grid-template-columns:1fr;gap:12px}
+@media (min-width:640px){.gate .row{grid-template-columns:1fr 1fr 1fr}}
+.gate label{display:grid;gap:6px;font-size:14px;font-weight:600}
+.gate input:not([type=checkbox]),.gate select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.check{display:flex !important;gap:10px;align-items:flex-start;font-weight:400 !important;color:var(--muted);margin:14px 0}
+.err{color:var(--flag);font-size:14px;min-height:1.2em;margin-bottom:8px}
+.fine{font-size:13px;color:var(--muted);margin-top:10px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+.guide{margin-top:88px;padding-top:56px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr;gap:44px}
+@media (min-width:900px){.guide{grid-template-columns:1fr 1fr;column-gap:56px}}
+.guide p{margin-top:12px;max-width:36em}
+.guide ul{margin:12px 0 0;padding-left:20px;max-width:36em}
+.guide li{margin:6px 0}
+.cta{margin-top:72px;padding:36px;background:var(--panel);border-radius:4px}
+.cta p{margin-top:10px;max-width:36em;color:var(--muted)}
+.sub{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;max-width:520px}
+.sub input[type=email]{flex:1 1 220px;padding:13px 14px;border:1px solid var(--line);border-radius:6px;background:var(--paper)}
+.formmsg{flex-basis:100%;font-size:14px;min-height:1.3em;color:var(--muted)}
+.formmsg.err{color:var(--flag)}
+footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+
+.print-only{display:none}
+@media print{
+  body{font-size:12px;background:#fff;color:#000}
+  .no-print,.export,.guide,.cta,footer,.chart .tip{display:none !important}
+  .print-only{display:block}
+  .calc{display:block;margin-top:16px}
+  .inputs{position:static;border:1px solid #999;padding:12px}
+  .kpi dd{font-size:26px}
+  .block{margin-top:20px;break-inside:avoid}
+  h1{font-size:28px}
+}
+.faq h3{font-family:var(--serif);font-size:21px;font-weight:500;margin-top:26px;line-height:1.3}
+.faq p{margin-top:8px;max-width:38em;color:var(--muted)}
+.updated{margin-top:44px;font-size:14px;color:var(--muted)}
+.updated a{color:inherit}
+.guide-faq{margin-top:72px;padding-top:44px;border-top:1px solid var(--line)}
+.guide-faq h2{font-size:clamp(26px,3.4vw,34px)}
+.tablewrap{overflow-x:auto}
+.tablewrap table{min-width:560px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <a class="mark" href="/">VC10X</a>
+    <small>For CIOs and allocators</small>
+  </header>
+
+  <main>
+    <h1>Private markets commitment pacing model</h1>
+    <p class="lede no-print">How much should you commit to private funds each year to reach and hold your target allocation? Enter your portfolio and fund assumptions to get an annual commitment plan, with projected calls, distributions and NAV.</p>
+    <p class="print-only muted" id="printed"></p>
+
+    <div class="calc">
+      <form class="inputs" id="f" autocomplete="off" onsubmit="return false">
+        <h2>Your portfolio</h2>
+        <fieldset class="group">
+          <legend>Today</legend>
+          <div class="field"><label for="total">Total portfolio</label><div class="unit"><span>$</span><input id="total" inputmode="decimal" value="1000"><span>M</span></div></div>
+          <div class="field"><label for="nav">Private markets NAV</label><div class="unit"><span>$</span><input id="nav" inputmode="decimal" value="100"><span>M</span></div></div>
+          <div class="field"><label for="unf">Unfunded commitments</label><div class="unit"><span>$</span><input id="unf" inputmode="decimal" value="60"><span>M</span></div></div>
+          <div class="field"><label for="age">Average age of current funds</label><div class="unit"><input id="age" inputmode="decimal" value="4"><span>yrs</span></div></div>
+        </fieldset>
+        <fieldset class="group">
+          <legend>Goals</legend>
+          <div class="field"><label for="target">Target private allocation<small>% of total portfolio</small></label><div class="unit"><input id="target" inputmode="decimal" value="20"><span>%</span></div></div>
+          <div class="field"><label for="years">Years to plan</label><div class="unit"><input id="years" inputmode="numeric" value="12"><span>yrs</span></div></div>
+          <div class="field wide"><label for="mode">Annual commitment</label><div class="unit"><select id="mode"><option value="solve">Solve for target</option><option value="fixed">Set my own</option></select></div></div>
+          <div class="field hide" id="crow"><label for="commit">Commit each year<small>% of total portfolio</small></label><div class="unit"><input id="commit" inputmode="decimal" value="5"><span>%</span></div></div>
+        </fieldset>
+        <fieldset class="group">
+          <legend>Rest of the portfolio</legend>
+          <div class="field"><label for="rpub">Return on public assets<small>a year</small></label><div class="unit"><input id="rpub" inputmode="decimal" value="6"><span>%</span></div></div>
+          <div class="field"><label for="spend">Spending or payout<small>% of portfolio a year</small></label><div class="unit"><input id="spend" inputmode="decimal" value="4"><span>%</span></div></div>
+        </fieldset>
+        <fieldset class="group" style="margin-bottom:0">
+          <legend>Fund assumptions</legend>
+          <div class="field"><label for="g">Fund NAV growth<small>a year</small></label><div class="unit"><input id="g" inputmode="decimal" value="12"><span>%</span></div></div>
+          <div class="field"><label for="life">Fund life</label><div class="unit"><input id="life" inputmode="numeric" value="12"><span>yrs</span></div></div>
+          <div class="field"><label for="bow">Bow factor<small>higher = later distributions</small></label><div class="unit"><input id="bow" inputmode="decimal" value="2.5"></div></div>
+          <div class="field"><label for="rc1">Called in year 1<small>% of unfunded</small></label><div class="unit"><input id="rc1" inputmode="decimal" value="25"><span>%</span></div></div>
+          <div class="field"><label for="rc2">Called in year 2</label><div class="unit"><input id="rc2" inputmode="decimal" value="33"><span>%</span></div></div>
+          <div class="field"><label for="rc3">Called each year after</label><div class="unit"><input id="rc3" inputmode="decimal" value="50"><span>%</span></div></div>
+        </fieldset>
+        <p class="err no-print" id="inerr" role="alert"></p>
+      </form>
+
+      <div id="out" aria-live="polite">
+        <dl class="kpis">
+          <div class="kpi"><dt>Commit each year</dt><dd id="k-c"></dd><p id="k-c-p"></p></div>
+          <div class="kpi"><dt id="k-t-t">Private NAV at the end of the plan</dt><dd id="k-t"></dd><p id="k-t-p"></p></div>
+          <div class="kpi"><dt>Peak exposure, NAV plus unfunded</dt><dd id="k-x"></dd><p id="k-x-p"></p></div>
+          <div class="kpi"><dt>Net cash flow next year</dt><dd id="k-n"></dd><p id="k-n-p"></p></div>
+        </dl>
+
+        <section class="block">
+          <h3>Private markets as a share of the portfolio</h3>
+          <p class="muted" id="chart-cap"></p>
+          <div class="chart" id="chart"><div class="tip" id="tip"></div></div>
+          <div class="legend"><span><i style="background:var(--ink)"></i>Private NAV</span><span><i style="background:var(--brass)"></i>NAV plus unfunded</span><span><i style="background:var(--muted);height:2px;vertical-align:4px"></i>Target</span></div>
+        </section>
+
+        <section class="block">
+          <h3>Year-by-year plan</h3>
+          <div class="tablewrap"><table id="plan"></table></div>
+        </section>
+
+        <section class="export no-print">
+          <h3>Save this plan</h3>
+          <p class="muted" style="margin-top:6px;font-size:15px">Download the year-by-year plan, or save a PDF for your investment committee.</p>
+          <div class="actions">
+            <button class="btn" type="button" data-act="csv">Download spreadsheet (CSV)</button>
+            <button class="btn ghost" type="button" data-act="pdf">Save as PDF</button>
+            <button class="btn ghost" type="button" id="copy">Copy link to this scenario</button>
+          </div>
+          <p class="fine" id="copied" role="status"></p>
+          <div class="gate" id="gate" hidden>
+            <h3 style="font-size:19px">Where should we send updates?</h3>
+            <p class="muted" style="font-size:15px;margin-top:4px">Your download starts right after. You'll only be asked once.</p>
+            <div class="hp" aria-hidden="true"><label>Leave this empty <input id="website" tabindex="-1" autocomplete="off"></label></div>
+            <div class="row" style="margin-top:14px">
+              <label>First name<input id="nm" autocomplete="given-name"></label>
+              <label>Email<input id="em" type="email" autocomplete="email"></label>
+              <label>You are<select id="rl"><option value="">Choose one</option><option>CIO or head of investments</option><option>Investment team at an endowment or foundation</option><option>Family office investment team</option><option>Pension or insurance investment team</option><option>Fund of funds or consultant</option><option>Fund manager</option></select></label>
+            </div>
+            <label class="check"><input type="checkbox" id="ok" checked> Send me the VC10X newsletter: how CIOs and allocators actually decide. Unsubscribe any time.</label>
+            <p class="err" id="gerr" role="alert"></p>
+            <button class="btn" type="button" id="unlock">Continue to download</button>
+            <p class="fine">Your numbers stay in your browser. We never see or store them.</p>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="guide">
+      <section>
+        <h2>Why pacing matters</h2>
+        <p>A private fund commitment isn't invested on day one. Capital is called over several years, and distributions start before the last calls arrive. Commit too little and you never reach your target. Commit too much in one year and you concentrate in a single vintage and strain liquidity when calls bunch up.</p>
+      </section>
+      <section>
+        <h2>How the model works</h2>
+        <p>Each year's commitment is modeled as its own vintage using the Takahashi–Alexander approach. A share of what's still unfunded is called each year. NAV grows at the fund growth rate, and a rising share of NAV is distributed as the fund ages, shaped by the bow factor. In solve mode, the model finds the steady commitment, as a % of the total portfolio each year, that lands private NAV on your target by the end of the plan.</p>
+      </section>
+      <section>
+        <h2>Choosing assumptions</h2>
+        <ul>
+          <li>Venture funds usually call capital more slowly and distribute later than buyout funds. Try a lower year 1 call rate and a higher bow factor.</li>
+          <li>Fund growth is the NAV growth before distributions, not the net IRR you expect.</li>
+          <li>Run a cautious case with slower distributions and lower growth before you commit to a plan.</li>
+        </ul>
+      </section>
+      <section>
+        <h2>What this model assumes</h2>
+        <ul>
+          <li>Annual steps, one blended set of fund assumptions, and commitments made at the start of each year.</li>
+          <li>Your current funds behave like a single pool of the average age you enter.</li>
+          <li>Spending is paid from public assets, which also fund calls and receive distributions.</li>
+          <li>Funds distribute everything by the end of their life.</li>
+        </ul>
+        <p class="muted">This is a planning tool, not investment advice. Real cash flows vary widely by fund, strategy and vintage.</p>
+      </section>
+    </div>
+
+    <div class="guide-faq no-print">
+    <section class="faq">
+      <h2>Frequently asked questions</h2>
+      <h3>What is a commitment pacing model?</h3>
+      <p>A forecast of how much to commit to private funds each year to reach and hold a target allocation. It accounts for the fact that funds call capital over several years and start returning it before the last calls are made.</p>
+      <h3>Why can't I commit my whole target allocation in one year?</h3>
+      <p>Commitments are called over several years and distributions begin before the last calls, so a single fund rarely has its full commitment invested at once. Allocators usually commit in steady annual vintages, which also spreads exposure across market cycles.</p>
+      <h3>What is the Takahashi–Alexander model?</h3>
+      <p>A cash-flow model from the Yale Investments Office, published in 2002, that projects the contributions, distributions and NAV of private funds from a few inputs: contribution rates, fund life, a growth rate, and a bow factor that sets how back-ended distributions are.</p>
+      <h3>Why do allocators commit more than their target allocation?</h3>
+      <p>Because at any time part of each commitment is still uncalled and part has already been returned. To keep invested NAV at the target, total exposure (NAV plus unfunded commitments) usually has to be well above it.</p>
+      <h3>How often should a pacing plan be updated?</h3>
+      <p>At least once a year, and after large market moves. Public market returns, the pace of distributions and the size of the total portfolio all shift the plan.</p>
+    </section>
+    <p class="updated">From <a href="/">VC10X</a>, hosted by <a href="/#about">Prashant Choubey</a>. Updated <time datetime="2026-10-03">3 October 2026</time>.</p>
+    </div>
+
+    <div class="cta no-print">
+      <h2>How allocators actually decide</h2>
+      <p>Every week, the VC10X newsletter shares how CIOs, endowments and family offices build portfolios, size private markets and pick managers, from 300+ conversations with allocators.</p>
+      <form class="sub" id="nl" novalidate>
+        <label class="hp" aria-hidden="true">Leave this empty <input name="website" tabindex="-1" autocomplete="off"></label>
+        <input type="email" name="email" placeholder="Your email" aria-label="Email address" autocomplete="email" required>
+        <button class="btn" type="submit">Get the newsletter</button>
+        <p class="formmsg" role="status"></p>
+      </form>
+      <p style="margin-top:18px">Stress-test the plan with the <a href="/liquidity-stress-test/">liquidity stress test</a>, or measure your funds with the <a href="/fund-performance-calculator/">fund performance calculator</a>.</p>
+    </div>
+  </main>
+
+  <footer>© <span id="yr">2026</span> <a href="/">VC10X</a>. Indicative only. Not legal, tax or investment advice.</footer>
+</div>
+
+<script>
+const SUBSCRIBE_ENDPOINT = "/api/subscribe";
+const LEAD_KEY = "vc10x-lead";
+const $ = id => document.getElementById(id);
+$("yr").textContent = new Date().getFullYear();
+const UTM = (() => {
+  try {
+    const q = new URLSearchParams(location.search), u = {};
+    ["utm_source","utm_medium","utm_campaign","utm_content"].forEach(k => { if (q.get(k)) u[k] = q.get(k).slice(0,100); });
+    if (!Object.keys(u).length && document.referrer && !document.referrer.includes(location.host)) u.referrer = document.referrer.slice(0,200);
+    return u;
+  } catch(e) { return {}; }
+})();
+const money = m => {           // m is in $M
+  if (!isFinite(m)) return "n/a";
+  const a = Math.abs(m), s = m < 0 ? "-" : "";
+  if (a < 0.0005) return "$0";
+  if (a >= 1000) return s + "$" + (a/1000).toFixed(a >= 10000 ? 0 : 2) + "B";
+  if (a >= 1) return s + "$" + (a >= 100 ? a.toFixed(0) : a.toFixed(a >= 10 ? 1 : 2)) + "M";
+  return s + "$" + Math.round(a*1000) + "K";
+};
+const pct = (v, d=1) => isFinite(v) ? (v*100).toFixed(d) + "%" : "n/a";
+const mult = v => isFinite(v) ? v.toFixed(2) + "x" : "n/a";
+function niceStep(x){ const p = Math.pow(10, Math.floor(Math.log10(x || 1))); const n = x / p; return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10) * p; }
+function readNums(ids, limits){
+  const v = {}, errs = [];
+  ids.forEach(k => {
+    let n = parseFloat(String($(k).value).replace(/[, $%]/g,""));
+    const [lo, hi] = limits[k];
+    if (!isFinite(n)) { n = lo; errs.push(k); }
+    v[k] = Math.min(hi, Math.max(lo, n));
+  });
+  return {v, errs};
+}
+function loadHash(ids, extra){
+  try {
+    const h = new URLSearchParams(location.hash.slice(1));
+    ids.forEach(k => { if (h.has(k) && isFinite(parseFloat(h.get(k)))) $(k).value = h.get(k); });
+    extra && extra(h);
+  } catch(e) {}
+}
+function saveHash(obj){ history.replaceState(null, "", "#" + new URLSearchParams(obj)); }
+function downloadCSV(rows, name){
+  const q = s => `"${String(s).replace(/"/g,'""')}"`;
+  const blob = new Blob([rows.map(r => r.map(q).join(",")).join("\n")], {type:"text/csv"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+function wireExport(formName, csv, render){
+  const ACTIONS = {csv, pdf: () => window.print()};
+  const lead = () => { try { return JSON.parse(localStorage.getItem(LEAD_KEY)); } catch(e) { return null; } };
+  let pending = null;
+  document.querySelectorAll("[data-act]").forEach(b => b.addEventListener("click", () => {
+    const act = b.dataset.act;
+    if (lead()) return ACTIONS[act]();
+    pending = act;
+    $("gate").hidden = false;
+    $("unlock").textContent = act === "csv" ? "Continue to download" : "Continue to PDF";
+    $("nm").focus();
+  }));
+  $("unlock").addEventListener("click", async () => {
+    const nm = $("nm").value.trim(), em = $("em").value.trim(), rl = $("rl").value, er = $("gerr"), btn = $("unlock");
+    if (!nm) { er.textContent = "Add your first name to continue."; return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { er.textContent = "Enter a valid email address, like name@example.com."; return; }
+    if (!rl) { er.textContent = "Choose the option that describes you best."; return; }
+    er.textContent = "";
+    const ok = $("ok").checked;
+    if (ok) {
+      btn.disabled = true; const label = btn.textContent; btn.textContent = "One moment";
+      try {
+        await fetch(SUBSCRIBE_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"},
+          body: JSON.stringify({form: formName, email: em, firstName: nm, role: rl, website: $("website").value, ...UTM})});
+      } catch(e) { /* never block the download on a network error */ }
+      btn.disabled = false; btn.textContent = label;
+    }
+    try { localStorage.setItem(LEAD_KEY, JSON.stringify({ok, t: Date.now()})); } catch(e) {}
+    $("gate").hidden = true;
+    if (pending) ACTIONS[pending]();
+  });
+  $("copy").addEventListener("click", async () => {
+    render();
+    try { await navigator.clipboard.writeText(location.href); $("copied").textContent = "Link copied. It opens with these numbers filled in."; }
+    catch(e) { $("copied").textContent = "Copy this link: " + location.href; }
+  });
+  $("nl").addEventListener("submit", async e => {
+    e.preventDefault();
+    const f = e.target, msg = f.querySelector(".formmsg"), btn = f.querySelector("button"), email = f.email.value.trim();
+    msg.classList.remove("err");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = "Enter a valid email address, like name@example.com."; msg.classList.add("err"); return; }
+    btn.disabled = true;
+    try {
+      const r = await fetch(SUBSCRIBE_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({form: formName + "-footer", email, website: f.website.value, ...UTM})});
+      if (!r.ok) throw new Error(r.status);
+      msg.textContent = "Subscribed. New issues will land in your inbox."; f.email.value = "";
+    } catch(err) { msg.textContent = "That didn't go through. Try again in a moment."; msg.classList.add("err"); }
+    btn.disabled = false;
+  });
+}
+// Line chart: series = [{rows:[{x,y}], color, dash}], shared axis. fmtY formats axis and tooltip values.
+function lineChart(box, tip, series, {xLabel="Year", fmtY, minY=0, tipText, aria}){
+  const W = 640, H = 240, pad = {l:56, r:10, t:14, b:34};
+  const xs = series[0].rows.map(r => r.x), n0 = Math.min(...xs), n1 = Math.max(...xs);
+  const vals = series.flatMap(s => s.rows.map(r => r.y));
+  const lo = Math.min(minY, ...vals), hi = Math.max(...vals) || 1;
+  const step = niceStep((hi - lo) / 4 || 1), top = Math.ceil(hi / step) * step, bot = Math.floor(lo / step) * step;
+  const iw = W - pad.l - pad.r, ih = H - pad.t - pad.b;
+  const x = v => pad.l + (v - n0) / ((n1 - n0) || 1) * iw, y = v => pad.t + ih - (v - bot) / ((top - bot) || 1) * ih;
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${aria}">`;
+  for (let g = bot; g <= top + 1e-9; g += step) {
+    s += `<line x1="${pad.l}" x2="${W-pad.r}" y1="${y(g)}" y2="${y(g)}" stroke="var(--line)" stroke-width="1"/>`;
+    s += `<text class="ax" x="${pad.l-8}" y="${y(g)+4}" text-anchor="end">${fmtY(g)}</text>`;
+  }
+  const span = n1 - n0, every = span <= 12 ? 1 : span <= 25 ? 5 : 10;
+  for (let t = n0; t <= n1; t += every) s += `<text class="ax" x="${x(t)}" y="${H-12}" text-anchor="middle">${t}</text>`;
+  s += `<text class="ax" x="${W-pad.r}" y="${H}" text-anchor="end">${xLabel}</text>`;
+  series.forEach(se => {
+    s += `<path d="${se.rows.map((r,i) => (i ? "L" : "M") + x(r.x).toFixed(1) + "," + y(r.y).toFixed(1)).join(" ")}" fill="none" stroke="${se.color}" stroke-width="2" ${se.dash ? 'stroke-dasharray="5 5"' : ""} stroke-linejoin="round" stroke-linecap="round"/>`;
+  });
+  s += `<line id="xh" x1="0" x2="0" y1="${pad.t}" y2="${pad.t+ih}" stroke="var(--muted)" stroke-width="1" opacity="0"/>`;
+  series.forEach((se, i) => { if (!se.dash) s += `<circle id="d${i}" r="4" fill="${se.color}" stroke="var(--paper)" stroke-width="2" opacity="0"/>`; });
+  s += `<rect x="${pad.l}" y="${pad.t}" width="${iw}" height="${ih}" fill="transparent" id="hit"/></svg>`;
+  box.innerHTML = s; box.appendChild(tip);
+  const svg = box.querySelector("svg"), hit = svg.querySelector("#hit");
+  const show = ev => {
+    const p = ev.touches ? ev.touches[0] : ev, b = svg.getBoundingClientRect();
+    const sx = (p.clientX - b.left) / b.width * W;
+    const xv = Math.max(n0, Math.min(n1, Math.round(n0 + (sx - pad.l) / iw * (n1 - n0))));
+    const xh = svg.querySelector("#xh"); xh.setAttribute("x1", x(xv)); xh.setAttribute("x2", x(xv)); xh.setAttribute("opacity", 1);
+    let top1 = Infinity;
+    series.forEach((se, i) => { const r = se.rows.find(r => r.x === xv); if (!r) return; top1 = Math.min(top1, y(r.y)); const d = svg.querySelector("#d" + i); if (d) { d.setAttribute("cx", x(xv)); d.setAttribute("cy", y(r.y)); d.setAttribute("opacity", 1); } });
+    tip.textContent = tipText(xv);
+    tip.style.left = Math.min(b.width - 100, Math.max(100, x(xv) / W * b.width)) + "px";
+    tip.style.top = (top1 / H * b.height - 10) + "px";
+    tip.style.opacity = 1;
+  };
+  hit.addEventListener("mousemove", show);
+  hit.addEventListener("touchstart", show, {passive:true});
+  hit.addEventListener("mouseleave", () => { tip.style.opacity = 0; svg.querySelectorAll("#xh,circle").forEach(el => el.setAttribute("opacity", 0)); });
+}
+const IDS = ["total","nav","unf","age","target","years","commit","rpub","spend","g","life","bow","rc1","rc2","rc3"];
+const LIMITS = {total:[1,1e7],nav:[0,1e7],unf:[0,1e7],age:[0,15],target:[0,90],years:[3,30],commit:[0,50],rpub:[-10,30],spend:[0,20],g:[-20,40],life:[4,20],bow:[0.5,6],rc1:[0,100],rc2:[0,100],rc3:[0,100]};
+loadHash(IDS, h => { if (["solve","fixed"].includes(h.get("mode"))) $("mode").value = h.get("mode"); });
+
+function simulate(v, c){
+  const rc = age => age <= 1 ? v.rc1/100 : age === 2 ? v.rc2/100 : v.rc3/100;
+  const rd = age => age >= v.life ? 1 : Math.pow(age / v.life, v.bow);
+  const pools = [{nav:v.nav, unf:v.unf, age:Math.round(v.age)}];
+  let pub = Math.max(0, v.total - v.nav);
+  const rows = [{y:0, total:v.total, nav:v.nav, unf:v.unf, commit:0, calls:0, dist:0}];
+  for (let y = 1; y <= v.years; y++) {
+    const T = pub + pools.reduce((s, p) => s + p.nav, 0);
+    const commit = c * T;
+    pools.push({nav:0, unf:commit, age:0});
+    let calls = 0, dist = 0;
+    pools.forEach(p => {
+      p.age += 1;
+      const call = p.unf * rc(p.age); p.unf -= call;
+      const grown = p.nav * (1 + v.g/100), d = grown * rd(p.age);
+      p.nav = grown + call - d; calls += call; dist += d;
+      if (p.age >= v.life) { p.unf = 0; }
+    });
+    pub = pub * (1 + v.rpub/100) - (v.spend/100) * T - calls + dist;
+    const nav = pools.reduce((s, p) => s + p.nav, 0), unf = pools.reduce((s, p) => s + p.unf, 0);
+    rows.push({y, total:pub + nav, nav, unf, commit, calls, dist, pub});
+  }
+  return rows;
+}
+function solve(v){
+  const end = c => { const r = simulate(v, c); const L = r[r.length - 1]; return L.nav / L.total; };
+  const t = v.target / 100;
+  if (end(0.5) < t) return {c:0.5, reachable:false};
+  let lo = 0, hi = 0.5;
+  for (let i = 0; i < 60; i++) { const m = (lo + hi) / 2; if (end(m) < t) lo = m; else hi = m; }
+  return {c:(lo + hi) / 2, reachable:true};
+}
+
+function render(){
+  const {v, errs} = readNums(IDS, LIMITS);
+  v.years = Math.round(v.years); v.life = Math.round(v.life);
+  v.mode = $("mode").value;
+  $("inerr").textContent = errs.length ? "Some fields aren't numbers, so we used the lowest allowed value." : "";
+  $("crow").classList.toggle("hide", v.mode !== "fixed");
+  const S = v.mode === "solve" ? solve(v) : {c:v.commit/100, reachable:true};
+  const rows = simulate(v, S.c), last = rows[rows.length - 1], t = v.target/100;
+  const hit = rows.find(r => r.y > 0 && r.nav / r.total >= t * 0.98);
+  const peak = rows.reduce((m, r) => (r.nav + r.unf) / r.total > (m.nav + m.unf) / m.total ? r : m, rows[0]);
+
+  $("k-c").textContent = pct(S.c);
+  $("k-c-p").innerHTML = (v.mode === "solve" && !S.reachable ? `Even 50% a year doesn't reach the target in ${v.years} years. Lengthen the plan or revisit the assumptions. ` : "") +
+    `About <b>${money(rows[1].commit)}</b> next year, growing with the portfolio to <b>${money(last.commit)}</b> by year ${v.years}.`;
+  $("k-t").textContent = pct(last.nav / last.total);
+  $("k-t-p").innerHTML = `<b>${money(last.nav)}</b> of a <b>${money(last.total)}</b> portfolio, against a ${pct(t, 0)} target. ` +
+    (hit ? `Within 2% of target from year ${hit.y}.` : `Not within 2% of target during the plan.`);
+  $("k-x").textContent = pct((peak.nav + peak.unf) / peak.total);
+  $("k-x-p").innerHTML = `In year ${peak.y}: <b>${money(peak.nav)}</b> NAV plus <b>${money(peak.unf)}</b> unfunded. That's what you're exposed to if calls speed up.`;
+  const n1 = rows[1].dist - rows[1].calls;
+  $("k-n").textContent = (n1 >= 0 ? "+" : "") + money(n1);
+  $("k-n-p").innerHTML = `<b>${money(rows[1].calls)}</b> in calls and <b>${money(rows[1].dist)}</b> in distributions. ` + (n1 < 0 ? "Plan the liquidity to fund it." : "Private markets are returning more than they call.");
+  $("chart-cap").textContent = `Commit ${pct(S.c)} of the portfolio each year, against a ${pct(t, 0)} target.`;
+
+  lineChart($("chart"), $("tip"), [
+    {rows: rows.map(r => ({x:r.y, y:(r.nav + r.unf) / r.total * 100})), color:"var(--brass)"},
+    {rows: rows.map(r => ({x:r.y, y:r.nav / r.total * 100})), color:"var(--ink)"},
+    {rows: rows.map(r => ({x:r.y, y:v.target})), color:"var(--muted)", dash:true}
+  ], {fmtY: g => g.toFixed(0) + "%", aria:"Private NAV and total exposure as a share of the portfolio by year",
+      tipText: y => { const r = rows[y]; return `Year ${y}: NAV ${pct(r.nav / r.total)} · with unfunded ${pct((r.nav + r.unf) / r.total)}`; }});
+
+  $("plan").innerHTML = `<thead><tr><th>Year</th><th>Commit</th><th>Calls</th><th>Distributions</th><th>Net cash flow</th><th>NAV</th><th>NAV %</th><th>Unfunded</th></tr></thead><tbody>` +
+    rows.slice(1).map(r => `<tr><td>${r.y}</td><td>${money(r.commit)}</td><td>${money(r.calls)}</td><td>${money(r.dist)}</td><td>${money(r.dist - r.calls)}</td><td>${money(r.nav)}</td><td>${pct(r.nav / r.total)}</td><td>${money(r.unf)}</td></tr>`).join("") + `</tbody>`;
+
+  $("printed").textContent = `${money(v.total)} portfolio · ${pct(t, 0)} target · commit ${pct(S.c)} a year · ${v.g}% fund growth, ${v.life}-year life, bow ${v.bow} · vc10x.com/commitment-pacing-model`;
+  const h = {}; IDS.forEach(k => h[k] = v[k]); h.mode = v.mode; saveHash(h);
+  return {v, rows, c:S.c};
+}
+IDS.forEach(k => $(k).addEventListener("input", render));
+$("mode").addEventListener("change", render);
+render();
+
+function csv(){
+  const {v, rows, c} = render();
+  const L = [["VC10X commitment pacing model"], ["vc10x.com/commitment-pacing-model/"], [], ["Inputs"]];
+  IDS.forEach(k => L.push([k, v[k]])); L.push(["mode", v.mode], ["Commitment, % of portfolio a year", (c*100).toFixed(2)], []);
+  L.push(["Year", "Commitment ($M)", "Calls ($M)", "Distributions ($M)", "Net cash flow ($M)", "Private NAV ($M)", "Unfunded ($M)", "Total portfolio ($M)", "NAV % of portfolio"]);
+  rows.slice(1).forEach(r => L.push([r.y, r.commit.toFixed(3), r.calls.toFixed(3), r.dist.toFixed(3), (r.dist - r.calls).toFixed(3), r.nav.toFixed(3), r.unf.toFixed(3), r.total.toFixed(3), (r.nav / r.total * 100).toFixed(2)]));
+  L.push([], ["Takahashi-Alexander style model. Indicative only. Not investment advice."]);
+  downloadCSV(L, `pacing-plan-${v.total}M.csv`);
+}
+wireExport("commitment-pacing-model", csv, render);
+</script>
+</body>
+</html>

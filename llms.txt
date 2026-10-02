@@ -7,6 +7,9 @@ All tools are free. Audit answers and calculator inputs stay in the visitor's br
 ## Tools
 
 - [Venture Fund Economics Calculator](https://vc10x.com/fund-economics-calculator/): Model management fees by year, GP commit (cash or fee waiver), and the return a fund must deliver before carried interest pays out, with carry at different outcomes.
+- [Private Markets Commitment Pacing Model](https://vc10x.com/commitment-pacing-model/): For CIOs and allocators. Solves for the annual commitment needed to reach a target private markets allocation, with projected capital calls, distributions and NAV (Takahashi-Alexander style model).
+- [Liquidity Stress Test](https://vc10x.com/liquidity-stress-test/): For CIOs and allocators. Tests whether a portfolio can meet capital calls and spending after a market shock, how far the private allocation drifts (the denominator effect), and whether equities would have to be sold.
+- [Fund Performance Calculator](https://vc10x.com/fund-performance-calculator/): Calculates TVPI, DPI, RVPI, net IRR and a Kaplan-Schoar public market equivalent (PME) from a fund's annual cash flows and NAV.
 - [The LP Fit Audit](https://vc10x.com/lp-fit-audit/): Fourteen questions that rank eight LP types (angels, family offices, funds of funds, endowments, pensions and sovereigns, corporates, wealth platforms, DFIs) by fit for a venture fund.
 - [The Fundraising Readiness Audit](https://vc10x.com/fundraising-audit/): Twenty questions that score a venture fund manager's readiness to raise across track record, LP pipeline, materials, terms and process.
 - [The Family Gap Audit](https://vc10x.com/audit/): Twenty questions that score a family or family office on succession, governance, next-gen readiness, investment architecture, and privacy and security.

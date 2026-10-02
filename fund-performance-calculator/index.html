@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fund Performance Calculator: TVPI, DPI, RVPI, IRR and PME | VC10X</title>
+<meta name="description" content="Free private fund performance calculator. Enter capital calls, distributions and NAV to get TVPI, DPI, RVPI, net IRR and a Kaplan-Schoar public market equivalent (PME).">
+<link rel="canonical" href="https://vc10x.com/fund-performance-calculator/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VC10X">
+<meta property="og:url" content="https://vc10x.com/fund-performance-calculator/">
+<meta property="og:title" content="Fund Performance Calculator: TVPI, DPI, IRR and PME">
+<meta property="og:description" content="Enter a fund&#x27;s calls, distributions and NAV. Get TVPI, DPI, RVPI, IRR and a public market equivalent. Free.">
+<meta property="og:image" content="https://vc10x.com/fund-performance-calculator/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@ChoubeySahab">
+<meta name="twitter:title" content="Fund Performance Calculator: TVPI, DPI, IRR and PME">
+<meta name="twitter:description" content="TVPI, DPI, RVPI, IRR and PME for any private fund, from its cash flows.">
+<meta name="twitter:image" content="https://vc10x.com/fund-performance-calculator/og.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "@id": "https://vc10x.com/fund-performance-calculator/#app", "name": "Fund Performance Calculator: TVPI, DPI, IRR and PME", "url": "https://vc10x.com/fund-performance-calculator/", "applicationCategory": "FinanceApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@id": "https://vc10x.com/#org"}, "author": {"@id": "https://vc10x.com/#prashant"}, "dateModified": "2026-10-03"}, {"@type": "FAQPage", "@id": "https://vc10x.com/fund-performance-calculator/#faq", "mainEntity": [{"@type": "Question", "name": "What is the difference between DPI and TVPI?", "acceptedAnswer": {"@type": "Answer", "text": "DPI (distributions to paid-in) counts only the cash a fund has returned. TVPI (total value to paid-in) adds the fund's remaining NAV to those distributions. DPI is realized; the NAV in TVPI is still an estimate."}}, {"@type": "Question", "name": "What is RVPI?", "acceptedAnswer": {"@type": "Answer", "text": "Residual value to paid-in: the fund's current NAV divided by the capital paid in. DPI plus RVPI equals TVPI."}}, {"@type": "Question", "name": "How do you calculate a private fund's IRR?", "acceptedAnswer": {"@type": "Answer", "text": "IRR is the annual rate that makes the present value of all contributions, distributions and the current NAV equal to zero. This calculator uses annual cash flows; exact cash-flow dates give a more precise figure."}}, {"@type": "Question", "name": "What is a public market equivalent (PME)?", "acceptedAnswer": {"@type": "Answer", "text": "A way to compare a private fund with a public index by imagining the same cash flows invested in the index. The Kaplan–Schoar PME divides the fund's distributions plus NAV, grown at the index return, by its contributions grown the same way. Above 1.0 means the fund beat the index."}}, {"@type": "Question", "name": "Why do LPs focus on DPI?", "acceptedAnswer": {"@type": "Answer", "text": "Because distributions are cash in hand. NAV can be marked down, and an IRR can look strong early on, but DPI shows what a fund has actually returned. It matters most in later years and in tight markets."}}]}, {"@type": "Organization", "@id": "https://vc10x.com/#org", "name": "VC10X", "url": "https://vc10x.com/", "logo": "https://vc10x.com/apple-touch-icon.png", "description": "Podcast and newsletter with 300+ conversations with asset managers, allocators and family office principals on how capital is raised, allocated and protected.", "founder": {"@id": "https://vc10x.com/#prashant"}, "sameAs": ["https://www.youtube.com/@VC10X", "https://podcasts.apple.com/us/podcast/id1632806986", "https://open.spotify.com/show/7F7KEhXNhTx1bKTBFgzv3k"]}, {"@type": "Person", "@id": "https://vc10x.com/#prashant", "name": "Prashant Choubey", "jobTitle": "Host, VC10X", "url": "https://vc10x.com/#about", "worksFor": {"@id": "https://vc10x.com/#org"}, "sameAs": ["https://www.linkedin.com/in/choubeysahab", "https://x.com/ChoubeySahab", "https://podcast10x.com"]}]}
+</script>
+<!-- Analytics: paste your Plausible or Google Analytics snippet here -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FFFFFF; --panel:#F6F6F6; --ink:#000000; --muted:#5C5C5C; --line:#D9D9D9;
+  --green:#000000; --brass:#3FDCFF; --flag:#C0392B; --on-green:#FFFFFF;
+  --serif:"Newsreader", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --sans:"Hanken Grotesk", "Helvetica Neue", Arial, system-ui, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#000000; --panel:#111111; --ink:#FFFFFF; --muted:#A6A6A6; --line:#2B2B2B;
+    --green:#FFFFFF; --brass:#3FDCFF; --flag:#FF7A6B; --on-green:#000000;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#000000; --panel:#111111; --ink:#FFFFFF; --muted:#A6A6A6; --line:#2B2B2B;
+  --green:#FFFFFF; --brass:#3FDCFF; --flag:#FF7A6B; --on-green:#000000;
+}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-underline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 22px 64px}
+header.bar{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:48px}
+.mark{font-family:var(--serif);font-weight:600;font-size:20px;text-decoration:none}
+.bar small{color:var(--muted);font-size:14px}
+h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;margin:0}
+h1{font-size:clamp(38px,5.4vw,56px);line-height:1.04;max-width:16em}
+h2{font-size:clamp(26px,3.4vw,34px);line-height:1.15}
+h3{font-size:21px;line-height:1.25}
+p{margin:0}
+.lede{font-family:var(--serif);font-size:21px;line-height:1.5;max-width:36em;margin-top:20px}
+.muted{color:var(--muted)}
+button,input,select{font:inherit;color:inherit}
+.btn{display:inline-block;background:var(--green);color:var(--on-green);border:0;border-radius:6px;padding:13px 22px;font-weight:600;font-size:16px;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.6;cursor:wait}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;box-shadow:0 0 0 5px var(--brass)}
+
+.calc{display:grid;grid-template-columns:1fr;gap:40px;margin-top:44px}
+@media (min-width:900px){.calc{grid-template-columns:320px 1fr;gap:56px;align-items:start}.inputs{position:sticky;top:20px}}
+
+.inputs{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--brass);border-radius:4px;padding:22px}
+.inputs h2{font-size:22px;margin-bottom:16px}
+.group{border:0;margin:0 0 18px;padding:0}
+.group legend{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:0;margin-bottom:10px}
+.field{display:grid;grid-template-columns:1fr 112px;gap:10px;align-items:center;margin-bottom:10px}
+.field label{font-size:15px;line-height:1.3}
+.field label small{display:block;font-size:13px;color:var(--muted)}
+.unit{display:flex;align-items:center;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.unit:focus-within{border-color:var(--ink)}
+.unit span{padding:0 8px;color:var(--muted);font-size:14px}
+.unit input{width:100%;min-width:0;border:0;background:transparent;padding:10px 8px;text-align:right;font-variant-numeric:tabular-nums}
+.unit input:focus{outline:none}
+.unit:has(input:focus-visible){box-shadow:0 0 0 3px var(--brass)}
+.unit select{width:100%;border:0;background:transparent;padding:10px 6px;font-size:14px;cursor:pointer}
+.unit select:focus{outline:none}
+.field.wide{grid-template-columns:1fr 150px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.hide{display:none}
+.note{font-size:13px;color:var(--muted);margin-top:6px}
+
+.kpis{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid var(--line)}
+.kpi{padding:22px 0;border-bottom:1px solid var(--line)}
+.kpi dt{font-size:14px;color:var(--muted)}
+.kpi dd{margin:6px 0 0;font-family:var(--serif);font-weight:500;font-size:clamp(34px,4.4vw,46px);line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpi p{margin-top:8px;font-size:15px;color:var(--muted);max-width:30em}
+.kpi p b{color:var(--ink);font-weight:600}
+@media (min-width:640px){.kpis{grid-template-columns:1fr 1fr;column-gap:36px}}
+
+.block{margin-top:44px}
+.block > p.muted{margin-top:6px;font-size:15px;max-width:40em}
+.chart{position:relative;margin-top:18px}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart .ax{font:12px var(--sans);fill:var(--muted)}
+.chart .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--paper);font-size:13px;padding:6px 9px;border-radius:4px;white-space:nowrap;transform:translate(-50%,-100%);opacity:0;transition:opacity .12s}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15px;margin-top:16px}
+th,td{padding:10px 8px;text-align:right;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left;padding-left:0}
+th{font-weight:600;font-size:13px;color:var(--muted)}
+tr.be td{background:var(--panel);font-weight:600}
+details{margin-top:14px;font-size:15px}
+summary{cursor:pointer;color:var(--muted)}
+
+.export{margin-top:44px;padding:24px;border:1px solid var(--line);border-radius:4px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.gate{margin-top:20px;padding-top:20px;border-top:1px solid var(--line)}
+.gate .row{display:grid;grid-template-columns:1fr;gap:12px}
+@media (min-width:640px){.gate .row{grid-template-columns:1fr 1fr 1fr}}
+.gate label{display:grid;gap:6px;font-size:14px;font-weight:600}
+.gate input:not([type=checkbox]),.gate select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.check{display:flex !important;gap:10px;align-items:flex-start;font-weight:400 !important;color:var(--muted);margin:14px 0}
+.err{color:var(--flag);font-size:14px;min-height:1.2em;margin-bottom:8px}
+.fine{font-size:13px;color:var(--muted);margin-top:10px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+.guide{margin-top:88px;padding-top:56px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr;gap:44px}
+@media (min-width:900px){.guide{grid-template-columns:1fr 1fr;column-gap:56px}}
+.guide p{margin-top:12px;max-width:36em}
+.guide ul{margin:12px 0 0;padding-left:20px;max-width:36em}
+.guide li{margin:6px 0}
+.cta{margin-top:72px;padding:36px;background:var(--panel);border-radius:4px}
+.cta p{margin-top:10px;max-width:36em;color:var(--muted)}
+.sub{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;max-width:520px}
+.sub input[type=email]{flex:1 1 220px;padding:13px 14px;border:1px solid var(--line);border-radius:6px;background:var(--paper)}
+.formmsg{flex-basis:100%;font-size:14px;min-height:1.3em;color:var(--muted)}
+.formmsg.err{color:var(--flag)}
+footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+
+.print-only{display:none}
+@media print{
+  body{font-size:12px;background:#fff;color:#000}
+  .no-print,.export,.guide,.cta,footer,.chart .tip{display:none !important}
+  .print-only{display:block}
+  .calc{display:block;margin-top:16px}
+  .inputs{position:static;border:1px solid #999;padding:12px}
+  .kpi dd{font-size:26px}
+  .block{margin-top:20px;break-inside:avoid}
+  h1{font-size:28px}
+}
+.faq h3{font-family:var(--serif);font-size:21px;font-weight:500;margin-top:26px;line-height:1.3}
+.faq p{margin-top:8px;max-width:38em;color:var(--muted)}
+.updated{margin-top:44px;font-size:14px;color:var(--muted)}
+.updated a{color:inherit}
+.guide-faq{margin-top:72px;padding-top:44px;border-top:1px solid var(--line)}
+.guide-faq h2{font-size:clamp(26px,3.4vw,34px)}
+.tablewrap{overflow-x:auto}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:10px}
+.cfhead,.cfrow{display:grid;grid-template-columns:36px 1fr 1fr;gap:8px;align-items:center}
+.cfhead{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.cfrow{margin-bottom:6px}
+.cfrow span{font-size:14px;color:var(--muted);text-align:center}
+.cfrow input{width:100%;min-width:0;padding:8px 10px;border:1px solid var(--line);border-radius:4px;background:var(--paper);text-align:right;font-variant-numeric:tabular-nums}
+.cfrow input:focus-visible{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px var(--brass)}
+.cfbtns{display:flex;gap:18px;margin-top:8px}
+.cfbtns .link{background:none;border:0;padding:4px 0;color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-size:14px}
+#metrics td:last-child{text-align:right;font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <a class="mark" href="/">VC10X</a>
+    <small>For LPs and fund managers</small>
+  </header>
+
+  <main>
+    <h1>Fund performance calculator: TVPI, DPI, IRR and PME</h1>
+    <p class="lede no-print">Enter a fund's yearly capital calls, distributions and current NAV. Get TVPI, DPI, RVPI and IRR, and a public market equivalent that shows whether it beat an index.</p>
+    <p class="print-only muted" id="printed"></p>
+
+    <div class="calc">
+      <form class="inputs" id="f" autocomplete="off" onsubmit="return false">
+        <h2>Your fund</h2>
+        <fieldset class="group">
+          <legend>Cash flows, $M per year</legend>
+          <div class="cf">
+            <div class="cfhead" aria-hidden="true"><span>Year</span><span>Calls</span><span>Distributions</span></div>
+            <div id="rows"></div>
+            <div class="cfbtns no-print"><button type="button" class="link" id="add">Add a year</button><button type="button" class="link" id="del">Remove last year</button></div>
+          </div>
+        </fieldset>
+        <fieldset class="group" style="margin-bottom:0">
+          <legend>Today and the benchmark</legend>
+          <div class="field"><label for="nav">Current NAV</label><div class="unit"><span>$</span><input id="nav" inputmode="decimal" value="40"><span>M</span></div></div>
+          <div class="field"><label for="idx">Index return<small>a year, for PME</small></label><div class="unit"><input id="idx" inputmode="decimal" value="10"><span>%</span></div></div>
+        </fieldset>
+        <p class="note no-print">Starts with a sample fund. Replace it with your own numbers.</p>
+        <p class="err no-print" id="inerr" role="alert"></p>
+      </form>
+
+      <div id="out" aria-live="polite">
+        <dl class="kpis">
+          <div class="kpi"><dt>TVPI</dt><dd id="k-tvpi"></dd><p id="k-tvpi-p"></p></div>
+          <div class="kpi"><dt>DPI</dt><dd id="k-dpi"></dd><p id="k-dpi-p"></p></div>
+          <div class="kpi"><dt>Net IRR</dt><dd id="k-irr"></dd><p id="k-irr-p"></p></div>
+          <div class="kpi"><dt>Kaplan–Schoar PME</dt><dd id="k-pme"></dd><p id="k-pme-p"></p></div>
+        </dl>
+
+        <section class="block">
+          <h3>Cumulative net cash flow: the J-curve</h3>
+          <p class="muted" id="chart-cap"></p>
+          <div class="chart" id="chart"><div class="tip" id="tip"></div></div>
+          <div class="legend"><span><i style="background:var(--ink)"></i>Distributions less calls, to date</span><span><i style="background:var(--brass)"></i>Plus NAV</span></div>
+        </section>
+
+        <section class="block">
+          <h3>All metrics</h3>
+          <div class="tablewrap"><table id="metrics"></table></div>
+        </section>
+
+        <section class="export no-print">
+          <h3>Save this analysis</h3>
+          <p class="muted" style="margin-top:6px;font-size:15px">Download the cash flows and metrics, or save a PDF for your investment committee or LP report.</p>
+          <div class="actions">
+            <button class="btn" type="button" data-act="csv">Download spreadsheet (CSV)</button>
+            <button class="btn ghost" type="button" data-act="pdf">Save as PDF</button>
+            <button class="btn ghost" type="button" id="copy">Copy link to this scenario</button>
+          </div>
+          <p class="fine" id="copied" role="status"></p>
+          <div class="gate" id="gate" hidden>
+            <h3 style="font-size:19px">Where should we send updates?</h3>
+            <p class="muted" style="font-size:15px;margin-top:4px">Your download starts right after. You'll only be asked once.</p>
+            <div class="hp" aria-hidden="true"><label>Leave this empty <input id="website" tabindex="-1" autocomplete="off"></label></div>
+            <div class="row" style="margin-top:14px">
+              <label>First name<input id="nm" autocomplete="given-name"></label>
+              <label>Email<input id="em" type="email" autocomplete="email"></label>
+              <label>You are<select id="rl"><option value="">Choose one</option><option>CIO or head of investments</option><option>Investment team at an endowment or foundation</option><option>Family office investment team</option><option>Pension or insurance investment team</option><option>Fund of funds or consultant</option><option>Fund manager</option></select></label>
+            </div>
+            <label class="check"><input type="checkbox" id="ok" checked> Send me the VC10X newsletter: how CIOs and allocators actually decide. Unsubscribe any time.</label>
+            <p class="err" id="gerr" role="alert"></p>
+            <button class="btn" type="button" id="unlock">Continue to download</button>
+            <p class="fine">Your numbers stay in your browser. We never see or store them.</p>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="guide">
+      <section>
+        <h2>The metrics, in one line each</h2>
+        <ul>
+          <li><b>Paid-in:</b> all capital called so far.</li>
+          <li><b>DPI:</b> distributions divided by paid-in. Cash actually returned.</li>
+          <li><b>RVPI:</b> current NAV divided by paid-in. Value still in the fund.</li>
+          <li><b>TVPI:</b> DPI plus RVPI. Total value created per dollar paid in.</li>
+          <li><b>IRR:</b> the annual return implied by the timing of the cash flows.</li>
+          <li><b>PME:</b> how the fund did against an index with the same cash flows.</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Reading them together</h2>
+        <p>Early in a fund's life, TVPI and IRR are mostly NAV, which is an estimate. DPI tells you how much is real. A high IRR with a low DPI often means early markups. A PME above 1.0 means the fund did better than the index would have with the same money at the same times.</p>
+      </section>
+      <section>
+        <h2>What this calculator assumes</h2>
+        <ul>
+          <li>Annual cash flows, each at the end of its year. The current NAV is valued at the end of the last year.</li>
+          <li>Figures are net to LPs: enter calls and distributions as the LP sees them.</li>
+          <li>PME uses one steady index return each year. For a precise PME, use the index's actual yearly returns.</li>
+        </ul>
+        <p class="muted">This is an analysis tool, not investment advice.</p>
+      </section>
+    </div>
+
+    <div class="guide-faq no-print">
+    <section class="faq">
+      <h2>Frequently asked questions</h2>
+      <h3>What is the difference between DPI and TVPI?</h3>
+      <p>DPI (distributions to paid-in) counts only the cash a fund has returned. TVPI (total value to paid-in) adds the fund's remaining NAV to those distributions. DPI is realized; the NAV in TVPI is still an estimate.</p>
+      <h3>What is RVPI?</h3>
+      <p>Residual value to paid-in: the fund's current NAV divided by the capital paid in. DPI plus RVPI equals TVPI.</p>
+      <h3>How do you calculate a private fund's IRR?</h3>
+      <p>IRR is the annual rate that makes the present value of all contributions, distributions and the current NAV equal to zero. This calculator uses annual cash flows; exact cash-flow dates give a more precise figure.</p>
+      <h3>What is a public market equivalent (PME)?</h3>
+      <p>A way to compare a private fund with a public index by imagining the same cash flows invested in the index. The Kaplan–Schoar PME divides the fund's distributions plus NAV, grown at the index return, by its contributions grown the same way. Above 1.0 means the fund beat the index.</p>
+      <h3>Why do LPs focus on DPI?</h3>
+      <p>Because distributions are cash in hand. NAV can be marked down, and an IRR can look strong early on, but DPI shows what a fund has actually returned. It matters most in later years and in tight markets.</p>
+    </section>
+    <p class="updated">From <a href="/">VC10X</a>, hosted by <a href="/#about">Prashant Choubey</a>. Updated <time datetime="2026-10-03">3 October 2026</time>.</p>
+    </div>
+
+    <div class="cta no-print">
+      <h2>How allocators actually decide</h2>
+      <p>Every week, the VC10X newsletter shares how CIOs, endowments and family offices build portfolios, size private markets and pick managers, from 300+ conversations with allocators.</p>
+      <form class="sub" id="nl" novalidate>
+        <label class="hp" aria-hidden="true">Leave this empty <input name="website" tabindex="-1" autocomplete="off"></label>
+        <input type="email" name="email" placeholder="Your email" aria-label="Email address" autocomplete="email" required>
+        <button class="btn" type="submit">Get the newsletter</button>
+        <p class="formmsg" role="status"></p>
+      </form>
+      <p style="margin-top:18px">Planning new commitments? Use the <a href="/commitment-pacing-model/">commitment pacing model</a>.</p>
+    </div>
+  </main>
+
+  <footer>© <span id="yr">2026</span> <a href="/">VC10X</a>. Indicative only. Not legal, tax or investment advice.</footer>
+</div>
+
+<script>
+const SUBSCRIBE_ENDPOINT = "/api/subscribe";
+const LEAD_KEY = "vc10x-lead";
+const $ = id => document.getElementById(id);
+$("yr").textContent = new Date().getFullYear();
+const UTM = (() => {
+  try {
+    const q = new URLSearchParams(location.search), u = {};
+    ["utm_source","utm_medium","utm_campaign","utm_content"].forEach(k => { if (q.get(k)) u[k] = q.get(k).slice(0,100); });
+    if (!Object.keys(u).length && document.referrer && !document.referrer.includes(location.host)) u.referrer = document.referrer.slice(0,200);
+    return u;
+  } catch(e) { return {}; }
+})();
+const money = m => {           // m is in $M
+  if (!isFinite(m)) return "n/a";
+  const a = Math.abs(m), s = m < 0 ? "-" : "";
+  if (a < 0.0005) return "$0";
+  if (a >= 1000) return s + "$" + (a/1000).toFixed(a >= 10000 ? 0 : 2) + "B";
+  if (a >= 1) return s + "$" + (a >= 100 ? a.toFixed(0) : a.toFixed(a >= 10 ? 1 : 2)) + "M";
+  return s + "$" + Math.round(a*1000) + "K";
+};
+const pct = (v, d=1) => isFinite(v) ? (v*100).toFixed(d) + "%" : "n/a";
+const mult = v => isFinite(v) ? v.toFixed(2) + "x" : "n/a";
+function niceStep(x){ const p = Math.pow(10, Math.floor(Math.log10(x || 1))); const n = x / p; return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10) * p; }
+function readNums(ids, limits){
+  const v = {}, errs = [];
+  ids.forEach(k => {
+    let n = parseFloat(String($(k).value).replace(/[, $%]/g,""));
+    const [lo, hi] = limits[k];
+    if (!isFinite(n)) { n = lo; errs.push(k); }
+    v[k] = Math.min(hi, Math.max(lo, n));
+  });
+  return {v, errs};
+}
+function loadHash(ids, extra){
+  try {
+    const h = new URLSearchParams(location.hash.slice(1));
+    ids.forEach(k => { if (h.has(k) && isFinite(parseFloat(h.get(k)))) $(k).value = h.get(k); });
+    extra && extra(h);
+  } catch(e) {}
+}
+function saveHash(obj){ history.replaceState(null, "", "#" + new URLSearchParams(obj)); }
+function downloadCSV(rows, name){
+  const q = s => `"${String(s).replace(/"/g,'""')}"`;
+  const blob = new Blob([rows.map(r => r.map(q).join(",")).join("\n")], {type:"text/csv"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+function wireExport(formName, csv, render){
+  const ACTIONS = {csv, pdf: () => window.print()};
+  const lead = () => { try { return JSON.parse(localStorage.getItem(LEAD_KEY)); } catch(e) { return null; } };
+  let pending = null;
+  document.querySelectorAll("[data-act]").forEach(b => b.addEventListener("click", () => {
+    const act = b.dataset.act;
+    if (lead()) return ACTIONS[act]();
+    pending = act;
+    $("gate").hidden = false;
+    $("unlock").textContent = act === "csv" ? "Continue to download" : "Continue to PDF";
+    $("nm").focus();
+  }));
+  $("unlock").addEventListener("click", async () => {
+    const nm = $("nm").value.trim(), em = $("em").value.trim(), rl = $("rl").value, er = $("gerr"), btn = $("unlock");
+    if (!nm) { er.textContent = "Add your first name to continue."; return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { er.textContent = "Enter a valid email address, like name@example.com."; return; }
+    if (!rl) { er.textContent = "Choose the option that describes you best."; return; }
+    er.textContent = "";
+    const ok = $("ok").checked;
+    if (ok) {
+      btn.disabled = true; const label = btn.textContent; btn.textContent = "One moment";
+      try {
+        await fetch(SUBSCRIBE_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"},
+          body: JSON.stringify({form: formName, email: em, firstName: nm, role: rl, website: $("website").value, ...UTM})});
+      } catch(e) { /* never block the download on a network error */ }
+      btn.disabled = false; btn.textContent = label;
+    }
+    try { localStorage.setItem(LEAD_KEY, JSON.stringify({ok, t: Date.now()})); } catch(e) {}
+    $("gate").hidden = true;
+    if (pending) ACTIONS[pending]();
+  });
+  $("copy").addEventListener("click", async () => {
+    render();
+    try { await navigator.clipboard.writeText(location.href); $("copied").textContent = "Link copied. It opens with these numbers filled in."; }
+    catch(e) { $("copied").textContent = "Copy this link: " + location.href; }
+  });
+  $("nl").addEventListener("submit", async e => {
+    e.preventDefault();
+    const f = e.target, msg = f.querySelector(".formmsg"), btn = f.querySelector("button"), email = f.email.value.trim();
+    msg.classList.remove("err");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = "Enter a valid email address, like name@example.com."; msg.classList.add("err"); return; }
+    btn.disabled = true;
+    try {
+      const r = await fetch(SUBSCRIBE_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({form: formName + "-footer", email, website: f.website.value, ...UTM})});
+      if (!r.ok) throw new Error(r.status);
+      msg.textContent = "Subscribed. New issues will land in your inbox."; f.email.value = "";
+    } catch(err) { msg.textContent = "That didn't go through. Try again in a moment."; msg.classList.add("err"); }
+    btn.disabled = false;
+  });
+}
+// Line chart: series = [{rows:[{x,y}], color, dash}], shared axis. fmtY formats axis and tooltip values.
+function lineChart(box, tip, series, {xLabel="Year", fmtY, minY=0, tipText, aria}){
+  const W = 640, H = 240, pad = {l:56, r:10, t:14, b:34};
+  const xs = series[0].rows.map(r => r.x), n0 = Math.min(...xs), n1 = Math.max(...xs);
+  const vals = series.flatMap(s => s.rows.map(r => r.y));
+  const lo = Math.min(minY, ...vals), hi = Math.max(...vals) || 1;
+  const step = niceStep((hi - lo) / 4 || 1), top = Math.ceil(hi / step) * step, bot = Math.floor(lo / step) * step;
+  const iw = W - pad.l - pad.r, ih = H - pad.t - pad.b;
+  const x = v => pad.l + (v - n0) / ((n1 - n0) || 1) * iw, y = v => pad.t + ih - (v - bot) / ((top - bot) || 1) * ih;
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${aria}">`;
+  for (let g = bot; g <= top + 1e-9; g += step) {
+    s += `<line x1="${pad.l}" x2="${W-pad.r}" y1="${y(g)}" y2="${y(g)}" stroke="var(--line)" stroke-width="1"/>`;
+    s += `<text class="ax" x="${pad.l-8}" y="${y(g)+4}" text-anchor="end">${fmtY(g)}</text>`;
+  }
+  const span = n1 - n0, every = span <= 12 ? 1 : span <= 25 ? 5 : 10;
+  for (let t = n0; t <= n1; t += every) s += `<text class="ax" x="${x(t)}" y="${H-12}" text-anchor="middle">${t}</text>`;
+  s += `<text class="ax" x="${W-pad.r}" y="${H}" text-anchor="end">${xLabel}</text>`;
+  series.forEach(se => {
+    s += `<path d="${se.rows.map((r,i) => (i ? "L" : "M") + x(r.x).toFixed(1) + "," + y(r.y).toFixed(1)).join(" ")}" fill="none" stroke="${se.color}" stroke-width="2" ${se.dash ? 'stroke-dasharray="5 5"' : ""} stroke-linejoin="round" stroke-linecap="round"/>`;
+  });
+  s += `<line id="xh" x1="0" x2="0" y1="${pad.t}" y2="${pad.t+ih}" stroke="var(--muted)" stroke-width="1" opacity="0"/>`;
+  series.forEach((se, i) => { if (!se.dash) s += `<circle id="d${i}" r="4" fill="${se.color}" stroke="var(--paper)" stroke-width="2" opacity="0"/>`; });
+  s += `<rect x="${pad.l}" y="${pad.t}" width="${iw}" height="${ih}" fill="transparent" id="hit"/></svg>`;
+  box.innerHTML = s; box.appendChild(tip);
+  const svg = box.querySelector("svg"), hit = svg.querySelector("#hit");
+  const show = ev => {
+    const p = ev.touches ? ev.touches[0] : ev, b = svg.getBoundingClientRect();
+    const sx = (p.clientX - b.left) / b.width * W;
+    const xv = Math.max(n0, Math.min(n1, Math.round(n0 + (sx - pad.l) / iw * (n1 - n0))));
+    const xh = svg.querySelector("#xh"); xh.setAttribute("x1", x(xv)); xh.setAttribute("x2", x(xv)); xh.setAttribute("opacity", 1);
+    let top1 = Infinity;
+    series.forEach((se, i) => { const r = se.rows.find(r => r.x === xv); if (!r) return; top1 = Math.min(top1, y(r.y)); const d = svg.querySelector("#d" + i); if (d) { d.setAttribute("cx", x(xv)); d.setAttribute("cy", y(r.y)); d.setAttribute("opacity", 1); } });
+    tip.textContent = tipText(xv);
+    tip.style.left = Math.min(b.width - 100, Math.max(100, x(xv) / W * b.width)) + "px";
+    tip.style.top = (top1 / H * b.height - 10) + "px";
+    tip.style.opacity = 1;
+  };
+  hit.addEventListener("mousemove", show);
+  hit.addEventListener("touchstart", show, {passive:true});
+  hit.addEventListener("mouseleave", () => { tip.style.opacity = 0; svg.querySelectorAll("#xh,circle").forEach(el => el.setAttribute("opacity", 0)); });
+}
+const SAMPLE = {c:[20,25,20,15,10,5,0,0,0,0], d:[0,0,2,5,10,20,30,35,25,15]};
+let C = SAMPLE.c.slice(), D = SAMPLE.d.slice();
+loadHash(["nav","idx"], h => {
+  const p = k => (h.get(k) || "").split(",").filter(x => x.trim() !== "").map(Number).filter(x => isFinite(x));
+  const c = p("c"), d = p("d");
+  if (c.length && c.length === d.length && c.length <= 40) { C = c; D = d; }
+});
+
+function drawRows(){
+  $("rows").innerHTML = C.map((_, i) => `<div class="cfrow"><span>${i + 1}</span>
+    <input inputmode="decimal" aria-label="Calls in year ${i + 1}" data-k="c" data-i="${i}" value="${C[i]}">
+    <input inputmode="decimal" aria-label="Distributions in year ${i + 1}" data-k="d" data-i="${i}" value="${D[i]}"></div>`).join("");
+  $("rows").querySelectorAll("input").forEach(el => el.addEventListener("input", () => {
+    const n = parseFloat(el.value.replace(/[, $]/g, ""));
+    (el.dataset.k === "c" ? C : D)[+el.dataset.i] = isFinite(n) && n >= 0 ? n : 0;
+    render();
+  }));
+}
+$("add").addEventListener("click", () => { if (C.length < 40) { C.push(0); D.push(0); drawRows(); render(); } });
+$("del").addEventListener("click", () => { if (C.length > 1) { C.pop(); D.pop(); drawRows(); render(); } });
+
+function irr(flows){
+  const npv = r => flows.reduce((s, f, t) => s + f / Math.pow(1 + r, t + 1), 0);
+  let lo = -0.99, hi = 10, flo = npv(lo), fhi = npv(hi);
+  if (!isFinite(flo) || !isFinite(fhi) || flo * fhi > 0) return NaN;
+  for (let i = 0; i < 200; i++) { const m = (lo + hi) / 2, fm = npv(m); if (flo * fm <= 0) { hi = m; } else { lo = m; flo = fm; } }
+  return (lo + hi) / 2;
+}
+function metrics(nav, idx){
+  const N = C.length, PI = C.reduce((a, b) => a + b, 0), DI = D.reduce((a, b) => a + b, 0);
+  const flows = C.map((c, i) => D[i] - c); flows[N - 1] += nav;
+  const g = t => Math.pow(1 + idx/100, N - t);       // grow a flow at the end of year t to the end of year N
+  const fvC = C.reduce((s, c, i) => s + c * g(i + 1), 0), fvD = D.reduce((s, d, i) => s + d * g(i + 1), 0);
+  let cum = 0; const path = [{x:0, y:0, z:0}];
+  C.forEach((c, i) => { cum += D[i] - c; path.push({x:i + 1, y:cum}); });
+  return {N, PI, DI, nav, dpi:DI / PI, rvpi:nav / PI, tvpi:(DI + nav) / PI, irr:irr(flows), pme:(fvD + nav) / fvC, path, net:DI + nav - PI};
+}
+
+function render(){
+  const {v, errs} = readNums(["nav","idx"], {nav:[0,1e7], idx:[-50,50]});
+  const M = metrics(v.nav, v.idx);
+  $("inerr").textContent = (errs.length ? "Some fields aren't numbers, so we used the lowest allowed value. " : "") + (M.PI <= 0 ? "Add at least one capital call to calculate the metrics." : "");
+  $("k-tvpi").textContent = mult(M.tvpi);
+  $("k-tvpi-p").innerHTML = `<b>${money(M.DI + M.nav)}</b> of total value on <b>${money(M.PI)}</b> paid in: ${M.net >= 0 ? money(M.net) + " of gains" : money(-M.net) + " below cost"}.`;
+  $("k-dpi").textContent = mult(M.dpi);
+  $("k-dpi-p").innerHTML = `<b>${money(M.DI)}</b> returned in cash. RVPI is <b>${mult(M.rvpi)}</b>, so ${M.tvpi > 0 ? pct(M.dpi / M.tvpi, 0) : "n/a"} of total value is realized.`;
+  $("k-irr").textContent = pct(M.irr);
+  $("k-irr-p").innerHTML = isFinite(M.irr) ? `On annual cash flows over ${M.N} years, with today's NAV counted at the end of year ${M.N}.` : `Can't be calculated for these cash flows. IRR needs both money in and money out.`;
+  $("k-pme").textContent = isFinite(M.pme) ? M.pme.toFixed(2) : "n/a";
+  $("k-pme-p").innerHTML = isFinite(M.pme) ? (M.pme >= 1 ? `<b>Beat</b> an index returning ${v.idx}% a year by ${pct(M.pme - 1, 0)} on the same cash flows.` : `<b>Trailed</b> an index returning ${v.idx}% a year by ${pct(1 - M.pme, 0)} on the same cash flows.`) : "";
+
+  const low = M.path.reduce((m, p) => p.y < m.y ? p : m, M.path[0]);
+  $("chart-cap").textContent = `Deepest point ${money(low.y)} in year ${low.x}. ` + (M.path[M.path.length - 1].y >= 0 ? "Cash breakeven reached." : "Not yet at cash breakeven.");
+  lineChart($("chart"), $("tip"), [
+    {rows: M.path.map(p => ({x:p.x, y:p.y})), color:"var(--ink)"},
+    {rows: [{x:M.N - 1, y:M.path[M.N - 1].y}, {x:M.N, y:M.path[M.N].y + M.nav}], color:"var(--brass)"}
+  ], {xLabel:"Fund year", fmtY: g => money(g), minY: Math.min(0, low.y), aria:"Cumulative net cash flow by fund year",
+      tipText: x => `Year ${x}: ${money(M.path[x].y)} net cash to date` + (x === M.N ? `, ${money(M.path[x].y + M.nav)} with NAV` : "")});
+
+  $("metrics").innerHTML = `<tbody>
+    <tr><td>Paid-in capital</td><td>${money(M.PI)}</td></tr>
+    <tr><td>Distributions</td><td>${money(M.DI)}</td></tr>
+    <tr><td>Current NAV</td><td>${money(M.nav)}</td></tr>
+    <tr><td>DPI</td><td>${mult(M.dpi)}</td></tr>
+    <tr><td>RVPI</td><td>${mult(M.rvpi)}</td></tr>
+    <tr><td>TVPI</td><td>${mult(M.tvpi)}</td></tr>
+    <tr><td>Net IRR</td><td>${pct(M.irr)}</td></tr>
+    <tr><td>Kaplan–Schoar PME at ${v.idx}%</td><td>${isFinite(M.pme) ? M.pme.toFixed(2) : "n/a"}</td></tr></tbody>`;
+
+  $("printed").textContent = `${M.N} years · ${money(M.PI)} paid in · ${money(M.DI)} distributed · ${money(M.nav)} NAV · vc10x.com/fund-performance-calculator`;
+  saveHash({c:C.join(","), d:D.join(","), nav:v.nav, idx:v.idx});
+  return {v, M};
+}
+["nav","idx"].forEach(k => $(k).addEventListener("input", render));
+drawRows(); render();
+
+function csv(){
+  const {v, M} = render();
+  const L = [["VC10X fund performance calculator"], ["vc10x.com/fund-performance-calculator/"], [],
+    ["Year", "Calls ($M)", "Distributions ($M)", "Net cash flow ($M)", "Cumulative net ($M)"]];
+  C.forEach((c, i) => L.push([i + 1, c, D[i], (D[i] - c).toFixed(3), M.path[i + 1].y.toFixed(3)]));
+  L.push([], ["Current NAV ($M)", v.nav], ["Index return for PME (%)", v.idx], [],
+    ["Paid-in ($M)", M.PI.toFixed(3)], ["Distributions ($M)", M.DI.toFixed(3)], ["DPI", M.dpi.toFixed(3)], ["RVPI", M.rvpi.toFixed(3)],
+    ["TVPI", M.tvpi.toFixed(3)], ["Net IRR (%)", isFinite(M.irr) ? (M.irr * 100).toFixed(2) : "n/a"], ["KS-PME", isFinite(M.pme) ? M.pme.toFixed(3) : "n/a"],
+    [], ["Annual cash flows at year end. Indicative only. Not investment advice."]);
+  downloadCSV(L, "fund-performance.csv");
+}
+wireExport("fund-performance-calculator", csv, render);
+</script>
+</body>
+</html>
