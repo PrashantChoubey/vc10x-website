@@ -150,10 +150,16 @@ section{padding:72px 0;border-top:1px solid var(--line)}
 .audit-band{background:var(--green-deep);color:var(--on-deep);border-top:0}
 .band-head{margin-bottom:48px}
 .audit-pair{display:grid;grid-template-columns:1fr;gap:56px}
-@media (min-width:820px){.audit-pair{grid-template-columns:1fr 1fr;gap:64px}}
-.audit-card h3{font-size:clamp(26px,3vw,32px);line-height:1.15}
-.audit-card .scard{margin-top:28px}
-.audit-card p{font-size:17px;margin-top:10px}
+.audit-card{display:grid;align-content:start}
+.audit-card .who{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--on-deep-muted);margin:0}
+.audit-card h3{font-size:clamp(24px,2.4vw,28px);line-height:1.15;margin-top:8px}
+.audit-card p.desc{font-size:16px;margin-top:10px}
+.audit-card .scard{margin-top:24px}
+.audit-card .btn{justify-self:start}
+@media (min-width:980px){
+  .audit-pair{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(5,auto);column-gap:44px;row-gap:0}
+  .audit-card{grid-row:span 5;grid-template-rows:subgrid}
+}
 .audit-band h2{font-size:clamp(34px,5vw,56px);line-height:1.02}
 .audit-band p{color:var(--on-deep-muted);margin-top:18px;max-width:30em;font-size:18px}
 .audit-band .btn{background:#fff;color:#000;margin-top:28px}
@@ -343,19 +349,28 @@ footer a{margin-right:16px}
 <section class="audit-band" id="audits">
   <div class="wrap">
     <div class="band-head">
-      <h2>Score yourself in seven minutes</h2>
-      <p>Twenty questions each. You get a score out of 100, the red flags in your answers, and what to fix first.</p>
+      <h2>Score yourself in minutes</h2>
+      <p>Three free audits for fund managers and families. Each gives you scores out of 100 and what to do next.</p>
     </div>
     <div class="audit-pair">
       <div class="audit-card">
+        <p class="who">For fund managers · 7 min</p>
         <h3>The Fundraising Readiness Audit</h3>
-        <p>For fund managers. Are you ready for the questions LPs ask before they commit?</p>
+        <p class="desc">Are you ready for the questions LPs ask before they commit?</p>
         <div class="scard"><div class="shead"><span>Area</span><span>Score / 100</span></div><div class="srow"><span class="lab">Track record and edge</span><span class="val">70</span><span class="bar" aria-hidden="true"><span class="fill" style="--w:70%"></span></span></div><div class="srow weak"><span class="lab">LP pipeline<span class="flag">Start here</span></span><span class="val">40</span><span class="bar" aria-hidden="true"><span class="fill" style="--w:40%"></span></span></div><div class="srow"><span class="lab">Materials and diligence</span><span class="val">58</span><span class="bar" aria-hidden="true"><span class="fill" style="--w:58%"></span></span></div><div class="srow"><span class="lab">Terms and economics</span><span class="val">82</span><span class="bar" aria-hidden="true"><span class="fill" style="--w:82%"></span></span></div><div class="srow"><span class="lab">Process and momentum</span><span class="val">48</span><span class="bar" aria-hidden="true"><span class="fill" style="--w:48%"></span></span></div><p class="sfoot"><span>Sample report</span><span>0 · 25 · 50 · 75 · 100</span></p></div>
         <a class="btn" href="/fundraising-audit/">Take the Fundraising Audit</a>
       </div>
       <div class="audit-card">
+        <p class="who">For fund managers · 5 min</p>
+        <h3>The LP Fit Audit</h3>
+        <p class="desc">Which LPs should you raise from? Eight LP types ranked by fit for your fund.</p>
+        <div class="scard"><div class="shead"><span>LP type</span><span>Fit / 100</span></div><div class="srow weak"><span class="lab">Family offices<span class="flag">Best fit</span></span><span class="val">78</span><span class="bar" aria-hidden="true"><span class="fill" style="--w:78%"></span></span></div><div class="srow"><span class="lab">Angels and operators</span><span class="val">71</span><span class="bar" aria-hidden="true"><span class="fill" style="--w:71%"></span></span></div><div class="srow"><span class="lab">Funds of funds</span><span class="val">66</span><span class="bar" aria-hidden="true"><span class="fill" style="--w:66%"></span></span></div><div class="srow"><span class="lab">Corporates</span><span class="val">49</span><span class="bar" aria-hidden="true"><span class="fill" style="--w:49%"></span></span></div><div class="srow"><span class="lab">Endowments</span><span class="val">38</span><span class="bar" aria-hidden="true"><span class="fill" style="--w:38%"></span></span></div><p class="sfoot"><span>Sample report</span><span>0 · 25 · 50 · 75 · 100</span></p></div>
+        <a class="btn" href="/lp-fit-audit/">Take the LP Fit Audit</a>
+      </div>
+      <div class="audit-card">
+        <p class="who">For families · 7 min</p>
         <h3>The Family Gap Audit</h3>
-        <p>For family principals and their offices. Where is your family exposed?</p>
+        <p class="desc">For family principals and their offices. Where is your family exposed?</p>
         <div class="scard"><div class="shead"><span>Area</span><span>Score / 100</span></div><div class="srow"><span class="lab">Succession and continuity</span><span class="val">78</span><span class="bar" aria-hidden="true"><span class="fill" style="--w:78%"></span></span></div><div class="srow"><span class="lab">Governance</span><span class="val">52</span><span class="bar" aria-hidden="true"><span class="fill" style="--w:52%"></span></span></div><div class="srow weak"><span class="lab">Next-gen readiness<span class="flag">Start here</span></span><span class="val">34</span><span class="bar" aria-hidden="true"><span class="fill" style="--w:34%"></span></span></div><div class="srow"><span class="lab">Investment architecture</span><span class="val">66</span><span class="bar" aria-hidden="true"><span class="fill" style="--w:66%"></span></span></div><div class="srow"><span class="lab">Privacy and security</span><span class="val">44</span><span class="bar" aria-hidden="true"><span class="fill" style="--w:44%"></span></span></div><p class="sfoot"><span>Sample report</span><span>0 · 25 · 50 · 75 · 100</span></p></div>
         <a class="btn" href="/audit/">Take the Family Gap Audit</a>
       </div>
