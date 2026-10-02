@@ -379,7 +379,12 @@ function wireExport(formName, csv, render){
   let pending = null;
   document.querySelectorAll("[data-act]").forEach(b => b.addEventListener("click", () => {
     const act = b.dataset.act;
-    if (lead()) return ACTIONS[act]();
+    const known = lead();
+    if (known) {
+      // Already gave us an email on another VC10X tool: no form, but record interest in this one once.
+      if (known.ok && known.em && !window.__tagged) { window.__tagged = true; fetch(SUBSCRIBE_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({form: formName, email: known.em, firstName: known.nm, role: known.rl, ...UTM})}).catch(() => {}); }
+      return ACTIONS[act]();
+    }
     pending = act;
     $("gate").hidden = false;
     $("unlock").textContent = act === "csv" ? "Continue to download" : "Continue to PDF";
@@ -400,7 +405,7 @@ function wireExport(formName, csv, render){
       } catch(e) { /* never block the download on a network error */ }
       btn.disabled = false; btn.textContent = label;
     }
-    try { localStorage.setItem(LEAD_KEY, JSON.stringify({ok, t: Date.now()})); } catch(e) {}
+    try { localStorage.setItem(LEAD_KEY, JSON.stringify({nm, em, rl, ok, t: Date.now()})); } catch(e) {}
     $("gate").hidden = true;
     if (pending) ACTIONS[pending]();
   });
@@ -479,10 +484,11 @@ function model(v){
   for (let y = 1; y <= v.years; y++) {
     const stressed = y <= v.syears, T0 = C + B + E + P;
     const calls = U * (stressed ? v.calls : v.calln) / 100;
-    const dist = P * (stressed ? v.dists : v.distn) / 100;
     U = U - calls + v.newc;
     if (!stressed) { E *= 1 + v.req/100; B *= 1 + v.rbond/100; C *= 1 + v.rbond/100; }
-    P = P * (stressed ? 1 : 1 + v.rpriv/100) + calls - dist;
+    P = P * (stressed ? 1 : 1 + v.rpriv/100);
+    const dist = P * (stressed ? v.dists : v.distn) / 100;
+    P = P + calls - dist;
     const spend = T0 * v.spend/100, need = calls + spend - dist;
     let left = need, sold = 0;
     if (left < 0) { C -= left; left = 0; }

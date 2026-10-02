@@ -157,6 +157,7 @@ footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);font-si
 .updated a{color:inherit}
 .guide-faq{margin-top:72px;padding-top:44px;border-top:1px solid var(--line)}
 .guide-faq h2{font-size:clamp(26px,3.4vw,34px)}
+.warnbox{border-left:3px solid var(--flag);padding:10px 14px;margin:0 0 18px;background:var(--panel);font-size:15px}
 .tablewrap{overflow-x:auto}
 .tablewrap table{min-width:560px}
 .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
@@ -210,6 +211,7 @@ footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);font-si
       </form>
 
       <div id="out" aria-live="polite">
+        <p class="warnbox" id="warn" role="alert" hidden></p>
         <dl class="kpis">
           <div class="kpi"><dt>Commit each year</dt><dd id="k-c"></dd><p id="k-c-p"></p></div>
           <div class="kpi"><dt id="k-t-t">Private NAV at the end of the plan</dt><dd id="k-t"></dd><p id="k-t-p"></p></div>
@@ -374,7 +376,12 @@ function wireExport(formName, csv, render){
   let pending = null;
   document.querySelectorAll("[data-act]").forEach(b => b.addEventListener("click", () => {
     const act = b.dataset.act;
-    if (lead()) return ACTIONS[act]();
+    const known = lead();
+    if (known) {
+      // Already gave us an email on another VC10X tool: no form, but record interest in this one once.
+      if (known.ok && known.em && !window.__tagged) { window.__tagged = true; fetch(SUBSCRIBE_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({form: formName, email: known.em, firstName: known.nm, role: known.rl, ...UTM})}).catch(() => {}); }
+      return ACTIONS[act]();
+    }
     pending = act;
     $("gate").hidden = false;
     $("unlock").textContent = act === "csv" ? "Continue to download" : "Continue to PDF";
@@ -395,7 +402,7 @@ function wireExport(formName, csv, render){
       } catch(e) { /* never block the download on a network error */ }
       btn.disabled = false; btn.textContent = label;
     }
-    try { localStorage.setItem(LEAD_KEY, JSON.stringify({ok, t: Date.now()})); } catch(e) {}
+    try { localStorage.setItem(LEAD_KEY, JSON.stringify({nm, em, rl, ok, t: Date.now()})); } catch(e) {}
     $("gate").hidden = true;
     if (pending) ACTIONS[pending]();
   });
@@ -472,7 +479,7 @@ function simulate(v, c){
   const rows = [{y:0, total:v.total, nav:v.nav, unf:v.unf, commit:0, calls:0, dist:0}];
   for (let y = 1; y <= v.years; y++) {
     const T = pub + pools.reduce((s, p) => s + p.nav, 0);
-    const commit = c * T;
+    const commit = c * Math.max(0, T);
     pools.push({nav:0, unf:commit, age:0});
     let calls = 0, dist = 0;
     pools.forEach(p => {
@@ -489,7 +496,7 @@ function simulate(v, c){
   return rows;
 }
 function solve(v){
-  const end = c => { const r = simulate(v, c); const L = r[r.length - 1]; return L.nav / L.total; };
+  const end = c => { const r = simulate(v, c); const L = r[r.length - 1]; return L.total > 0 ? L.nav / L.total : Infinity; };
   const t = v.target / 100;
   if (end(0.5) < t) return {c:0.5, reachable:false};
   let lo = 0, hi = 0.5;
@@ -501,11 +508,15 @@ function render(){
   const {v, errs} = readNums(IDS, LIMITS);
   v.years = Math.round(v.years); v.life = Math.round(v.life);
   v.mode = $("mode").value;
-  $("inerr").textContent = errs.length ? "Some fields aren't numbers, so we used the lowest allowed value." : "";
+  const navCapped = v.nav > v.total; if (navCapped) v.nav = v.total;
+  $("inerr").textContent = (errs.length ? "Some fields aren't numbers, so we used the lowest allowed value. " : "") + (navCapped ? "Private NAV can't be larger than the total portfolio, so we capped it." : "");
   $("crow").classList.toggle("hide", v.mode !== "fixed");
   const S = v.mode === "solve" ? solve(v) : {c:v.commit/100, reachable:true};
   const rows = simulate(v, S.c), last = rows[rows.length - 1], t = v.target/100;
   const hit = rows.find(r => r.y > 0 && r.nav / r.total >= t * 0.98);
+  const dry = rows.find(r => r.y > 0 && r.pub < 0);
+  $("warn").hidden = !dry;
+  if (dry) $("warn").innerHTML = `<b>This plan isn't fundable as entered.</b> Capital calls and spending use up all public assets by year ${dry.y}. Lower commitments or spending, or check your assumptions.`;
   const peak = rows.reduce((m, r) => (r.nav + r.unf) / r.total > (m.nav + m.unf) / m.total ? r : m, rows[0]);
 
   $("k-c").textContent = pct(S.c);

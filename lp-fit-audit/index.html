@@ -329,14 +329,21 @@ const QUESTIONS = [
 ];
 const TOPICS = [...new Set(QUESTIONS.map(q => q.t))];
 
-// Hard limits that a high raw score can't overcome. Each returns a reason when it applies.
-const CAPS = {
-  inst: (a) => (a[0] === 0 || a[1] <= 1) && {cap:25, why:"Most pensions and sovereign funds need a larger fund and several funds of history before they invest directly. Reach them later, or through a fund of funds."},
-  endow: (a) => a[0] === 0 && a[2] !== 0 && {cap:45, why:"Endowments rarely back a Fund I without realized results you can be credited for. Start the relationship now for Fund II or III."},
-  dfi: (a) => a[8] === 0 && {cap:20, why:"Development finance and government-backed LPs mostly invest in emerging markets and specific regions, not US-only funds."},
-  wealth: (a) => a[2] === 3 && {cap:30, why:"Wealth platforms need a track record or a name advisors can explain to their clients."},
-  ang: (a) => a[1] === 3 && {cap:40, why:"At this fund size, individual checks can't carry the raise on their own."}
+// Hard limits that a high raw score can't overcome. Each rule returns {cap, why} when it applies; the lowest cap wins.
+const RULES = {
+  inst: [a => (a[0] === 0 || a[1] <= 1) && {cap:25, why:"Most pensions and sovereign funds need a larger fund and several funds of history before they invest directly. Reach them later, or through a fund of funds."},
+         a => (a[10] >= 2 || a[2] === 3) && {cap:25, why:"Pensions and sovereign funds need an attributable track record and fully institutional operations before they'll start diligence."}],
+  endow: [a => a[0] === 0 && a[2] !== 0 && {cap:45, why:"Endowments rarely back a Fund I without realized results you can be credited for. Start the relationship now for Fund II or III."},
+          a => a[10] >= 2 && {cap:45, why:"Endowments expect institutional operations: a fund administrator, auditor, compliance policies and a completed due diligence questionnaire."}],
+  fof: [a => a[10] === 3 && {cap:50, why:"Funds of funds run an institutional diligence process. Without a fund administrator, auditor and due diligence questionnaire in place, most won't proceed."}],
+  dfi: [a => a[8] === 0 && {cap:20, why:"Development finance and government-backed LPs mostly invest in emerging markets and specific regions, not US-only funds."}],
+  wealth: [a => a[2] === 3 && {cap:30, why:"Wealth platforms need a track record or a name advisors can explain to their clients."}],
+  ang: [a => a[1] === 3 && {cap:40, why:"At this fund size, individual checks can't carry the raise on their own."}]
 };
+const CAPS = Object.fromEntries(Object.entries(RULES).map(([id, rules]) => [id, a => {
+  const hits = rules.map(r => r(a)).filter(Boolean);
+  return hits.length ? {cap: Math.min(...hits.map(h => h.cap)), why: hits.map(h => h.why).join(" ")} : false;
+}]));
 const FIT = [
   {min:65, name:"Strong fit"},
   {min:45, name:"Possible fit"},
@@ -482,15 +489,17 @@ function teaser(){
       <p class="fine">We never share your answers. Your individual responses are not stored on our servers.</p>
     </div>`;
   raise();
+  try { const L = JSON.parse(localStorage.getItem("vc10x-lead")); if (L && L.em) { document.getElementById("nm").value = L.nm || ""; document.getElementById("em").value = L.em; const o = [...document.getElementById("rl").options].find(o => o.text === L.rl); if (o) o.selected = true; } } catch(e) {}
   document.getElementById("unlock").onclick = async () => {
     const nm = document.getElementById("nm").value.trim(), em = document.getElementById("em").value.trim(), rl = document.getElementById("rl").value;
     const er = document.getElementById("er"), btn = document.getElementById("unlock");
     if (!nm) { er.textContent = "Add your first name to continue."; return; }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { er.textContent = "Enter a valid email address, like name@fund.com."; return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { er.textContent = "Enter a valid email address, like name@example.com."; return; }
     if (!rl) { er.textContent = "Choose the option that describes you best."; return; }
     er.textContent = "";
     const ok = document.getElementById("ok").checked;
     S.lead = {nm, em, rl, ok, t: Date.now()};
+    try { localStorage.setItem("vc10x-lead", JSON.stringify(S.lead)); } catch(e) {}
     if (ok) {
       btn.disabled = true; btn.textContent = "Unlocking your plan";
       try {

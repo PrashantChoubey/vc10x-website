@@ -527,7 +527,12 @@ let pending = null;
 
 document.querySelectorAll("[data-act]").forEach(b => b.addEventListener("click", () => {
   const act = b.dataset.act;
-  if (lead()) return ACTIONS[act]();
+  const known = lead();
+  if (known) {
+    // Already gave us an email on another VC10X tool: no form, but record interest in this one once.
+    if (known.ok && known.em && !window.__tagged) { window.__tagged = true; fetch(SUBSCRIBE_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({form: FORM_NAME, email: known.em, firstName: known.nm, role: known.rl, ...UTM})}).catch(() => {}); }
+    return ACTIONS[act]();
+  }
   pending = act;
   $("gate").hidden = false;
   $("unlock").textContent = act === "csv" ? "Continue to download" : "Continue to PDF";
@@ -549,7 +554,7 @@ $("unlock").addEventListener("click", async () => {
     } catch(e) { /* never block the download on a network error */ }
     btn.disabled = false; btn.textContent = label;
   }
-  try { localStorage.setItem(LEAD_KEY, JSON.stringify({ok, t: Date.now()})); } catch(e) {}
+  try { localStorage.setItem(LEAD_KEY, JSON.stringify({nm, em, rl, ok, t: Date.now()})); } catch(e) {}
   $("gate").hidden = true;
   if (pending) ACTIONS[pending]();
 });

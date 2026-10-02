@@ -446,15 +446,17 @@ function teaser(){
       <p class="fine">We never share your answers. Your individual responses are not stored on our servers.</p>
     </div>`;
   raise();
+  try { const L = JSON.parse(localStorage.getItem("vc10x-lead")); if (L && L.em) { document.getElementById("nm").value = L.nm || ""; document.getElementById("em").value = L.em; const o = [...document.getElementById("rl").options].find(o => o.text === L.rl); if (o) o.selected = true; } } catch(e) {}
   document.getElementById("unlock").onclick = async () => {
     const nm = document.getElementById("nm").value.trim(), em = document.getElementById("em").value.trim(), rl = document.getElementById("rl").value;
     const er = document.getElementById("er"), btn = document.getElementById("unlock");
     if (!nm) { er.textContent = "Add your first name to continue."; return; }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { er.textContent = "Enter a valid email address, like name@family.com."; return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { er.textContent = "Enter a valid email address, like name@example.com."; return; }
     if (!rl) { er.textContent = "Choose the option that describes you best."; return; }
     er.textContent = "";
     const ok = document.getElementById("ok").checked;
     S.lead = {nm, em, rl, ok, t: Date.now()};
+    try { localStorage.setItem("vc10x-lead", JSON.stringify(S.lead)); } catch(e) {}
     if (ok) {
       btn.disabled = true; btn.textContent = "Unlocking your report";
       const R = results();
