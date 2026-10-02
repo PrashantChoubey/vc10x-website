@@ -9,7 +9,7 @@ audit/                        Family Gap Audit      -> vc10x.com/audit/
 fundraising-audit/            Fundraising Audit     -> vc10x.com/fundraising-audit/
 functions/api/subscribe.js    newsletter + audit signups -> beehiiv
 functions/api/issues.js       "Latest from the newsletter" feed from beehiiv
-functions/api/popular.js      titles for the Popular uploads videos (YouTube)
+functions/api/popular.js      titles for the Popular conversations videos (YouTube)
 _redirects, _headers          Cloudflare Pages routing and headers
 wrangler.toml                 Cloudflare Pages config
 ```
@@ -47,7 +47,7 @@ Every push to `main` redeploys automatically.
 4. Add redirects for pages on the old site that people link to, in `_redirects`.
 
 ## Editing content
-- Popular uploads: the `POPULAR` list near the bottom of `index.html`. One YouTube
+- Popular conversations: the `POPULAR` list near the bottom of `index.html`. One YouTube
   link per line, in display order; the first is featured. Thumbnails and titles
   come from YouTube automatically.
 - Audit questions, scoring and advice: the `PILLARS`, `QUESTIONS` and `TIERS`
