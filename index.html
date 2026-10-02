@@ -124,27 +124,23 @@ section{padding:72px 0;border-top:1px solid var(--line)}
 @media (min-width:560px){.grid6{grid-template-columns:1fr 1fr}}
 @media (min-width:880px){.grid6{grid-template-columns:repeat(3,1fr)}.vid.feat{display:grid;grid-template-columns:1.5fr 1fr;gap:40px;align-items:center}}
 
-.paths{display:grid;grid-template-columns:1fr;gap:0}
-.path{padding:32px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr;gap:20px}
-.path:first-child{border-top:1px solid var(--line)}
-.path h3{font-size:28px}
-.path .who p{color:var(--muted);max-width:30em;margin-top:8px;font-size:16px}
-.res{list-style:none;margin:0;padding:0}
-.res a{display:grid;grid-template-columns:1fr auto;column-gap:16px;padding:16px 0;border-top:1px solid var(--line);text-decoration:none}
-.res li:first-child a{border-top:0;padding-top:4px}
-.res .tag{grid-column:1/-1;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
-.res .t{font-weight:600;font-size:18px}
-.res .go{align-self:center;font-size:20px;color:var(--muted);transition:transform .15s,color .15s}
-.res .d{color:var(--muted);font-size:15px;margin-top:2px}
+.dir{display:grid;grid-template-columns:1fr;gap:56px}
+.aud{display:grid;align-content:start}
+.aud .who{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.aud h3{font-size:clamp(24px,2.4vw,28px);line-height:1.15;margin-top:8px}
+.aud p.desc{color:var(--muted);font-size:16px;margin-top:10px;max-width:30em}
+.res{list-style:none;margin:24px 0 0;padding:0}
+.res .rhead{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-bottom:8px;border-bottom:1px solid var(--ink)}
+.res a{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--line);text-decoration:none}
+.res .t{font-weight:600;font-size:16px}
+.res .tag{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.res .d{grid-column:1/-1;color:var(--muted);font-size:14px;line-height:1.45}
+.res .go{color:var(--muted);transition:color .15s}
 .res a:hover .t{text-decoration:underline;text-underline-offset:3px}
-.res a:hover .go,.res a:focus-visible .go{color:var(--ink);transform:translateX(4px)}
-@media (min-width:820px){
-  .path{grid-template-columns:300px 1fr;gap:56px}
-  .res a{grid-template-columns:120px 1fr auto;align-items:baseline}
-  .res .tag{grid-column:1;grid-row:1/span 2;margin:0;padding-top:4px}
-  .res .t{grid-column:2;grid-row:1}
-  .res .go{grid-column:3;grid-row:1/span 2}
-  .res .d{grid-column:2;grid-row:2}
+.res a:hover .go,.res a:focus-visible .go{color:var(--ink)}
+@media (min-width:980px){
+  .dir{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(4,auto);column-gap:44px;row-gap:0}
+  .aud{grid-row:span 4;grid-template-rows:subgrid}
 }
 
 .audit-band{background:var(--green-deep);color:var(--on-deep);border-top:0}
@@ -317,29 +313,38 @@ footer a{margin-right:16px}
 <section id="start">
   <div class="wrap">
     <div class="sec-head"><h2>Start where you sit</h2><p>Free tools, audits and reading for each seat at the table.</p></div>
-    <div class="paths">
-      <div class="path">
-        <div class="who"><h3>Fund managers</h3><p>How LPs actually decide, what gets a fund to first close, and how the best GPs source what everyone else misses.</p></div>
+    <div class="dir">
+      <div class="aud">
+        <p class="who">For GPs and emerging managers</p>
+        <h3>Fund managers</h3>
+        <p class="desc">How LPs actually decide, what gets a fund to first close, and how the best GPs source what everyone else misses.</p>
         <ul class="res">
-          <li><a href="/fundraising-audit/"><span class="tag">Audit · 7 min</span><span class="t">Fundraising Readiness Audit</span><span class="go" aria-hidden="true">→</span><span class="d">Are you ready for the questions LPs ask before they commit?</span></a></li>
-          <li><a href="/lp-fit-audit/"><span class="tag">Audit · 5 min</span><span class="t">LP Fit Audit</span><span class="go" aria-hidden="true">→</span><span class="d">Which LP types fit your fund, ranked, with a playbook for the top three.</span></a></li>
-          <li><a href="/fund-economics-calculator/"><span class="tag">Calculator</span><span class="t">Fund Economics Calculator</span><span class="go" aria-hidden="true">→</span><span class="d">Fees by year, GP commit, and the return you need before carry pays out.</span></a></li>
-          <li><a href="#latest"><span class="tag">Newsletter</span><span class="t">What LPs say after the meeting</span><span class="go" aria-hidden="true">→</span><span class="d">Weekly issues on how allocators pick managers.</span></a></li>
+          <li class="rhead" aria-hidden="true"><span>Start with</span><span>Format</span></li>
+          <li><a href="/fundraising-audit/"><span class="t">Fundraising Readiness Audit&nbsp;<span class="go" aria-hidden="true">→</span></span><span class="tag">Audit · 7 min</span><span class="d">Are you ready for the questions LPs ask before they commit?</span></a></li>
+          <li><a href="/lp-fit-audit/"><span class="t">LP Fit Audit&nbsp;<span class="go" aria-hidden="true">→</span></span><span class="tag">Audit · 5 min</span><span class="d">Which LP types fit your fund, ranked, with a playbook for the top three.</span></a></li>
+          <li><a href="/fund-economics-calculator/"><span class="t">Fund Economics Calculator&nbsp;<span class="go" aria-hidden="true">→</span></span><span class="tag">Calculator</span><span class="d">Fees by year, GP commit, and the return you need before carry pays out.</span></a></li>
+          <li><a href="#latest"><span class="t">What LPs say after the meeting&nbsp;<span class="go" aria-hidden="true">→</span></span><span class="tag">Newsletter</span><span class="d">Weekly issues on how allocators pick managers.</span></a></li>
         </ul>
       </div>
-      <div class="path">
-        <div class="who"><h3>CIOs and allocators</h3><p>Allocation frameworks, liquidity under stress, and where experienced allocators are still finding returns others aren't.</p></div>
+      <div class="aud">
+        <p class="who">For CIOs, endowments and allocators</p>
+        <h3>CIOs and allocators</h3>
+        <p class="desc">Allocation frameworks, liquidity under stress, and where experienced allocators are still finding returns others aren't.</p>
         <ul class="res">
-          <li><a href="#latest"><span class="tag">Newsletter</span><span class="t">Recent issues</span><span class="go" aria-hidden="true">→</span><span class="d">How CIOs and family offices are positioning portfolios now.</span></a></li>
-          <li><a href="/fund-economics-calculator/"><span class="tag">Calculator</span><span class="t">Fund Economics Calculator</span><span class="go" aria-hidden="true">→</span><span class="d">Check a manager's fee drag and what the fund must return before carry.</span></a></li>
-          <li><a href="#popular"><span class="tag">Podcast</span><span class="t">Most-watched conversations</span><span class="go" aria-hidden="true">→</span><span class="d">Allocators and CIOs explaining how they actually decide.</span></a></li>
+          <li class="rhead" aria-hidden="true"><span>Start with</span><span>Format</span></li>
+          <li><a href="#latest"><span class="t">Recent issues&nbsp;<span class="go" aria-hidden="true">→</span></span><span class="tag">Newsletter</span><span class="d">How CIOs and family offices are positioning portfolios now.</span></a></li>
+          <li><a href="/fund-economics-calculator/"><span class="t">Fund Economics Calculator&nbsp;<span class="go" aria-hidden="true">→</span></span><span class="tag">Calculator</span><span class="d">Check a manager's fee drag and what the fund must return before carry.</span></a></li>
+          <li><a href="#popular"><span class="t">Most-watched conversations&nbsp;<span class="go" aria-hidden="true">→</span></span><span class="tag">Podcast</span><span class="d">Allocators and CIOs explaining how they actually decide.</span></a></li>
         </ul>
       </div>
-      <div class="path">
-        <div class="who"><h3>Families</h3><p>Succession, governance, next-gen readiness and security, from families and the people who run their offices.</p></div>
+      <div class="aud">
+        <p class="who">For principals and family offices</p>
+        <h3>Families</h3>
+        <p class="desc">Succession, governance, next-gen readiness and security, from families and the people who run their offices.</p>
         <ul class="res">
-          <li><a href="/audit/"><span class="tag">Audit · 7 min</span><span class="t">Family Gap Audit</span><span class="go" aria-hidden="true">→</span><span class="d">A scored view of where your family is exposed, and what to fix first.</span></a></li>
-          <li><a href="https://www.youtube.com/playlist?list=PLsqyGxJem3HiK6yxKuqUpWpmgKyttuA1k" target="_blank" rel="noopener"><span class="tag">Podcast</span><span class="t">Family office conversations</span><span class="go" aria-hidden="true">→</span><span class="d">How principals and their offices handle succession, governance and risk.</span></a></li>
+          <li class="rhead" aria-hidden="true"><span>Start with</span><span>Format</span></li>
+          <li><a href="/audit/"><span class="t">Family Gap Audit&nbsp;<span class="go" aria-hidden="true">→</span></span><span class="tag">Audit · 7 min</span><span class="d">A scored view of where your family is exposed, and what to fix first.</span></a></li>
+          <li><a href="https://www.youtube.com/playlist?list=PLsqyGxJem3HiK6yxKuqUpWpmgKyttuA1k" target="_blank" rel="noopener"><span class="t">Family office conversations&nbsp;<span class="go" aria-hidden="true">→</span></span><span class="tag">Podcast</span><span class="d">How principals and their offices handle succession, governance and risk.</span></a></li>
         </ul>
       </div>
     </div>
