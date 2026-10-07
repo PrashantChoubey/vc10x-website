@@ -1,2 +1,17 @@
 /family-gap-audit   /audit/               301
 /fundraising        /fundraising-audit/   301
+
+# Episode pages from the old site: send visitors to that episode on YouTube
+/vibecap                                https://www.youtube.com/@VC10X/search?query=VibeCap   301
+/openvc-steph-nass                      https://www.youtube.com/@VC10X/search?query=OpenVC+Steph+Nass   301
+/link-capital                           https://www.youtube.com/@VC10X/search?query=Link+Capital   301
+/social-capital-bank                    https://www.youtube.com/@VC10X/search?query=Social+Capital+Bank   301
+/telstra-ventures                       https://www.youtube.com/@VC10X/search?query=Telstra+Ventures   301
+/blume-ventures                         https://www.youtube.com/@VC10X/search?query=Blume+Ventures   301
+/the-dream-investor                     https://www.youtube.com/@VC10X/search?query=The+Dream+Investor   301
+/investing-in-africa                    https://www.youtube.com/@VC10X/search?query=Investing+in+Africa   301
+/the-canadian-startup-ecosystem         https://www.youtube.com/@VC10X/search?query=Canadian+startup+ecosystem   301
+/boostvc-adam-draper                    https://www.youtube.com/@VC10X/search?query=Adam+Draper   301
+/investing-on-crowdfunding-platforms    https://www.youtube.com/@VC10X/search?query=crowdfunding   301
+/nexus-vp                               https://www.youtube.com/@VC10X/search?query=Nexus+Venture+Partners   301
+/the-new-builders                       https://www.youtube.com/@VC10X/search?query=The+New+Builders   301
