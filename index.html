@@ -101,6 +101,16 @@ form.sub input[type=email]{flex:1 1 240px;padding:14px 16px;border:1px solid var
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 
 section{padding:72px 0;border-top:1px solid var(--line)}
+/* Firms featured: one line, equal-height logos */
+section.firms{padding:32px 0}
+.firms .label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
+.firms ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:40px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.firms ul::-webkit-scrollbar{display:none}
+.firms li{flex:none}
+.firms img{display:block;height:26px;width:auto;opacity:.85}
+@media (max-width:1079px){.firms ul{justify-content:flex-start;gap:36px;mask-image:linear-gradient(90deg,#000 85%,transparent);-webkit-mask-image:linear-gradient(90deg,#000 85%,transparent)}.firms img{height:22px}}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .firms img{filter:invert(1)}}
+:root[data-theme="dark"] .firms img{filter:invert(1)}
 .sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;margin-bottom:36px}
 .sec-head h2{font-size:clamp(30px,4vw,42px);line-height:1.1}
 .sec-head p{color:var(--muted);max-width:30em}
@@ -250,6 +260,19 @@ footer a{margin-right:16px}
     <p class="listen">Or listen on <a href="https://www.youtube.com/@VC10X" target="_blank" rel="noopener">YouTube</a>, <a href="https://podcasts.apple.com/us/podcast/id1632806986" target="_blank" rel="noopener">Apple Podcasts</a> or <a href="https://open.spotify.com/show/7F7KEhXNhTx1bKTBFgzv3k" target="_blank" rel="noopener">Spotify</a>.</p>
   </div>
 </div>
+
+<section class="firms" aria-label="Firms featured on VC10X">
+  <div class="wrap">
+    <p class="label">Investment leaders from these firms have joined VC10X</p>
+    <ul>
+      <li><img src="/logos/ubs.png" alt="UBS" height="26" width="67" loading="lazy" decoding="async"></li>
+      <li><img src="/logos/stepstone.png" alt="StepStone" height="26" width="158" loading="lazy" decoding="async"></li>
+      <li><img src="/logos/bny.png" alt="BNY Wealth" height="26" width="246" loading="lazy" decoding="async"></li>
+      <li><img src="/logos/feg.png" alt="FEG" height="26" width="96" loading="lazy" decoding="async"></li>
+      <li><img src="/logos/neuberger.png" alt="Neuberger Berman" height="26" width="224" loading="lazy" decoding="async"></li>
+    </ul>
+  </div>
+</section>
 
 <section id="popular">
   <div class="wrap">
