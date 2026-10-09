@@ -371,7 +371,7 @@ function intro(){
       <button class="btn" id="go">${started ? "Continue the audit" : "Start the audit"}</button>
       ${started ? `<button class="link" id="reset" style="margin-left:18px">Start over</button>` : ""}
     </div>
-    <div>${pillarsHTML(SAMPLE, {mark:["pipe"], note:"Sample report"})}</div>
+    <div>${pillarsHTML(null, {note:"Your scores appear here"})}</div>
   </div>`;
   raise();
   document.getElementById("go").onclick = () => { S.stage="q"; S.i = Math.max(0, S.a.findIndex(x=>x==null)); if (S.i<0) S.i=0; save(); render(); };

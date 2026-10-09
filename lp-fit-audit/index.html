@@ -414,7 +414,7 @@ function intro(){
       <button class="btn" id="go">${started ? "Continue the audit" : "Start the audit"}</button>
       ${started ? `<button class="link" id="reset" style="margin-left:18px">Start over</button>` : ""}
     </div>
-    <div>${scoreHTML(SAMPLE_ORDER, SAMPLE, {mark:["fo"], note:"Sample report"})}</div>
+    <div>${scoreHTML(TYPES, null, {note:"Your ranking appears here"})}</div>
   </div>`;
   raise();
   document.getElementById("go").onclick = () => { S.stage = "q"; S.i = Math.max(0, S.a.findIndex(x => x == null)); save(); render(); };
