@@ -107,8 +107,9 @@ section.firms{padding:32px 0}
 .firms ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:40px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .firms ul::-webkit-scrollbar{display:none}
 .firms li{flex:none}
-.firms img{display:block;height:26px;width:auto;opacity:.85}
-@media (max-width:1079px){.firms ul{justify-content:flex-start;gap:36px;mask-image:linear-gradient(90deg,#000 85%,transparent);-webkit-mask-image:linear-gradient(90deg,#000 85%,transparent)}.firms img{height:22px}}
+/* Sized so each logo's lettering is the same height, not the box: --k = 1 / share of height the letters fill */
+.firms img{display:block;height:calc(22px * var(--k,1));width:auto;opacity:.85}
+@media (max-width:1079px){.firms ul{justify-content:flex-start;gap:36px;mask-image:linear-gradient(90deg,#000 85%,transparent);-webkit-mask-image:linear-gradient(90deg,#000 85%,transparent)}.firms img{height:calc(18px * var(--k,1))}}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .firms img{filter:invert(1)}}
 :root[data-theme="dark"] .firms img{filter:invert(1)}
 .sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;margin-bottom:36px}
@@ -265,11 +266,11 @@ footer a{margin-right:16px}
   <div class="wrap">
     <p class="label">Investment leaders from these firms have joined VC10X</p>
     <ul>
-      <li><img src="/logos/ubs.png" alt="UBS" height="26" width="67" loading="lazy" decoding="async"></li>
-      <li><img src="/logos/stepstone.png" alt="StepStone" height="26" width="158" loading="lazy" decoding="async"></li>
-      <li><img src="/logos/bny.png" alt="BNY Wealth" height="26" width="246" loading="lazy" decoding="async"></li>
-      <li><img src="/logos/feg.png" alt="FEG" height="26" width="96" loading="lazy" decoding="async"></li>
-      <li><img src="/logos/neuberger.png" alt="Neuberger Berman" height="26" width="224" loading="lazy" decoding="async"></li>
+      <li><img src="/logos/ubs.png" alt="UBS" height="32" width="83" style="--k:1.453" loading="lazy" decoding="async"></li>
+      <li><img src="/logos/stepstone.png" alt="StepStone" height="35" width="213" style="--k:1.6" loading="lazy" decoding="async"></li>
+      <li><img src="/logos/bny.png" alt="BNY Wealth" height="22" width="208" style="--k:1.0" loading="lazy" decoding="async"></li>
+      <li><img src="/logos/feg.png" alt="FEG" height="23" width="85" style="--k:1.044" loading="lazy" decoding="async"></li>
+      <li><img src="/logos/neuberger.png" alt="Neuberger Berman" height="22" width="189" style="--k:1.0" loading="lazy" decoding="async"></li>
     </ul>
   </div>
 </section>
