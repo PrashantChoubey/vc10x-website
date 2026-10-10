@@ -11,11 +11,16 @@ All tools are free. Audit answers and calculator inputs stay in the visitor's br
 - [Liquidity Stress Test](https://vc10x.com/liquidity-stress-test/): For CIOs and allocators. Tests whether a portfolio can meet capital calls and spending after a market shock, how far the private allocation drifts (the denominator effect), and whether equities would have to be sold.
 - [Fund Performance Calculator](https://vc10x.com/fund-performance-calculator/): Calculates TVPI, DPI, RVPI, net IRR and a Kaplan-Schoar public market equivalent (PME) from a fund's annual cash flows and NAV.
 - [The LP Fit Audit](https://vc10x.com/lp-fit-audit/): Fourteen questions that rank eight LP types (angels, family offices, funds of funds, endowments, pensions and sovereigns, corporates, wealth platforms, DFIs) by fit for a venture fund.
+- [The Venture Manager Scorecard](https://vc10x.com/manager-scorecard/): Twenty-four questions that score a venture fund manager on the eight tests LPs run before committing (focus, picking, skill or luck, attribution, fund construction, people, the numbers, conviction). LPs can mark questions as not yet known and compare saved scorecards; GPs can score their own fund the way an LP would.
 - [The Fundraising Readiness Audit](https://vc10x.com/fundraising-audit/): Twenty questions that score a venture fund manager's readiness to raise across track record, LP pipeline, materials, terms and process.
 - [The Family Gap Audit](https://vc10x.com/audit/): Twenty questions that score a family or family office on succession, governance, next-gen readiness, investment architecture, and privacy and security.
 - [The Family Office Readiness Audit](https://vc10x.com/family-office-readiness/): Twelve questions that rank a wealth manager, multi-family office, outsourced family office and single-family office by fit for a family, with an estimated annual cost for each.
 - [The Liquidity Event Readiness Audit](https://vc10x.com/liquidity-event-audit/): Twenty questions for founders and family business owners selling a company, covering pre-sale tax and estate planning, advisors, a deployment plan, family, and privacy.
 - [Advisor Fee Calculator](https://vc10x.com/advisor-fee-calculator/): Shows the dollars paid to a wealth manager over time, the growth given up, and what a lower or flat fee would change.
+
+## Playbooks
+
+- [How LPs Evaluate Venture Fund Managers](https://vc10x.com/playbooks/how-lps-evaluate-venture-fund-managers/): The eight tests allocators run before committing to a venture fund, with techniques from on-record conversations with twelve LPs, and a 40-question due diligence question bank.
 
 ## Podcast and newsletter
 

@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Venture Manager Scorecard: Evaluate a VC Fund Manager Like an LP | VC10X</title>
+<meta name="description" content="Score a venture capital fund manager on the eight tests LPs run before they commit, or score your own fund the way an LP would. Free, 24 questions, with the questions to ask next and side-by-side manager comparison.">
+<link rel="canonical" href="https://vc10x.com/manager-scorecard/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VC10X">
+<meta property="og:url" content="https://vc10x.com/manager-scorecard/">
+<meta property="og:title" content="The Venture Manager Scorecard">
+<meta property="og:description" content="Score a VC manager on the eight tests LPs run before they commit, or score your own fund the way an LP would.">
+<meta property="og:image" content="https://vc10x.com/manager-scorecard/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Venture Manager Scorecard">
+<meta name="twitter:description" content="The eight tests LPs run on a venture manager, as a free scorecard.">
+<meta name="twitter:image" content="https://vc10x.com/manager-scorecard/og.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "@id": "https://vc10x.com/manager-scorecard/#app", "name": "The Venture Manager Scorecard", "url": "https://vc10x.com/manager-scorecard/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@id": "https://vc10x.com/#org"}, "author": {"@id": "https://vc10x.com/#prashant"}, "dateModified": "2026-10-10", "isBasedOn": "https://vc10x.com/playbooks/how-lps-evaluate-venture-fund-managers/"}, {"@type": "FAQPage", "@id": "https://vc10x.com/manager-scorecard/#faq", "mainEntity": [{"@type": "Question", "name": "How do LPs evaluate venture capital fund managers?", "acceptedAnswer": {"@type": "Answer", "text": "Allocators interviewed by VC10X look for a clear focus and a reason the manager will win, picking judgment that's repeatable rather than lucky, a track record they can attribute, a fund size that fits the strategy, partners they trust, honest performance numbers and expertise that predates the trend."}}, {"@type": "Question", "name": "How do you compare venture managers objectively?", "acceptedAnswer": {"@type": "Answer", "text": "Score every manager on the same tests, look at the weakest test as closely as the total, and keep track of what you haven't verified yet. One clear fail usually matters more than a high average."}}, {"@type": "Question", "name": "Can a first-time fund manager score well?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The tests are the same for first-time and established managers, but the evidence differs: references that confirm the manager's role at prior firms, attributable angel investments, and a credible plan to build a firm."}}, {"@type": "Question", "name": "Should a GP score their own fund?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Scoring yourself the way an LP would, before you raise, shows which questions you can't yet answer. Ask each partner to score the fund separately and compare."}}]}, {"@type": "Organization", "@id": "https://vc10x.com/#org", "name": "VC10X", "url": "https://vc10x.com/"}, {"@type": "Person", "@id": "https://vc10x.com/#prashant", "name": "Prashant Choubey", "url": "https://vc10x.com/about/"}]}
+</script>
+<!-- Analytics: paste your Plausible or Google Analytics snippet here -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FFFFFF; --panel:#F6F6F6; --ink:#000000; --muted:#5C5C5C; --line:#D9D9D9;
+  --green:#000000; --green-soft:#F2F2F2; --brass:#3FDCFF; --flag:#C0392B; --flag-soft:#FBE9E7;
+  --on-green:#FFFFFF;
+  --serif:"Newsreader", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --sans:"Hanken Grotesk", "Helvetica Neue", Arial, system-ui, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#000000; --panel:#111111; --ink:#FFFFFF; --muted:#A6A6A6; --line:#2B2B2B;
+  --green:#FFFFFF; --green-soft:#1C1C1C; --brass:#3FDCFF; --flag:#FF7A6B; --flag-soft:#3A1512;
+  --on-green:#000000;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#000000; --panel:#111111; --ink:#FFFFFF; --muted:#A6A6A6; --line:#2B2B2B;
+  --green:#FFFFFF; --green-soft:#1C1C1C; --brass:#3FDCFF; --flag:#FF7A6B; --flag-soft:#3A1512;
+  --on-green:#000000;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:28px 22px 64px}
+header.bar{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:40px}
+.mark{font-family:var(--serif);font-weight:600;font-size:20px;letter-spacing:.01em;color:var(--ink);text-decoration:none}
+.bar small{color:var(--muted);font-size:14px}
+h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;margin:0}
+h1{font-size:clamp(38px,5.4vw,52px);line-height:1.04}
+h2{font-size:clamp(26px,4vw,34px);line-height:1.15}
+h3{font-size:22px;line-height:1.25}
+p{margin:0}
+.lede{font-family:var(--serif);font-size:21px;line-height:1.5;color:var(--ink);max-width:36em;margin-top:22px}
+.muted{color:var(--muted)}
+button,input,select{font:inherit;color:inherit}
+.btn{display:inline-block;background:var(--green);color:var(--on-green);border:0;border-radius:6px;padding:14px 26px;font-weight:600;font-size:16px;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;box-shadow:0 0 0 5px var(--brass)}
+
+/* Scorecard: one row per area, 0-100 scale in quartile segments */
+.scard{font-variant-numeric:tabular-nums}
+.shead{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-bottom:8px;border-bottom:1px solid var(--ink)}
+.srow{display:grid;grid-template-columns:1fr auto;gap:8px 12px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line)}
+.srow .lab{font-size:14px;line-height:1.3}
+.srow .val{font-size:15px;font-weight:600}
+.srow .bar{grid-column:1/-1;position:relative;height:6px;border-radius:3px;overflow:hidden;background:repeating-linear-gradient(90deg,var(--line) 0 calc(25% - 2px),transparent calc(25% - 2px) 25%)}
+.srow .fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:3px;background:var(--ink);transition:width 1s cubic-bezier(.2,.7,.2,1)}
+.srow.weak .fill{background:var(--brass)}
+.srow .flag{display:inline-block;margin-left:8px;padding:1px 6px;border-radius:3px;background:var(--brass);color:#000;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;vertical-align:1px}
+.sfoot{display:flex;justify-content:space-between;margin-top:8px;font-size:11px;color:var(--muted)}
+@media (prefers-reduced-motion: reduce){.srow .fill{transition:none}}
+
+.intro-grid{display:grid;grid-template-columns:1fr;gap:48px;margin-top:8px}
+.facts{display:flex;flex-wrap:wrap;gap:10px 28px;margin:28px 0 32px;color:var(--muted);font-size:15px}
+.facts span b{color:var(--ink);font-weight:600}
+
+/* Question screen */
+.progress{display:flex;gap:6px;margin-bottom:10px}
+.progress div{flex:1;height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--brass);width:0;transition:width .3s}
+.qmeta{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-bottom:34px}
+.qtext{font-family:var(--serif);font-size:clamp(24px,3.6vw,31px);line-height:1.25;font-weight:500;max-width:28em}
+.qhint{margin-top:12px;color:var(--muted);font-size:15px;max-width:40em}
+.options{list-style:none;padding:0;margin:30px 0 0;display:grid;gap:10px}
+.opt{width:100%;text-align:left;display:flex;gap:14px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:16px 18px;cursor:pointer;font-size:16px;line-height:1.45}
+.opt:hover{border-color:var(--green)}
+.opt .dot{flex:none;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--muted);margin-top:2px}
+.opt[aria-checked="true"]{border-color:var(--green);background:var(--green-soft)}
+.opt[aria-checked="true"] .dot{border-color:var(--green);background:radial-gradient(var(--green) 45%,transparent 50%)}
+.qnav{display:flex;justify-content:space-between;margin-top:28px}
+.link{background:none;border:0;padding:6px 0;color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-size:15px}
+.link:disabled{opacity:.35;cursor:default}
+
+/* Results */
+.score-row{display:flex;align-items:flex-end;gap:22px;flex-wrap:wrap;margin:10px 0 8px}
+.score{font-family:var(--serif);font-size:clamp(88px,16vw,132px);line-height:.85;font-weight:500;letter-spacing:-.03em}
+.score small{font-size:.28em;color:var(--muted);letter-spacing:0;margin-left:4px}
+.tier{padding-bottom:10px}
+.tier h2{font-size:30px}
+.tier p{color:var(--muted);max-width:26em;margin-top:6px}
+.flagcount{display:inline-block;margin-top:30px;background:var(--flag-soft);color:var(--flag);padding:8px 14px;border-radius:4px;font-weight:600;font-size:15px}
+section.block{margin-top:52px}
+.gate{margin-top:44px;background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--brass);border-radius:4px;padding:28px}
+.gate ul{margin:16px 0 22px;padding-left:20px;color:var(--ink)}
+.gate li{margin:4px 0}
+.field{display:grid;gap:6px;margin-bottom:14px}
+.field label{font-size:14px;font-weight:600}
+.field input,.field select{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--muted);margin:4px 0 20px}
+.check input{margin-top:4px}
+.err{color:var(--flag);font-size:14px;margin-bottom:10px;min-height:1em}
+.fine{font-size:13px;color:var(--muted);margin-top:14px}
+.flags{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:10px}
+.flags li{border-left:3px solid var(--flag);padding:6px 0 6px 16px}
+.plan{display:grid;gap:34px;margin-top:22px}
+.plan ol{margin:12px 0 0;padding-left:22px}
+.plan li{margin:8px 0;max-width:40em}
+.plan .why{color:var(--muted);margin-top:6px;max-width:40em}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.pitch{margin-top:56px;padding-top:28px;border-top:1px solid var(--line)}
+footer{margin-top:64px;font-size:13px;color:var(--muted)}
+.hidden{display:none}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.btn:disabled{opacity:.6;cursor:wait}
+@media (min-width:760px){.intro-grid{grid-template-columns:1.25fr 1fr;align-items:end}}
+.learn{margin-top:80px;padding-top:44px;border-top:1px solid var(--line)}
+.learn section + section{margin-top:44px}
+.learn p{margin-top:12px;max-width:38em}
+.learn dl{margin:18px 0 0}
+.learn dt{font-family:var(--serif);font-size:21px;font-weight:500;margin-top:18px}
+.learn dd{margin:4px 0 0;color:var(--muted);max-width:38em}
+.learn ul{margin:14px 0 0;padding-left:20px}
+.learn li{margin:6px 0}
+.faq h3{font-family:var(--serif);font-size:21px;font-weight:500;margin-top:26px;line-height:1.3}
+.faq p{margin-top:8px;max-width:38em;color:var(--muted)}
+.updated{margin-top:44px;font-size:14px;color:var(--muted)}
+.updated a{color:inherit}
+
+/* Manager scorecard additions */
+.modes{border:0;padding:0;margin:0;display:grid;gap:10px}
+.modes legend{font-weight:600;font-size:15px;margin-bottom:10px;padding:0}
+.mode{text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:16px 18px;cursor:pointer;display:block;width:100%}
+.mode:hover,.mode[aria-pressed="true"]{border-color:var(--green);box-shadow:inset 3px 0 0 var(--brass)}
+.mode b{display:block;font-family:var(--serif);font-weight:500;font-size:21px}
+.mode span{display:block;color:var(--muted);font-size:15px;margin-top:2px}
+.opt.unk{background:transparent;border-style:dashed;color:var(--muted)}
+.cov{margin-top:14px;color:var(--muted);font-size:15px}
+.plan .sub{margin-top:14px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.plan .more{margin-top:10px;font-size:15px}
+.cmpwrap{overflow-x:auto;margin-top:16px}
+table.cmp{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums;min-width:640px}
+table.cmp th,table.cmp td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:center;white-space:nowrap}
+table.cmp thead th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;border-bottom:1px solid var(--ink)}
+table.cmp th[scope=row],table.cmp thead th:first-child{text-align:left;white-space:normal}
+table.cmp th[scope=row] small{display:block;color:var(--muted);font-weight:400;font-size:12px}
+table.cmp td.tot{font-weight:700}
+table.cmp td.low{background:var(--brass);color:#000;font-weight:600}
+table.cmp tr.cur th[scope=row]{box-shadow:inset 3px 0 0 var(--ink)}
+.actions a.btn{text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <a class="mark" href="/">VC10X</a>
+    <small>For LPs and venture fund managers</small>
+  </header>
+  <main id="app" aria-live="polite"></main>
+  <div class="learn" id="learn">
+    <section>
+      <h2>The eight tests LPs run on a venture manager</h2>
+      <p>Twenty-four questions, three for each test. The tests come from the VC10X playbook <a href="/playbooks/how-lps-evaluate-venture-fund-managers/">How LPs Evaluate Venture Fund Managers</a>, built from on-record conversations with twelve allocators.</p>
+      <dl>
+        <dt>1. Focus</dt><dd>Why will this manager win? A narrow focus and an advantage they can prove.</dd>
+        <dt>2. Picking</dt><dd>Can they choose, not just see? Clear reasoning on the deals they passed on.</dd>
+        <dt>3. Skill or luck</dt><dd>Will it happen again? A deal-by-deal story that matches the strategy.</dd>
+        <dt>4. Attribution</dt><dd>Is the record really theirs? References that confirm their actual role.</dd>
+        <dt>5. Fund construction</dt><dd>Does the fund fit the strategy? Earned ownership and a size planned around it.</dd>
+        <dt>6. People</dt><dd>Would you want them beside you in a crisis? Behavior, not promises, that shows alignment.</dd>
+        <dt>7. The numbers</dt><dd>What's behind the IRR? Clean cash flows, conservative marks, a liquidity plan.</dd>
+        <dt>8. Conviction</dt><dd>Is this expertise or a trend? Evidence they were there before the theme got hot.</dd>
+      </dl>
+    </section>
+    <section>
+      <h2>How the score works</h2>
+      <p>Every answer is worth zero to three points, and each test is scored out of 100. The total is out of 100, with a red flag for any answer that would end a conversation on its own.</p>
+      <p>Scoring a manager you're still diligencing? Answer “Haven't found out yet” where you don't know. Those questions don't count toward the score. They become your list of open questions, with the exact questions to ask next.</p>
+      <ul>
+        <li><b>80 to 100:</b> Strong candidate</li>
+        <li><b>60 to 79:</b> Promising, with gaps</li>
+        <li><b>40 to 59:</b> Significant concerns</li>
+        <li><b>Below 40:</b> Not ready for a commitment</li>
+      </ul>
+      <p>A high average can't hide a clear fail. If any test scores below 34, the verdict is capped at “Significant concerns”, and any red flag caps it at “Promising, with gaps”.</p>
+      <p>Your answers stay in your browser. We don't store them.</p>
+    </section>
+    <section>
+      <h2>Who it's for</h2>
+      <p><b>LPs and allocators:</b> score each manager after your meetings, keep the scorecards side by side and see exactly which test to dig into next. <b>Fund managers:</b> score your own fund the way an LP would, before your first meeting, and fix what an LP would find.</p>
+    </section>
+    <section class="faq">
+      <h2>Frequently asked questions</h2>
+      <h3>How do LPs evaluate venture capital fund managers?</h3>
+      <p>Allocators interviewed by VC10X look for a clear focus and a reason the manager will win, picking judgment that's repeatable rather than lucky, a track record they can attribute, a fund size that fits the strategy, partners they trust, honest performance numbers and expertise that predates the trend.</p>
+      <h3>How do you compare venture managers objectively?</h3>
+      <p>Score every manager on the same tests, look at the weakest test as closely as the total, and keep track of what you haven't verified yet. One clear fail usually matters more than a high average.</p>
+      <h3>Can a first-time fund manager score well?</h3>
+      <p>Yes. The tests are the same for first-time and established managers, but the evidence differs: references that confirm the manager's role at prior firms, attributable angel investments, and a credible plan to build a firm.</p>
+      <h3>Should a GP score their own fund?</h3>
+      <p>Yes. Scoring yourself the way an LP would, before you raise, shows which questions you can't yet answer. Ask each partner to score the fund separately and compare.</p>
+    </section>
+    <section>
+      <h2>Related from VC10X</h2>
+      <ul>
+        <li><a href="/playbooks/how-lps-evaluate-venture-fund-managers/">How LPs Evaluate Venture Fund Managers</a>: the playbook behind this scorecard, with a free 40-question due diligence PDF.</li>
+        <li><a href="/fundraising-audit/">The Fundraising Readiness Audit</a>: how ready your raise is, from pipeline to first close.</li>
+        <li><a href="/lp-fit-audit/">The LP Fit Audit</a>: which LP types fit your fund, ranked.</li>
+        <li><a href="/fund-performance-calculator/">Fund Performance Calculator</a>: IRR, TVPI, DPI and PME from a fund's cash flows.</li>
+      </ul>
+    </section>
+    <p class="updated">From <a href="/">VC10X</a>, hosted by <a href="/about/">Prashant Choubey</a>. Updated <time datetime="2026-10-10">10 October 2026</time>.</p>
+  </div>
+  <footer>Indicative only. This scorecard structures your own judgment; it is not legal, tax or investment advice.</footer>
+</div>
+
+<script>
+const SUBSCRIBE_ENDPOINT = "/api/subscribe";
+const FORM_NAME = "manager-scorecard";
+const PLAYBOOK = "/playbooks/how-lps-evaluate-venture-fund-managers/";
+const PDF_URL = PLAYBOOK + "vc10x-lp-due-diligence-question-bank-q7k2.pdf";
+
+/* ---------- The eight tests ---------- */
+// ask: questions an LP should ask next; prep: what a GP should prepare. Both come from the playbook.
+const TESTS = [
+  {id:"focus", name:"Focus", short:"Focus", anchor:"test-focus",
+   why:"Almost every fund claims access and value-add. LPs want a specific area the manager knows better than anyone, and proof founders there choose them.",
+   ask:["In one sentence, what is your focus, and why are you the right team for it?","What evidence shows your advantage works: competitive rounds won, founders who referred others?","Which part of the market are you deliberately not pursuing, and why?"],
+   prep:["Write your focus in one sentence and test it on someone outside venture.","Attach proof to every claim: rounds won, founders who referred others.","Cut any theme you can't show you knew before it was popular."]},
+  {id:"picking", name:"Picking", short:"Picking", anchor:"test-picking",
+   why:"Top founders talk to the same five to ten funds, so seeing deals sets no one apart. The decisions a manager didn't make reveal their judgment.",
+   ask:["Tell me about a company you passed on. Why, and what happened?","Tell me about a company where you chose not to invest more. What did you see?","In your best deals, why did the founder choose you over other investors?"],
+   prep:["Prepare two honest pass stories, including one that went on to succeed.","For each top company, be ready to explain why the founder chose you.","Collect concrete examples of help: customers, hires, introductions to the right next investors."]},
+  {id:"luck", name:"Skill or luck", short:"Skill or luck", anchor:"test-repeatability",
+   why:"A handful of companies drive most venture returns, so a strong record can rest on one lucky deal. LPs test whether the process would find the next one.",
+   ask:["Walk me through one investment: how it was sourced, how competitive the round was, and what the thesis was.","Walk me through a company that failed. What did you learn, and what changed?","How will this strategy hold over your next three funds, not just this one?"],
+   prep:["Be ready to walk through any company in the portfolio, failures included.","Show the thread from your thesis to each investment, and where you deviated and why.","Explain how the strategy holds for the next three funds."]},
+  {id:"attribution", name:"Attribution", short:"Attribution", anchor:"test-attribution",
+   why:"A role on a deal is easy to overstate. LPs verify what the manager actually did, often through references they find themselves.",
+   ask:["For each deal in your record, what was your specific role: sourcing, leading, board work?","Who at your prior firm can confirm that role?","How will you build the team, brand and processes of a standalone firm?"],
+   prep:["Build an attribution sheet: each deal, your role, and who can confirm it.","Brief founders and co-investors who will confirm your role when LPs call.","Have a plan for hiring, brand and back office."]},
+  {id:"construction", name:"Fund construction", short:"Construction", anchor:"test-construction",
+   why:"Fund size decides how big the winners must be and how much ownership the fund needs. Raising more than the strategy needs signals fees matter more than returns.",
+   ask:["How did you arrive at this fund size, and what would make it too big?","What ownership do you target at entry, and how do you earn it?","How many companies will you back, and how many can each partner really support?"],
+   prep:["Show the math linking fund size, ownership, number of companies and reserves.","Know your entry ownership in your top companies, and how you earned it.","Size the portfolio to the founders each partner can really support."]},
+  {id:"people", name:"People", short:"People", anchor:"test-people",
+   why:"A commitment lasts a decade or more. When two managers look alike on paper, trust decides, and alignment shows in actions, not statements.",
+   ask:["How do partners split economics and decisions, and how will that change as you grow?","How much are the partners committing, and is it cash or a fee waiver?","Describe a decision the partners disagreed on. How was it resolved?"],
+   prep:["Be open about economics, succession and your next hire before you're asked.","Keep your fee budget in line with what the firm actually needs.","Give LPs time with the partners outside the pitch."]},
+  {id:"numbers", name:"The numbers", short:"Numbers", anchor:"test-numbers",
+   why:"IRR depends on timing and is easy to flatter. LPs rebuild it, check valuation habits and judge DPI against the exit market.",
+   ask:["Do you use a subscription credit line? Show IRR with and without it.","For each exit, how did the sale price compare with your last valuation?","When do you expect to return capital, and what leading indicators support that?"],
+   prep:["Show IRR with and without your credit line before you're asked.","Share your record of valuations against sale prices.","Explain your liquidity approach: partial sales, secondaries, and when you'd use them."]},
+  {id:"conviction", name:"Conviction", short:"Conviction", anchor:"test-conviction",
+   why:"Hot themes attract managers who discover them at the same time as everyone else. LPs want evidence of expertise built before the trend.",
+   ask:["When did you first invest in, research or write about your theme?","Which founders and experts in the space would vouch for you?","If your theme cooled, what would remain of your edge?"],
+   prep:["Show a timeline of your involvement in the theme before it peaked.","Line up founders and experts in the space who will vouch for you.","Explain each hot-theme company's moat in one sentence."]}
+];
+
+/* ---------- Questions: lp and gp wording, options best to worst ---------- */
+const QUESTIONS = [
+  {t:"focus", lp:"Can the manager state their focus in one sentence that no other fund could say about itself?", gp:"Can you state your focus in one sentence that no other fund could say about itself?",
+   o:["Yes, and others repeat it back accurately","Yes, but it sounds like other funds","Several angles, not one clear focus","No clear focus"], flag:"No clear focus: the strategy could belong to any fund."},
+  {t:"focus", lp:"What evidence backs the manager's claimed advantage?", gp:"What evidence backs your advantage?",
+   o:["Specific proof: competitive rounds won, founder referrals","Some examples","Mostly assertion","None"]},
+  {t:"focus", lp:"Would founders in this area recognize the manager's advantage: expertise, network or reputation?", gp:"Would founders in your area recognize your advantage: expertise, network or reputation?",
+   o:["Yes, founders seek them out","Some recognition","Little so far","No"], flag:"No advantage founders would recognize."},
+
+  {t:"picking", lp:"Can the manager explain deals they passed on, with their reasoning at the time?", gp:"Can you explain deals you passed on, with your reasoning at the time?",
+   o:["Yes: specific deals, clear reasoning, misses included","A few, loosely explained","Only in general terms","No"], flag:"No account of the deals passed on."},
+  {t:"picking", lp:"In the best deals, is it clear why the founder chose this manager over other investors?", gp:"In your best deals, can you show why the founder chose you over other investors?",
+   o:["Yes, and founders confirm it","Plausible, but unconfirmed","Unclear","They followed others into the round"]},
+  {t:"picking", lp:"How does the manager help companies before and after investing?", gp:"How do you help companies before and after investing?",
+   o:["Concrete examples founders confirm: customers, hires, the right next investors","Some examples","Generic offers of help","Mostly passive"]},
+
+  {t:"luck", lp:"Taken through individual deals off script, do the manager's answers match the stated strategy?", gp:"If an LP took you through individual deals off script, would your answers match your stated strategy?",
+   o:["Consistently","Mostly, with explained exceptions","Several contradictions","Often contradict it"], flag:"Deal stories contradict the stated strategy."},
+  {t:"luck", lp:"How much of the track record rests on one or two outlier deals?", gp:"How much of your track record rests on one or two outlier deals?",
+   o:["Several good outcomes from the same process","A few, with one standout","Mostly one or two outliers","One deal carries everything"]},
+  {t:"luck", lp:"Will the strategy hold for the next three funds?", gp:"Will your strategy hold for your next three funds?",
+   o:["Yes, with a clear plan for how it scales","Probably, with some changes","Unclear","It shifts with each market"]},
+
+  {t:"attribution", lp:"How clearly can the track record be attributed to the manager?", gp:"How clearly can an LP attribute your track record to you?",
+   o:["Fully: deal-level roles, confirmed by references","Mostly, with some shared credit","Hard to separate from the prior firm or team","No investing record yet"], flag:"The track record can't be attributed to the manager."},
+  {t:"attribution", lp:"Have references you found yourself confirmed the manager's role?", gp:"Would references an LP finds on their own confirm your role?",
+   o:["Yes, several","One or two","Only references the manager provided","None yet"]},
+  {t:"attribution", lp:"Is there a credible plan to build a standalone firm: team, brand and back office?", gp:"Do you have a credible plan to build a standalone firm: team, brand and back office?",
+   o:["Yes, with people and providers in place","A plan, partly in place","Rough intentions","No plan"], flag:"No plan to build a standalone firm."},
+
+  {t:"construction", lp:"Does the fund size follow from the strategy?", gp:"Does your fund size follow from your strategy?",
+   o:["Yes: a model linking size, ownership, number of companies and reserves","A rough model","Set by what LPs might commit","Not modeled"], flag:"The fund size isn't tied to the strategy."},
+  {t:"construction", lp:"What ownership does the manager achieve at entry?", gp:"What ownership do you achieve at entry?", hint:"For seed managers, allocators we interviewed look for roughly 7 to 10 percent.",
+   o:["Meaningful and earned, at or near target","Close to target","Often well below target","Small stakes across many companies"], flag:"Small stakes across many companies: a logo collection."},
+  {t:"construction", lp:"Can the team really support the number of companies planned?", gp:"Can your team really support the number of companies you plan to back?",
+   o:["Yes, comfortably","Stretched but workable","Clearly too many per partner","Not considered"]},
+
+  {t:"people", lp:"How well do you know the partners beyond the pitch?", gp:"How well do LPs get to know your partners beyond the pitch?",
+   o:["Well: unstructured time, and references on character","Some time outside meetings","Pitch meetings only","Barely"]},
+  {t:"people", lp:"Are partner economics, decision rights and succession clear and fair?", gp:"Are your partner economics, decision rights and succession clear and fair?",
+   o:["Clear, documented and fair","Clear but untested","Vague in places","Unclear or contested"], flag:"Partner economics or decision rights are unclear."},
+  {t:"people", lp:"Is alignment visible in actions: GP commitment, fee budget and behavior?", gp:"Is your alignment visible in actions: GP commitment, fee budget and behavior?",
+   o:["Strong: meaningful commitment, lean fee budget","Reasonable","Small or fee-funded commitment, large fee budget","Fees appear to matter more than returns"], flag:"Fees appear to matter more than returns."},
+
+  {t:"numbers", lp:"Is IRR shown with and without the subscription credit line?", gp:"Do you show IRR with and without your subscription credit line?",
+   o:["Both, unprompted","On request","Only the headline IRR","Refused or unclear"], flag:"IRR isn't shown without the credit line."},
+  {t:"numbers", lp:"How do exit prices compare with the manager's last valuation before each sale?", gp:"How do your exit prices compare with your last valuation before each sale?",
+   o:["Usually above the last mark","Around the last mark","Often below the last mark","No exits or data to judge yet"]},
+  {t:"numbers", lp:"Is there a credible plan to return capital?", gp:"Do you have a credible plan to return capital?",
+   o:["Yes: leading indicators, partial sales, secondaries","Some thinking","Waiting for IPOs","No plan"], flag:"No plan to return capital."},
+
+  {t:"conviction", lp:"Did the manager's expertise in their theme come before the trend?", gp:"Did your expertise in your theme come before the trend?",
+   o:["Yes, by years, with evidence","Some time before","Around the same time as everyone else","After it became popular"], flag:"The expertise arrived with the trend."},
+  {t:"conviction", lp:"Is there a community of founders and experts around the manager in this theme?", gp:"Is there a community of founders and experts around you in this theme?",
+   o:["Yes, and they would vouch","Growing","Thin","None"]},
+  {t:"conviction", lp:"Do the portfolio's companies in hot themes have a defensible moat?", gp:"Do your companies in hot themes have a defensible moat?",
+   o:["Yes, clear moats in data or process","Mostly","Some look easy to copy","Mostly easy to copy"]}
+];
+const UNKNOWN = 4; // LP mode only: "Haven't found out yet", excluded from the score
+
+const TIERS = {
+  lp:[{min:80, name:"Strong candidate", text:"Evidence across the tests. Focus the rest of diligence on the weakest test and on references you find yourself."},
+      {min:60, name:"Promising, with gaps", text:"The core case holds, but a few tests are thin. Close them before this goes to committee."},
+      {min:40, name:"Significant concerns", text:"Several tests are weak. Decide whether the gaps can be closed, or whether this is a pass for now."},
+      {min:0,  name:"Not ready for a commitment", text:"Too many tests fail to support a commitment today. Keep the relationship warm and revisit on the next fund."}],
+  gp:[{min:80, name:"LP-ready", text:"An allocator running these tests would find strong evidence. Make sure every partner can tell the same story."},
+      {min:60, name:"Nearly LP-ready", text:"The story works, but an LP would find gaps in a few tests. Close them before your next meetings."},
+      {min:40, name:"Gaps an LP would find", text:"You'd spend meetings answering questions you could have prepared for. Fix the weakest tests first."},
+      {min:0,  name:"Not ready for LP diligence", text:"Going out now risks spending relationships you'll need later. Build the evidence before your first meeting."}]
+};
+
+/* ---------- State ---------- */
+const KEY = "vc10x-manager-scorecard", SAVED = "vc10x-scorecards";
+const fresh = (mode=null, name="") => ({stage:"intro", mode, name, i:0, a:Array(QUESTIONS.length).fill(null), lead:null});
+let S = fresh();
+try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && s.a && s.a.length===QUESTIONS.length) S = s; } catch(e){}
+(function captureUTM(){
+  try {
+    const q = new URLSearchParams(location.search), u = {};
+    ["utm_source","utm_medium","utm_campaign","utm_content"].forEach(k => { if (q.get(k)) u[k] = q.get(k).slice(0,100); });
+    if (Object.keys(u).length) S.utm = u;
+    if (!S.utm && document.referrer && !document.referrer.includes(location.host)) S.utm = {referrer: document.referrer.slice(0,200)};
+  } catch(e){}
+})();
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+const saved = () => { try { return JSON.parse(localStorage.getItem(SAVED)) || []; } catch(e) { return []; } };
+const storeSaved = list => { try { localStorage.setItem(SAVED, JSON.stringify(list)); } catch(e) {} };
+
+const $app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const isLP = () => S.mode === "lp";
+
+function results(){
+  const by = {}; TESTS.forEach(t => by[t.id] = {got:0, max:0, unknown:0});
+  const flags = [], open = new Set();
+  let answered = 0;
+  QUESTIONS.forEach((q, k) => {
+    const ans = S.a[k];
+    if (ans === UNKNOWN) { by[q.t].unknown++; open.add(q.t); return; }
+    answered++;
+    by[q.t].got += ans==null ? 0 : 3 - ans; by[q.t].max += 3;
+    if (q.flag && ans === 3) flags.push(q.flag);
+  });
+  const pct = {}; let got = 0, max = 0;
+  TESTS.forEach(t => { const b = by[t.id]; pct[t.id] = b.max ? Math.round(b.got / b.max * 100) : null; got += b.got; max += b.max; });
+  const total = max ? Math.round(got / max * 100) : 0;
+  // One clear fail outweighs a high average: a failed test caps the verdict at the third tier, a red flag at the second.
+  const tiers = TIERS[S.mode || "lp"];
+  let ti = tiers.findIndex(t => total >= t.min), cap = "";
+  const failed = TESTS.filter(t => pct[t.id] != null && pct[t.id] < 34);
+  if (failed.length && ti < 2) { ti = 2; cap = `Capped because ${failed.map(t => t.name).join(" and ")} ${failed.length > 1 ? "score" : "scores"} below 34. A clear fail on one test usually ends the conversation.`; }
+  else if (flags.length && ti < 1) { ti = 1; cap = "Capped because of the red flag" + (flags.length > 1 ? "s" : "") + " below, despite the high total."; }
+  const ranked = TESTS.filter(t => pct[t.id] != null && pct[t.id] < 80).sort((x,y) => pct[x.id] - pct[y.id]);
+  return {pct, total, tier: tiers[ti], cap, flags, weakest: ranked.slice(0,2), open:[...open], coverage: Math.round(answered / QUESTIONS.length * 100)};
+}
+
+function cardHTML(pct, {labels=true, mark=[], note=""} = {}){
+  const rows = TESTS.map(t => {
+    const v = pct ? pct[t.id] : null, weak = mark.includes(t.id);
+    const shown = !pct || !labels ? "–" : v == null ? "Open" : v;
+    return `<div class="srow${weak ? " weak" : ""}"><span class="lab">${esc(t.name)}${weak ? `<span class="flag">Weakest</span>` : ""}</span><span class="val">${shown}</span><span class="bar" aria-hidden="true"><span class="fill" data-w="${v || 0}"></span></span></div>`;
+  }).join("");
+  return `<div class="scard"><div class="shead"><span>Test</span><span>Score / 100</span></div>${rows}<p class="sfoot"><span>${note}</span><span>0 · 25 · 50 · 75 · 100</span></p></div>`;
+}
+function raise(){ requestAnimationFrame(() => requestAnimationFrame(() => document.querySelectorAll(".srow .fill").forEach(f => f.style.width = f.dataset.w + "%"))); }
+
+/* ---------- Screens ---------- */
+function intro(){
+  const started = S.a.some(x => x!=null) && S.mode;
+  $app.innerHTML = `
+  <div class="intro-grid">
+    <div>
+      <h1>The Venture Manager Scorecard</h1>
+      <p class="lede">Score a venture fund manager on the eight tests allocators run before they commit, or score your own fund the way an LP would. You get a score for each test, the red flags, and exactly what to ask or fix next.</p>
+      <div class="facts"><span><b>24 questions</b>, about 6 minutes</span><span><b>8 tests</b> scored</span><span>Answers stay in your browser</span></div>
+      ${started ? `<button class="btn" id="cont">Continue${S.name ? " scoring " + esc(S.name) : ""}</button> <button class="link" id="reset" style="margin-left:18px">Start over</button>` : `
+      <fieldset class="modes"><legend>Which side of the table are you on?</legend>
+        <button class="mode" data-m="lp"><b>Score a manager</b><span>I'm an LP, family office, endowment or adviser evaluating a fund.</span></button>
+        <button class="mode" data-m="gp"><b>Score my own fund</b><span>I'm a GP or emerging manager preparing to raise.</span></button>
+      </fieldset>
+      <div id="namebox" hidden>
+        <div class="field" style="margin-top:18px"><label for="mname">Manager or fund name <span class="muted" style="font-weight:400">(optional, to compare scorecards)</span></label><input id="mname" maxlength="60" autocomplete="off" placeholder="e.g. Fund A"></div>
+        <button class="btn" id="go">Start scoring</button>
+      </div>`}
+      ${saved().length ? `<p style="margin-top:22px"><button class="link" id="cmp">See your ${saved().length} saved scorecard${saved().length>1?"s":""}</button></p>` : ""}
+    </div>
+    <div>${cardHTML(null, {note:"Scores appear here"})}</div>
+  </div>`;
+  raise();
+  const go = () => { S.stage = "q"; S.i = Math.max(0, S.a.findIndex(x => x==null)); save(); render(); window.scrollTo(0,0); };
+  document.querySelectorAll(".mode").forEach(b => b.onclick = () => {
+    const lead = S.lead; S = fresh(b.dataset.m); S.lead = lead; captureMode();
+    document.querySelectorAll(".mode").forEach(x => x.setAttribute("aria-pressed", x===b));
+    if (S.mode === "lp") { document.getElementById("namebox").hidden = false; document.getElementById("mname").focus(); }
+    else go();
+  });
+  const g = document.getElementById("go"); if (g) g.onclick = () => { S.name = document.getElementById("mname").value.trim().slice(0,60); go(); };
+  const c = document.getElementById("cont"); if (c) c.onclick = go;
+  const r = document.getElementById("reset"); if (r) r.onclick = restart;
+  const cm = document.getElementById("cmp"); if (cm) cm.onclick = () => { S.stage = "compare"; render(); window.scrollTo(0,0); };
+}
+function captureMode(){ try { const q = new URLSearchParams(location.search); ["utm_source","utm_medium","utm_campaign","utm_content"].forEach(k => { if (q.get(k)) (S.utm = S.utm || {})[k] = q.get(k).slice(0,100); }); } catch(e){} }
+
+function question(){
+  const q = QUESTIONS[S.i], t = TESTS.find(x => x.id===q.t);
+  const bars = TESTS.map(tt => {
+    const idx = QUESTIONS.map((qq,k)=>qq.t===tt.id?k:-1).filter(k=>k>=0);
+    return `<div><i style="width:${idx.filter(k => S.a[k]!=null).length/idx.length*100}%"></i></div>`;
+  }).join("");
+  const opts = isLP() ? [...q.o, "Haven't found out yet"] : q.o;
+  const tn = TESTS.indexOf(t) + 1;
+  $app.innerHTML = `
+    <div class="progress" aria-hidden="true">${bars}</div>
+    <div class="qmeta"><span>Test ${tn} of 8 · ${esc(t.name)}${S.name ? " · " + esc(S.name) : ""}</span><span>Question ${S.i+1} of ${QUESTIONS.length}</span></div>
+    <p class="qtext" id="qt">${esc(isLP() ? q.lp : q.gp)}</p>
+    ${q.hint ? `<p class="qhint">${esc(q.hint)}</p>` : ""}
+    <ul class="options" role="radiogroup" aria-labelledby="qt">
+      ${opts.map((o,k) => `<li><button class="opt${k===UNKNOWN ? " unk" : ""}" role="radio" aria-checked="${S.a[S.i]===k}" data-k="${k}"><span class="dot"></span><span>${esc(o)}</span></button></li>`).join("")}
+    </ul>
+    <div class="qnav">
+      <button class="link" id="back" ${S.i===0?"disabled":""}>Previous question</button>
+      ${S.a[S.i]!=null ? `<button class="link" id="next">${S.i===QUESTIONS.length-1?"See the score":"Next question"}</button>` : ""}
+    </div>`;
+  document.querySelectorAll(".opt").forEach(b => b.onclick = () => {
+    S.a[S.i] = +b.dataset.k; save();
+    document.querySelectorAll(".opt").forEach(x => x.setAttribute("aria-checked", x===b));
+    setTimeout(advance, 260);
+  });
+  document.getElementById("back").onclick = () => { if (S.i>0){ S.i--; save(); render(); } };
+  const n = document.getElementById("next"); if (n) n.onclick = advance;
+  const first = document.querySelector('.opt[aria-checked="true"]') || document.querySelector(".opt");
+  first && first.focus({preventScroll:true});
+}
+function advance(){
+  if (S.i < QUESTIONS.length-1) S.i++;
+  else { const m = S.a.findIndex(x=>x==null); if (m>=0) S.i = m; else { S.stage = S.lead ? "report" : "teaser"; if (S.lead) storeScorecard(); } }
+  save(); render(); window.scrollTo(0,0);
+}
+
+function heading(R){
+  const who = isLP() ? (S.name ? esc(S.name) : "This manager") : "Your fund";
+  return `<p class="muted">${who} · ${isLP() ? "scored as an LP" : "scored the way an LP would"}</p>
+    <div class="score-row">
+      <div class="score">${R.total}<small>/100</small></div>
+      <div class="tier"><h2>${R.tier.name}</h2><p>${esc(R.tier.text)}</p></div>
+    </div>
+    ${R.cap ? `<p class="cov"><b>${esc(R.cap)}</b></p>` : ""}
+    ${isLP() && R.coverage < 100 ? `<p class="cov">Based on ${R.coverage}% of the questions. ${R.open.length} test${R.open.length>1?"s have":" has"} open questions.</p>` : ""}`;
+}
+
+function teaser(){
+  const R = results();
+  $app.innerHTML = `
+    ${heading(R)}
+    ${R.flags.length ? `<span class="flagcount">${R.flags.length} red flag${R.flags.length>1?"s":""} found</span>` : ""}
+    <section class="block">${cardHTML(R.pct, {labels:false, note:"Unlock to see each score"})}</section>
+    <div class="gate">
+      <h3>Unlock the full scorecard</h3>
+      <ul>
+        <li>The score on each of the eight tests</li>
+        <li>${R.flags.length ? "The red flags, spelled out" : "Where the answers came closest to a red flag"}</li>
+        <li>${isLP() ? "The questions to ask next for the weakest tests" : "What to prepare for your two weakest tests"}</li>
+        ${isLP() ? "<li>Saved scorecards, so you can compare managers side by side</li>" : ""}
+      </ul>
+      <div class="hp" aria-hidden="true"><label for="website">Leave this empty</label><input id="website" tabindex="-1" autocomplete="off"></div>
+      <div class="field"><label for="nm">First name</label><input id="nm" autocomplete="given-name"></div>
+      <div class="field"><label for="em">Email</label><input id="em" type="email" autocomplete="email"></div>
+      <div class="field"><label for="rl">You are</label>
+        <select id="rl"><option value="">Choose one</option><option>LP or allocator</option><option>General or managing partner</option><option>Emerging manager, Fund I or II</option><option>Investment team member</option><option>Placement agent or advisor</option></select></div>
+      <label class="check"><input type="checkbox" id="ok" checked> Send me the VC10X newsletter and new playbooks. Unsubscribe any time.</label>
+      <p class="err" id="er" role="alert"></p>
+      <button class="btn" id="unlock">Unlock the full scorecard</button>
+      <p class="fine">We never share your answers. Your individual responses are not stored on our servers.</p>
+    </div>`;
+  raise();
+  const rl = document.getElementById("rl");
+  try {
+    const L = JSON.parse(localStorage.getItem("vc10x-lead"));
+    if (L && L.em) { document.getElementById("nm").value = L.nm || ""; document.getElementById("em").value = L.em; const o = [...rl.options].find(o => o.text === L.rl); if (o) o.selected = true; }
+  } catch(e) {}
+  if (!rl.value) rl.value = isLP() ? "LP or allocator" : "General or managing partner";
+  document.getElementById("unlock").onclick = async () => {
+    const nm = document.getElementById("nm").value.trim(), em = document.getElementById("em").value.trim(), role = rl.value;
+    const er = document.getElementById("er"), btn = document.getElementById("unlock");
+    if (!nm) { er.textContent = "Add your first name to continue."; return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { er.textContent = "Enter a valid email address, like name@example.com."; return; }
+    if (!role) { er.textContent = "Choose the option that describes you best."; return; }
+    er.textContent = "";
+    const ok = document.getElementById("ok").checked;
+    S.lead = {nm, em, rl: role, ok, t: Date.now()};
+    try { localStorage.setItem("vc10x-lead", JSON.stringify(S.lead)); } catch(e) {}
+    if (ok) {
+      btn.disabled = true; btn.textContent = "Unlocking";
+      const R = results();
+      try {
+        await fetch(SUBSCRIBE_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"},
+          body: JSON.stringify({form: FORM_NAME + "-" + S.mode, email: em, firstName: nm, role,
+            score: R.total, tier: R.tier.name, weakest: R.weakest[0] ? R.weakest[0].short : "",
+            website: document.getElementById("website").value, ...(S.utm || {})})});
+      } catch(e) { /* never block the report on a network error */ }
+    }
+    storeScorecard();
+    S.stage = "report"; save(); render(); window.scrollTo(0,0);
+  };
+}
+
+function storeScorecard(){
+  if (!isLP()) return;
+  const R = results(), list = saved();
+  const entry = {id: S.id || (S.id = Date.now().toString(36)), name: S.name || "Unnamed manager", total: R.total, pct: R.pct, coverage: R.coverage, t: Date.now()};
+  const k = list.findIndex(x => x.id === entry.id);
+  if (k >= 0) list[k] = entry; else list.push(entry);
+  storeSaved(list.slice(-20));
+}
+
+function report(){
+  const R = results();
+  const weakIds = R.weakest.map(t => t.id);
+  const openTests = TESTS.filter(t => R.open.includes(t.id));
+  $app.innerHTML = `
+    ${heading(R)}
+    <section class="block">
+      <h3 style="margin-bottom:18px">The eight tests</h3>
+      ${cardHTML(R.pct, {mark: weakIds, note: isLP() && R.open.length ? "“Open” = not yet known" : ""})}
+    </section>
+    <section class="block">
+      <h3>Red flags</h3>
+      ${R.flags.length ? `<ul class="flags">${R.flags.map(f=>`<li>${esc(f)}</li>`).join("")}</ul>`
+        : `<p class="muted" style="margin-top:12px">None of the answers hit a red flag that would end the conversation on its own.</p>`}
+    </section>
+    <section class="block">
+      <h3>${isLP() ? "Where to dig next" : "What to fix first"}</h3>
+      ${R.weakest.length ? "" : `<p class="muted" style="margin-top:12px">Every test scores 80 or more. ${isLP() ? "Focus the rest of diligence on references you find yourself." : "Make sure every partner tells the same story."}</p>`}
+      <div class="plan">
+        ${R.weakest.map(t => `<div>
+          <h2>${esc(t.name)} <span class="muted" style="font-size:.7em">${R.pct[t.id]}/100</span></h2>
+          <p class="why">${esc(t.why)}</p>
+          <p class="sub">${isLP() ? "Ask the manager" : "Prepare"}</p>
+          <ol>${(isLP() ? t.ask : t.prep).map(a=>`<li>${esc(a)}</li>`).join("")}</ol>
+          <p class="more"><a href="${PLAYBOOK}#${t.anchor}">How allocators run this test</a></p>
+        </div>`).join("")}
+      </div>
+    </section>
+    ${isLP() && openTests.length ? `<section class="block">
+      <h3>Open questions</h3>
+      <p class="muted" style="margin-top:8px;max-width:36em">You haven't found these out yet, so they're not in the score. Ask them before this goes to committee.</p>
+      <div class="plan">${openTests.map(t => `<div><p class="sub">${esc(t.name)}</p><ol>${t.ask.map(a=>`<li>${esc(a)}</li>`).join("")}</ol></div>`).join("")}</div>
+    </section>` : ""}
+    ${isLP() ? compareHTML() : ""}
+    <section class="block">
+      <h3>Take this further</h3>
+      <p class="muted" style="margin-top:8px;max-width:36em">${isLP() ? "Bring the 40-question due diligence PDF to your next manager meeting. It has scoring boxes for each test and a page to compare managers." : "Download the 40 questions LPs will ask, and answer every one before your first meeting. Then ask each partner to score the fund separately and compare."}</p>
+      <div class="actions">
+        <a class="btn" href="${PDF_URL}" download="VC10X LP Due Diligence Question Bank.pdf">Download the 40-question PDF</a>
+        ${isLP() ? `<button class="btn ghost" id="another">Score another manager</button>` : `<button class="btn ghost" id="again">Retake the scorecard</button>`}
+      </div>
+      <p class="fine"><a href="${PLAYBOOK}">Read the playbook: How LPs Evaluate Venture Fund Managers</a></p>
+    </section>
+    <div class="pitch">
+      <h3>From the VC10X newsletter</h3>
+      <p style="margin-top:8px;max-width:36em">What LPs say about funds after the meeting ends, drawn from 300+ VC10X conversations. ${S.lead.ok ? "You're subscribed as " + esc(S.lead.em) + "." : ""}</p>
+    </div>`;
+  raise(); wireCompare();
+  const a = document.getElementById("another"); if (a) a.onclick = () => { const lead = S.lead; S = fresh("lp"); S.lead = lead; S.stage = "intro"; save(); render(); setTimeout(() => { const b = document.querySelector('.mode[data-m="lp"]'); b && b.click(); }, 0); window.scrollTo(0,0); };
+  const g = document.getElementById("again"); if (g) g.onclick = restart;
+}
+
+function compareHTML(){
+  const list = saved();
+  if (!list.length) return "";
+  const head = TESTS.map(t => `<th title="${esc(t.name)}">${esc(t.short)}</th>`).join("");
+  const rows = list.map(x => {
+    const vals = TESTS.map(t => x.pct[t.id]).filter(v => v != null), low = vals.length ? Math.min(...vals) : null;
+    return `<tr${x.id === S.id ? ' class="cur"' : ""}><th scope="row">${esc(x.name)}<small>${x.coverage < 100 ? x.coverage + "% known" : "Complete"}</small></th><td class="tot">${x.total}</td>${TESTS.map(t => { const v = x.pct[t.id]; return `<td${v != null && v === low ? ' class="low"' : ""}>${v == null ? "–" : v}</td>`; }).join("")}<td><button class="link del" data-id="${esc(x.id)}" aria-label="Remove ${esc(x.name)}">Remove</button></td></tr>`;
+  }).join("");
+  return `<section class="block" id="compare">
+    <h3>Your scorecards</h3>
+    <p class="muted" style="margin-top:8px;max-width:38em">Saved in this browser only. The lowest test for each manager is highlighted: one clear fail usually matters more than a high total.</p>
+    <div class="cmpwrap"><table class="cmp"><thead><tr><th>Manager</th><th>Total</th>${head}<th></th></tr></thead><tbody>${rows}</tbody></table></div>
+  </section>`;
+}
+function wireCompare(){
+  document.querySelectorAll(".del").forEach(b => b.onclick = () => { storeSaved(saved().filter(x => x.id !== b.dataset.id)); render(); });
+}
+function compare(){
+  $app.innerHTML = `<p class="muted"><button class="link" id="home">Back</button></p>${compareHTML() || `<p class="muted" style="margin-top:20px">No saved scorecards yet.</p>`}`;
+  wireCompare();
+  document.getElementById("home").onclick = () => { S.stage = "intro"; render(); };
+}
+
+function restart(){ const lead = S.lead; S = fresh(); S.lead = lead; save(); render(); }
+function render(){ ({intro, q:question, teaser, report, compare})[S.stage](); document.getElementById("learn").hidden = S.stage !== "intro"; }
+render();
+</script>
+</body>
+</html>
