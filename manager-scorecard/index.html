@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Venture Manager Scorecard: Evaluate a VC Fund Manager Like an LP | VC10X</title>
-<meta name="description" content="Score a venture capital fund manager on the eight tests LPs run before they commit, or score your own fund the way an LP would. Free, 24 questions, with the questions to ask next and side-by-side manager comparison.">
+<title>Venture Manager Scorecard: Evaluate a VC Fund Manager the Way 12 LPs Do | VC10X</title>
+<meta name="description" content="Score a venture capital fund manager on the eight tests twelve allocators described on the VC10X podcast, or score your own fund the way an LP would. Free, 24 questions, with the questions to ask next and side-by-side manager comparison.">
 <link rel="canonical" href="https://vc10x.com/manager-scorecard/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="VC10X">
 <meta property="og:url" content="https://vc10x.com/manager-scorecard/">
 <meta property="og:title" content="The Venture Manager Scorecard">
-<meta property="og:description" content="Score a VC manager on the eight tests LPs run before they commit, or score your own fund the way an LP would.">
+<meta property="og:description" content="The eight tests twelve allocators told VC10X they run before committing to a venture fund, as a free scorecard. Score a manager, or your own fund.">
 <meta property="og:image" content="https://vc10x.com/manager-scorecard/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Venture Manager Scorecard">
-<meta name="twitter:description" content="The eight tests LPs run on a venture manager, as a free scorecard.">
+<meta name="twitter:description" content="The eight tests twelve allocators told VC10X they run on a venture manager, as a free scorecard.">
 <meta name="twitter:image" content="https://vc10x.com/manager-scorecard/og.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -158,6 +158,8 @@ footer{margin-top:64px;font-size:13px;color:var(--muted)}
 .mode span{display:block;color:var(--muted);font-size:15px;margin-top:2px}
 .opt.unk{background:transparent;border-style:dashed;color:var(--muted)}
 .cov{margin-top:14px;color:var(--muted);font-size:15px}
+.source{margin-top:14px;color:var(--muted);font-size:15px;max-width:36em}
+.source a{color:var(--ink);text-underline-offset:3px}
 .plan .sub{margin-top:14px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:600}
 .plan .more{margin-top:10px;font-size:15px}
 .cmpwrap{overflow-x:auto;margin-top:16px}
@@ -416,8 +418,9 @@ function intro(){
   <div class="intro-grid">
     <div>
       <h1>The Venture Manager Scorecard</h1>
-      <p class="lede">Score a venture fund manager on the eight tests allocators run before they commit, or score your own fund the way an LP would. You get a score for each test, the red flags, and exactly what to ask or fix next.</p>
-      <div class="facts"><span><b>24 questions</b>, about 6 minutes</span><span><b>8 tests</b> scored</span><span>Answers stay in your browser</span></div>
+      <p class="lede">Score a venture fund manager the way allocators actually do, or score your own fund before they do.</p>
+      <p class="source">The eight tests come from on-record VC10X conversations with twelve LPs, from fund-of-funds partners to family office investment heads, about how they decide who gets their money. They're the backbone of the playbook <a href="/playbooks/how-lps-evaluate-venture-fund-managers/">How LPs Evaluate Venture Fund Managers</a>.</p>
+      <div class="facts"><span><b>12 allocators</b> on the record</span><span><b>8 tests</b> they run</span><span><b>24 questions</b>, about 6 minutes</span><span>Answers stay private</span></div>
       ${started ? `<button class="btn" id="cont">Continue${S.name ? " scoring " + esc(S.name) : ""}</button> <button class="link" id="reset" style="margin-left:18px">Start over</button>` : `
       <fieldset class="modes"><legend>Which side of the table are you on?</legend>
         <button class="mode" data-m="lp"><b>Score a manager</b><span>I'm an LP, family office, endowment or adviser evaluating a fund.</span></button>
