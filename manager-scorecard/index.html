@@ -204,7 +204,7 @@ table.cmp tr.cur th[scope=row]{box-shadow:inset 3px 0 0 var(--ink)}
         <li><b>40 to 59:</b> Significant concerns</li>
         <li><b>Below 40:</b> Not ready for a commitment</li>
       </ul>
-      <p>A high average can't hide a clear fail. If any test scores below 34, the verdict is capped at “Significant concerns”, and any red flag caps it at “Promising, with gaps”.</p>
+      <p>A high average can't hide a clear fail. If any test scores below 34, the verdict is capped at “Significant concerns”, and any red flag caps it at “Promising, with gaps”. If you've answered fewer than half the questions, there's no verdict yet: the result shows as “Too early to score”.</p>
       <p>Your answers stay in your browser. We don't store them.</p>
     </section>
     <section>
@@ -338,6 +338,7 @@ const QUESTIONS = [
    o:["Yes, clear moats in data or process","Mostly","Some look easy to copy","Mostly easy to copy"]}
 ];
 const UNKNOWN = 4; // LP mode only: "Haven't found out yet", excluded from the score
+const EARLY = {name:"Too early to score", text:"You've answered fewer than half the questions, so there isn't enough evidence for a verdict yet. Treat the scores below as a working view and close the open questions first."};
 
 const TIERS = {
   lp:[{min:80, name:"Strong candidate", text:"Evidence across the tests. Focus the rest of diligence on the weakest test and on references you find yourself."},
@@ -391,8 +392,11 @@ function results(){
   const failed = TESTS.filter(t => pct[t.id] != null && pct[t.id] < 34);
   if (failed.length && ti < 2) { ti = 2; cap = `Capped because ${failed.map(t => t.name).join(" and ")} ${failed.length > 1 ? "score" : "scores"} below 34. A clear fail on one test usually ends the conversation.`; }
   else if (flags.length && ti < 1) { ti = 1; cap = "Capped because of the red flag" + (flags.length > 1 ? "s" : "") + " below, despite the high total."; }
+  let tier = tiers[ti];
+  // With fewer than half the questions known, any verdict would rest on too little evidence.
+  if (answered < QUESTIONS.length / 2) { tier = EARLY; cap = ""; }
   const ranked = TESTS.filter(t => pct[t.id] != null && pct[t.id] < 80).sort((x,y) => pct[x.id] - pct[y.id]);
-  return {pct, total, tier: tiers[ti], cap, flags, weakest: ranked.slice(0,2), open:[...open], coverage: Math.round(answered / QUESTIONS.length * 100)};
+  return {pct, total, tier, cap, flags, weakest: ranked.slice(0,2), open:[...open], coverage: Math.round(answered / QUESTIONS.length * 100)};
 }
 
 function cardHTML(pct, {labels=true, mark=[], note=""} = {}){
@@ -430,7 +434,7 @@ function intro(){
   raise();
   const go = () => { S.stage = "q"; S.i = Math.max(0, S.a.findIndex(x => x==null)); save(); render(); window.scrollTo(0,0); };
   document.querySelectorAll(".mode").forEach(b => b.onclick = () => {
-    const lead = S.lead; S = fresh(b.dataset.m); S.lead = lead; captureMode();
+    const lead = S.lead, utm = S.utm; S = fresh(b.dataset.m); S.lead = lead; S.utm = utm; captureMode();
     document.querySelectorAll(".mode").forEach(x => x.setAttribute("aria-pressed", x===b));
     if (S.mode === "lp") { document.getElementById("namebox").hidden = false; document.getElementById("mname").focus(); }
     else go();
@@ -519,7 +523,8 @@ function teaser(){
     const L = JSON.parse(localStorage.getItem("vc10x-lead"));
     if (L && L.em) { document.getElementById("nm").value = L.nm || ""; document.getElementById("em").value = L.em; const o = [...rl.options].find(o => o.text === L.rl); if (o) o.selected = true; }
   } catch(e) {}
-  if (!rl.value) rl.value = isLP() ? "LP or allocator" : "General or managing partner";
+  // The mode is the stronger signal: someone scoring their own fund isn't an LP, whatever an older signup said.
+  if (!rl.value || (!isLP() && rl.value === "LP or allocator")) rl.value = isLP() ? "LP or allocator" : "General or managing partner";
   document.getElementById("unlock").onclick = async () => {
     const nm = document.getElementById("nm").value.trim(), em = document.getElementById("em").value.trim(), role = rl.value;
     const er = document.getElementById("er"), btn = document.getElementById("unlock");
@@ -571,7 +576,7 @@ function report(){
     </section>
     <section class="block">
       <h3>${isLP() ? "Where to dig next" : "What to fix first"}</h3>
-      ${R.weakest.length ? "" : `<p class="muted" style="margin-top:12px">Every test scores 80 or more. ${isLP() ? "Focus the rest of diligence on references you find yourself." : "Make sure every partner tells the same story."}</p>`}
+      ${R.weakest.length ? "" : R.tier === EARLY ? `<p class="muted" style="margin-top:12px">Not enough answers yet to say which tests are weakest. Start with the open questions below.</p>` : `<p class="muted" style="margin-top:12px">Every test scores 80 or more. ${isLP() ? "Focus the rest of diligence on references you find yourself." : "Make sure every partner tells the same story."}</p>`}
       <div class="plan">
         ${R.weakest.map(t => `<div>
           <h2>${esc(t.name)} <span class="muted" style="font-size:.7em">${R.pct[t.id]}/100</span></h2>
@@ -602,7 +607,7 @@ function report(){
       <p style="margin-top:8px;max-width:36em">What LPs say about funds after the meeting ends, drawn from 300+ VC10X conversations. ${S.lead.ok ? "You're subscribed as " + esc(S.lead.em) + "." : ""}</p>
     </div>`;
   raise(); wireCompare();
-  const a = document.getElementById("another"); if (a) a.onclick = () => { const lead = S.lead; S = fresh("lp"); S.lead = lead; S.stage = "intro"; save(); render(); setTimeout(() => { const b = document.querySelector('.mode[data-m="lp"]'); b && b.click(); }, 0); window.scrollTo(0,0); };
+  const a = document.getElementById("another"); if (a) a.onclick = () => { const lead = S.lead, utm = S.utm; S = fresh("lp"); S.lead = lead; S.utm = utm; S.stage = "intro"; save(); render(); setTimeout(() => { const b = document.querySelector('.mode[data-m="lp"]'); b && b.click(); }, 0); window.scrollTo(0,0); };
   const g = document.getElementById("again"); if (g) g.onclick = restart;
 }
 
@@ -611,7 +616,7 @@ function compareHTML(){
   if (!list.length) return "";
   const head = TESTS.map(t => `<th title="${esc(t.name)}">${esc(t.short)}</th>`).join("");
   const rows = list.map(x => {
-    const vals = TESTS.map(t => x.pct[t.id]).filter(v => v != null), low = vals.length ? Math.min(...vals) : null;
+    const vals = TESTS.map(t => x.pct[t.id]).filter(v => v != null), low = vals.length && Math.min(...vals) < Math.max(...vals) ? Math.min(...vals) : null;
     return `<tr${x.id === S.id ? ' class="cur"' : ""}><th scope="row">${esc(x.name)}<small>${x.coverage < 100 ? x.coverage + "% known" : "Complete"}</small></th><td class="tot">${x.total}</td>${TESTS.map(t => { const v = x.pct[t.id]; return `<td${v != null && v === low ? ' class="low"' : ""}>${v == null ? "–" : v}</td>`; }).join("")}<td><button class="link del" data-id="${esc(x.id)}" aria-label="Remove ${esc(x.name)}">Remove</button></td></tr>`;
   }).join("");
   return `<section class="block" id="compare">
@@ -629,7 +634,7 @@ function compare(){
   document.getElementById("home").onclick = () => { S.stage = "intro"; render(); };
 }
 
-function restart(){ const lead = S.lead; S = fresh(); S.lead = lead; save(); render(); }
+function restart(){ const lead = S.lead, utm = S.utm; S = fresh(); S.lead = lead; S.utm = utm; save(); render(); }
 function render(){ ({intro, q:question, teaser, report, compare})[S.stage](); document.getElementById("learn").hidden = S.stage !== "intro"; }
 render();
 </script>
