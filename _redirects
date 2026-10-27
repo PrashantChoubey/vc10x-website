@@ -1,5 +1,7 @@
 /family-gap-audit   /audit/               301
 /fundraising        /fundraising-audit/   301
+/playbooks          /playbooks/how-lps-evaluate-venture-fund-managers/   302
+/playbooks/         /playbooks/how-lps-evaluate-venture-fund-managers/   302
 
 # Episode pages from the old site: send visitors to that episode on YouTube
 /vibecap                                https://www.youtube.com/@VC10X/search?query=VibeCap   301
