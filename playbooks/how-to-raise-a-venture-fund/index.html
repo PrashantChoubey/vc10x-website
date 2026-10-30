@@ -243,6 +243,27 @@ ol.stages .src{font-size:14px;color:var(--muted);margin-top:4px}
           </div>
         </section>
 
+        <aside class="grab" id="grab" aria-labelledby="grab-h">
+          <h2 id="grab-h">Download the fundraising checklist</h2>
+          <p class="muted">All 35 steps, grouped by the seven stages, in a PDF with tick boxes and a weekly tracker for your raise. Tell us which side of the table you're on and download it right here.</p>
+          <form id="grabForm" novalidate>
+            <fieldset class="side">
+              <legend class="sr">I am</legend>
+              <label><input type="radio" name="side" value="General or managing partner"><span><b>I'm raising a fund</b>GP or emerging manager. Work through it before your first LP meeting.</span></label>
+              <label><input type="radio" name="side" value="LP or allocator"><span><b>I allocate to funds</b>LP, family office, endowment or adviser. See what the managers you meet are doing.</span></label>
+            </fieldset>
+            <div class="hp" aria-hidden="true"><label>Leave this empty <input name="website" tabindex="-1" autocomplete="off"></label></div>
+            <div class="grabrow">
+              <input name="nm" autocomplete="given-name" placeholder="First name" aria-label="First name">
+              <input name="em" type="email" autocomplete="email" placeholder="Your email" aria-label="Your email">
+              <button class="btn" type="submit">Download the PDF</button>
+            </div>
+            <p class="err" id="grabErr" role="alert"></p>
+            <label class="optin"><input type="checkbox" name="ok" checked> Also send me the VC10X newsletter and new playbooks. Unsubscribe any time.</label>
+          </form>
+          <div id="grabDone" hidden><p id="grabMsg">Your download has started. You can also <a href="#checklist">read the checklist on the page</a>.</p><button class="btn ghost" type="button" id="grabPrint" style="margin-top:12px">Download again</button></div>
+        </aside>
+
         <section id="market">
           <h2>The market you're raising into</h2>
           <p class="answer"><b>Short answer</b>Harder than a few years ago. LPs have more managers to choose from and fewer distributions to reinvest, so first-time managers have to be sharper about who they pitch and why.</p>
@@ -621,64 +642,87 @@ ol.stages .src{font-size:14px;color:var(--muted);margin-top:4px}
 
         <section id="checklist">
           <h2>The fundraising checklist</h2>
-          <p>Thirty-five steps drawn from this playbook, grouped by stage. Work through them before your first LP meeting and keep them open during the raise.</p>
-          <div class="bank">
-            <h3>Stage 1: Before you quit</h3>
-            <ol>
-              <li>List everyone who might back you, with a soft-commitment amount for each.</li>
-              <li>Estimate what share will convert at a first close.</li>
-              <li>Make two or three investments with your own money that match the strategy.</li>
-              <li>Budget for at least a year of costs before management fees arrive.</li>
-              <li>Decide how you'll fund the management company in the meantime.</li>
-            </ol>
-            <h3>Stage 2: Positioning</h3>
-            <ol start="6">
-              <li>Write your positioning in one sentence no established firm could say.</li>
-              <li>Explain why your background leads to this strategy.</li>
-              <li>Open your deck with your story, not your résumé.</li>
-              <li>Show what the firm looks like by Fund IV.</li>
-              <li>Cut any theme you can't show you knew before it was popular.</li>
-            </ol>
-            <h3>Stage 3: Fund size and structure</h3>
-            <ol start="11">
-              <li>Work out the smallest fund that proves the strategy, and why.</li>
-              <li>Check the size against your check sizes, ownership targets and reserves.</li>
-              <li>Decide your GP commitment, and whether it's cash or funded from fees.</li>
-              <li>Engage fund administration, audit and legal counsel.</li>
-              <li>Decide solo or partnership, and how you'll cover what you can't do yourself.</li>
-            </ol>
-            <h3>Stage 4: Who to target</h3>
-            <ol start="16">
-              <li>Write your ideal LP profile: type, check size, sector link, appetite for first funds.</li>
-              <li>Build a target list that fits that profile.</li>
-              <li>Find each LP's minimum check before the first meeting.</li>
-              <li>Check funds of funds' own fundraising timing.</li>
-              <li>Keep a separate list of large LPs to meet for later funds.</li>
-            </ol>
-            <h3>Stage 5: Outreach</h3>
-            <ol start="21">
-              <li>Send your target list to your network and ask for specific introductions.</li>
-              <li>Ask other GPs and existing LPs who they can introduce you to.</li>
-              <li>Write first emails around common ground, not the fund.</li>
-              <li>Start around 20 conversations within the same couple of weeks.</li>
-              <li>Publish something that lets LPs hear your story before you meet.</li>
-            </ol>
-            <h3>Stage 6: Meetings and momentum</h3>
-            <ol start="26">
-              <li>Use the first meeting to establish fit, and listen more than you talk.</li>
-              <li>Plan what each of the first three meetings will cover.</li>
-              <li>End every call with a dated next step.</li>
-              <li>Have your track record, deal list, references and memos ready.</li>
-              <li>Complete a standard due diligence questionnaire before you're asked.</li>
-            </ol>
-            <h3>Stage 7: Closing</h3>
-            <ol start="31">
-              <li>Hold a first close as soon as you can start investing.</li>
-              <li>Decide what early LPs receive for committing first.</li>
-              <li>Set weekly targets for conversations and introductions.</li>
-              <li>Set a close date, communicate it and stick to it.</li>
-              <li>Plan quarterly reporting before the final close.</li>
-            </ol>
+          <p>Thirty-five steps drawn from this playbook, grouped by stage. Work through them before your first LP meeting and keep them open during the raise. The PDF adds tick boxes and a weekly tracker.</p>
+          <div class="bank" id="bank">
+            <p class="kicker noprint" style="margin-bottom:8px">VC10X · How to Raise a Venture Fund</p>
+            <div id="bankBody" class="fade">
+              <h3>Stage 1: Before you quit</h3>
+              <ol start="1">
+                <li>List everyone who might back you, with a soft-commitment amount for each.</li>
+                <li>Estimate what share will convert at a first close.</li>
+                <li>Make two or three investments with your own money that match the strategy.</li>
+                <li>Budget for at least a year of costs before management fees arrive.</li>
+                <li>Decide how you'll fund the management company in the meantime.</li>
+              </ol>
+              <h3>Stage 2: Positioning</h3>
+              <ol start="6">
+                <li>Write your positioning in one sentence no established firm could say.</li>
+                <li>Explain why your background leads to this strategy.</li>
+                <li>Open your deck with your story, not your résumé.</li>
+                <li>Show what the firm looks like by Fund IV.</li>
+                <li>Cut any theme you can't show you knew before it was popular.</li>
+              </ol>
+              <h3>Stage 3: Fund size and structure</h3>
+              <ol start="11">
+                <li>Work out the smallest fund that proves the strategy, and why.</li>
+                <li>Check the size against your check sizes, ownership targets and reserves.</li>
+                <li>Decide your GP commitment, and whether it's cash or funded from fees.</li>
+                <li>Engage fund administration, audit and legal counsel.</li>
+                <li>Decide solo or partnership, and how you'll cover what you can't do yourself.</li>
+              </ol>
+              <h3>Stage 4: Who to target</h3>
+              <ol start="16">
+                <li>Write your ideal LP profile: type, check size, sector link, appetite for first funds.</li>
+                <li>Build a target list that fits that profile.</li>
+                <li>Find each LP's minimum check before the first meeting.</li>
+                <li>Check funds of funds' own fundraising timing.</li>
+                <li>Keep a separate list of large LPs to meet for later funds.</li>
+              </ol>
+              <h3>Stage 5: Outreach</h3>
+              <ol start="21">
+                <li>Send your target list to your network and ask for specific introductions.</li>
+                <li>Ask other GPs and existing LPs who they can introduce you to.</li>
+                <li>Write first emails around common ground, not the fund.</li>
+                <li>Start around 20 conversations within the same couple of weeks.</li>
+                <li>Publish something that lets LPs hear your story before you meet.</li>
+              </ol>
+              <h3>Stage 6: Meetings and momentum</h3>
+              <ol start="26">
+                <li>Use the first meeting to establish fit, and listen more than you talk.</li>
+                <li>Plan what each of the first three meetings will cover.</li>
+                <li>End every call with a dated next step.</li>
+                <li>Have your track record, deal list, references and memos ready.</li>
+                <li>Complete a standard due diligence questionnaire before you're asked.</li>
+              </ol>
+              <h3>Stage 7: Closing</h3>
+              <ol start="31">
+                <li>Hold a first close as soon as you can start investing.</li>
+                <li>Decide what early LPs receive for committing first.</li>
+                <li>Set weekly targets for conversations and introductions.</li>
+                <li>Set a close date, communicate it and stick to it.</li>
+                <li>Plan quarterly reporting before the final close.</li>
+              </ol>
+            </div>
+            <div class="noprint" id="bankCta" style="margin-top:18px">
+              <button class="btn" type="button" id="getBank">Get the full checklist</button>
+              <p class="fine">Free. Read all 35 steps here and download the PDF, with tick boxes and a weekly tracker.</p>
+            </div>
+            <div class="noprint" id="bankDone" hidden style="margin-top:18px">
+              <button class="btn ghost" type="button" id="printBank">Download the PDF</button>
+            </div>
+            <div class="gate noprint" id="gate" hidden>
+              <h3 style="font-size:19px;margin:0">Download the checklist</h3>
+              <p class="muted" style="font-size:15px;margin-top:4px">Your download starts right after. You'll only be asked once.</p>
+              <div class="hp" aria-hidden="true"><label>Leave this empty <input id="website" tabindex="-1" autocomplete="off"></label></div>
+              <div class="row" style="margin-top:14px">
+                <label>First name<input id="nm" autocomplete="given-name"></label>
+                <label>Email<input id="em" type="email" autocomplete="email"></label>
+                <label>You are<select id="rl"><option value="">Choose one</option><option>General or managing partner</option><option>Emerging manager, Fund I or II</option><option>Investment team member</option><option>LP or allocator</option><option>Placement agent or advisor</option></select></label>
+              </div>
+              <label class="check"><input type="checkbox" id="ok" checked> Send me the VC10X newsletter and new playbooks. Unsubscribe any time.</label>
+              <p class="err" id="gerr" role="alert"></p>
+              <button class="btn" type="button" id="unlock">Download the PDF</button>
+            </div>
           </div>
         </section>
 
@@ -730,6 +774,119 @@ ol.stages .src{font-size:14px;color:var(--muted);margin-top:4px}
     </span>
   </footer>
 </div>
-<script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+<script>
+const SUBSCRIBE_ENDPOINT = "/api/subscribe";
+const FORM_NAME = "playbook-raise-fund";
+const LEAD_KEY = "vc10x-lead";
+const $ = id => document.getElementById(id);
+$("yr").textContent = new Date().getFullYear();
+
+const UTM = (() => {
+  try {
+    const q = new URLSearchParams(location.search), u = {};
+    ["utm_source","utm_medium","utm_campaign","utm_content"].forEach(k => { if (q.get(k)) u[k] = q.get(k).slice(0,100); });
+    if (!Object.keys(u).length && document.referrer && !document.referrer.includes(location.host)) u.referrer = document.referrer.slice(0,200);
+    return u;
+  } catch(e) { return {}; }
+})();
+
+const lead = () => { try { return JSON.parse(localStorage.getItem(LEAD_KEY)); } catch(e) { return null; } };
+
+function openBank() {
+  $("bankBody").classList.remove("fade");
+  $("bankCta").hidden = true;
+  $("gate").hidden = true;
+  $("bankDone").hidden = false;
+}
+
+// Top-of-page signup for both sides of the table; opens the question bank too.
+function grabDone() { $("grabForm").hidden = true; $("grabDone").hidden = false; }
+if (lead()) {
+  // Already on the list from another VC10X page: skip the form and offer the file directly.
+  grabDone();
+  $("grabMsg").innerHTML = 'You\'re already on the VC10X list, so it\'s yours. You can also <a href="#checklist">read the checklist on the page</a>.';
+  $("grabPrint").textContent = "Download the PDF"; $("grabPrint").classList.remove("ghost");
+}
+$("grabForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const f = e.target, er = $("grabErr"), btn = f.querySelector("button");
+  const side = (f.querySelector('input[name="side"]:checked') || {}).value, nm = f.nm.value.trim(), em = f.em.value.trim();
+  if (!side) { er.textContent = "Choose which side of the table you're on."; return; }
+  if (!nm) { er.textContent = "Add your first name to continue."; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { er.textContent = "Enter a valid email address, like name@example.com."; return; }
+  er.textContent = "";
+  if (f.ok.checked) {
+    btn.disabled = true; const label = btn.textContent; btn.textContent = "One moment";
+    try {
+      await fetch(SUBSCRIBE_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({form: FORM_NAME + "-top", email: em, firstName: nm, role: side, website: f.website.value, ...UTM})});
+    } catch(err) { /* never block the download on a network error */ }
+    btn.disabled = false; btn.textContent = label;
+  }
+  try { localStorage.setItem(LEAD_KEY, JSON.stringify({nm, em, rl: side, ok: f.ok.checked, t: Date.now()})); } catch(e) {}
+  window.__tagged = true; grabDone(); openBank(); downloadPdf();
+});
+$("grabPrint").addEventListener("click", () => {
+  const known = lead();
+  // Record interest in this playbook once for people who signed up elsewhere on VC10X.
+  if (known && known.ok && known.em && !window.__tagged) { window.__tagged = true; fetch(SUBSCRIBE_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({form: FORM_NAME, email: known.em, firstName: known.nm, role: known.rl, ...UTM})}).catch(() => {}); }
+  downloadPdf();
+});
+
+$("getBank").addEventListener("click", () => {
+  const known = lead();
+  if (known) {
+    // Already gave us an email on another VC10X page: no form, but record interest in this playbook once.
+    if (known.ok && known.em && !window.__tagged) { window.__tagged = true; fetch(SUBSCRIBE_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({form: FORM_NAME, email: known.em, firstName: known.nm, role: known.rl, ...UTM})}).catch(() => {}); }
+    return openBank();
+  }
+  $("bankCta").hidden = true;
+  $("gate").hidden = false;
+  $("nm").focus();
+});
+
+$("unlock").addEventListener("click", async () => {
+  const nm = $("nm").value.trim(), em = $("em").value.trim(), rl = $("rl").value, er = $("gerr"), btn = $("unlock");
+  if (!nm) { er.textContent = "Add your first name to continue."; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { er.textContent = "Enter a valid email address, like name@example.com."; return; }
+  if (!rl) { er.textContent = "Choose the option that describes you best."; return; }
+  er.textContent = "";
+  const ok = $("ok").checked;
+  if (ok) {
+    btn.disabled = true; const label = btn.textContent; btn.textContent = "One moment";
+    try {
+      await fetch(SUBSCRIBE_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({form: FORM_NAME, email: em, firstName: nm, role: rl, website: $("website").value, ...UTM})});
+    } catch(e) { /* never block the content on a network error */ }
+    btn.disabled = false; btn.textContent = label;
+  }
+  try { localStorage.setItem(LEAD_KEY, JSON.stringify({nm, em, rl, ok, t: Date.now()})); } catch(e) {}
+  window.__tagged = true; openBank(); downloadPdf();
+});
+
+const PDF_URL = "vc10x-fundraising-checklist-m4t9.pdf";
+function downloadPdf() {
+  const a = document.createElement("a");
+  a.href = PDF_URL; a.download = "VC10X Fundraising Checklist.pdf";
+  document.body.appendChild(a); a.click(); a.remove();
+}
+$("printBank").addEventListener("click", downloadPdf);
+window.addEventListener("afterprint", () => document.documentElement.classList.remove("print-bank"));
+
+document.getElementById("nl") && $("nl").addEventListener("submit", async e => {
+  e.preventDefault();
+  const f = e.target, msg = f.nextElementSibling, btn = f.querySelector("button"), email = f.email.value.trim();
+  msg.classList.remove("err");
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = "Enter a valid email address, like name@example.com."; msg.classList.add("err"); return; }
+  btn.disabled = true;
+  try {
+    const r = await fetch(SUBSCRIBE_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({form: FORM_NAME + "-footer", email, website: f.website.value, ...UTM})});
+    if (!r.ok) throw new Error(r.status);
+    msg.textContent = "Subscribed. New issues will land in your inbox."; f.email.value = "";
+  } catch(err) { msg.textContent = "That didn't go through. Try again in a moment."; msg.classList.add("err"); }
+  btn.disabled = false;
+});
+</script>
 </body>
 </html>
