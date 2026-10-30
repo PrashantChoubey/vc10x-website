@@ -125,6 +125,7 @@ section.block{margin-top:52px}
 .check input{margin-top:4px}
 .err{color:var(--flag);font-size:14px;margin-bottom:10px;min-height:1em}
 .fine{font-size:13px;color:var(--muted);margin-top:14px}
+.capnote{margin-top:14px;color:var(--muted);font-size:15px;font-weight:600}
 .flags{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:10px}
 .flags li{border-left:3px solid var(--flag);padding:6px 0 6px 16px}
 .plan{display:grid;gap:34px;margin-top:22px}
@@ -339,7 +340,8 @@ const RULES = {
           a => a[10] >= 2 && {cap:45, why:"Endowments expect institutional operations: a fund administrator, auditor, compliance policies and a completed due diligence questionnaire."}],
   fof: [a => a[10] === 3 && {cap:50, why:"Funds of funds run an institutional diligence process. Without a fund administrator, auditor and due diligence questionnaire in place, most won't proceed."}],
   dfi: [a => a[8] === 0 && {cap:20, why:"Development finance and government-backed LPs mostly invest in emerging markets and specific regions, not US-only funds."}],
-  wealth: [a => a[2] === 3 && {cap:30, why:"Wealth platforms need a track record or a name advisors can explain to their clients."}],
+  wealth: [a => a[2] === 3 && {cap:30, why:"Wealth platforms need a track record or a name advisors can explain to their clients."},
+           a => a[0] === 0 && a[2] >= 2 && {cap:40, why:"Wealth platforms rarely add a Fund I manager without realized results or strong markups. They usually come in once you have a name advisors recognize."}],
   ang: [a => a[1] === 3 && {cap:40, why:"At this fund size, individual checks can't carry the raise on their own."}]
 };
 const CAPS = Object.fromEntries(Object.entries(RULES).map(([id, rules]) => [id, a => {
@@ -465,7 +467,8 @@ function headline(R){
     <div class="score-row">
       <div class="score">${R.fit[t.id]}<small>/100</small></div>
       <div class="tier"><h2>${esc(t.name)}</h2><p>${esc(t.why)}</p></div>
-    </div>`;
+    </div>
+    ${R.fit[t.id] < 45 ? `<p class="capnote">No LP type is a strong fit yet. The plan below shows what each would need to see, so you can build toward them.</p>` : ""}`;
 }
 
 function teaser(){
@@ -546,8 +549,8 @@ function report(){
       <div class="plan">${R.top.map(card).join("")}</div>
     </section>
     <section class="block">
-      <h3>Not a fit yet</h3>
-      <ul class="flags soft">${R.rest.map(t => `<li><b>${esc(t.short)}</b> · ${R.fit[t.id]}/100. ${esc(R.limits[t.id] || "Few of your answers match what this LP type looks for today. Revisit after your next fund or a change in strategy.")}</li>`).join("")}</ul>
+      <h3>The other five</h3>
+      <ul class="flags soft">${R.rest.map(t => `<li><b>${esc(t.short)}</b> · ${fitName(R.fit[t.id])}, ${R.fit[t.id]}/100. ${esc(R.limits[t.id] || (R.fit[t.id] >= 45 ? "Worth approaching too, after your top three." : "Few of your answers match what this LP type looks for today. Revisit after your next fund or a change in strategy."))}</li>`).join("")}</ul>
     </section>
     <section class="block">
       <h3>Take this further</h3>

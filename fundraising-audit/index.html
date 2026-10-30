@@ -113,6 +113,7 @@ button,input,select{font:inherit;color:inherit}
 .tier{padding-bottom:10px}
 .tier h2{font-size:30px}
 .tier p{color:var(--muted);max-width:26em;margin-top:6px}
+.capnote{margin-top:14px;color:var(--muted);font-size:15px;font-weight:600}
 .flagcount{display:inline-block;margin-top:30px;background:var(--flag-soft);color:var(--flag);padding:8px 14px;border-radius:4px;font-weight:600;font-size:15px}
 section.block{margin-top:52px}
 .gate{margin-top:44px;background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--brass);border-radius:4px;padding:28px}
@@ -180,6 +181,7 @@ footer{margin-top:64px;font-size:13px;color:var(--muted)}
         <li><b>40 to 59:</b> Not yet</li>
         <li><b>Below 40:</b> Rebuild the plan</li>
       </ul>
+      <p>A high average can't hide a clear gap. If any pillar scores below 34, the verdict is capped at "Not yet", and any red flag caps it at "Nearly ready".</p>
       <p>Your answers stay in your browser. We don't store them.</p>
     </section>
     <section>
@@ -342,9 +344,13 @@ function results(){
   const pct = {}; let got=0, max=0;
   PILLARS.forEach(p => { pct[p.id] = Math.round(by[p.id].got / by[p.id].max * 100); got += by[p.id].got; max += by[p.id].max; });
   const total = Math.round(got / max * 100);
-  const tier = TIERS.find(t => total >= t.min);
+  // One clear gap outweighs a high average: a failed pillar caps the verdict at "Not yet", a red flag at "Nearly ready".
+  let ti = TIERS.findIndex(t => total >= t.min), cap = "";
+  const failed = PILLARS.filter(p => pct[p.id] < 34);
+  if (failed.length && ti < 2) { ti = 2; cap = `Capped because ${failed.map(p => p.name).join(" and ")} ${failed.length > 1 ? "score" : "scores"} below 34. LPs will find that gap whatever the total.`; }
+  else if (flags.length && ti < 1) { ti = 1; cap = "Capped because of the red flag" + (flags.length > 1 ? "s" : "") + " in your answers, despite the high total."; }
   const ranked = [...PILLARS].sort((x,y) => pct[x.id] - pct[y.id]);
-  return {pct, total, tier, flags, weakest: ranked.slice(0,2)};
+  return {pct, total, tier: TIERS[ti], cap, flags, weakest: ranked.filter(p => pct[p.id] < 80).slice(0,2), lowest: ranked[0]};
 }
 
 function pillarsHTML(pct, {labels=true, mark=[], note=""} = {}){
@@ -423,6 +429,7 @@ function teaser(){
       <div class="score">${R.total}<small>/100</small></div>
       <div class="tier"><h2>${R.tier.name}</h2><p>${esc(R.tier.text)}</p></div>
     </div>
+    ${R.cap ? `<p class="capnote">${esc(R.cap)}</p>` : ""}
     ${R.flags.length ? `<span class="flagcount">${R.flags.length} red flag${R.flags.length>1?"s":""} found in your answers</span>` : ""}
     <section class="block">${pillarsHTML(R.pct, {labels:false, note:"Unlock to see each score"})}</section>
     <div class="gate">
@@ -462,7 +469,7 @@ function teaser(){
           method: "POST", headers: {"Content-Type": "application/json"},
           body: JSON.stringify({
             form: "fundraising-audit", email: em, firstName: nm, role: rl,
-            score: R.total, tier: R.tier.name, weakest: R.weakest[0].short,
+            score: R.total, tier: R.tier.name, weakest: (R.weakest[0] || R.lowest).short,
             website: document.getElementById("website").value,
             ...(S.utm || {})
           })
@@ -483,6 +490,7 @@ function report(){
       <div class="score">${R.total}<small>/100</small></div>
       <div class="tier"><h2>${R.tier.name}</h2><p>${esc(R.tier.text)}</p></div>
     </div>
+    ${R.cap ? `<p class="capnote">${esc(R.cap)}</p>` : ""}
     <section class="block">
       <h3 style="margin-bottom:18px">Your five pillars</h3>
       ${pillarsHTML(R.pct, {mark:weakIds})}
@@ -495,6 +503,7 @@ function report(){
     </section>
     <section class="block">
       <h3>Where to start</h3>
+      ${R.weakest.length ? "" : `<p class="muted" style="margin-top:12px">Every pillar scores 80 or more. Your job now is running a tight process: set a close date and keep the pipeline moving.</p>`}
       <div class="plan">
         ${R.weakest.map(p => `<div>
           <h2>${esc(p.name)} <span class="muted" style="font-size:.7em">${R.pct[p.id]}%</span></h2>
