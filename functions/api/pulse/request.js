@@ -22,9 +22,14 @@ export const onRequestPost = handle(async ({ request, env }) => {
     "SELECT 1 FROM requests WHERE email = ? AND status = 'pending' UNION SELECT 1 FROM members WHERE email = ?"
   ).bind(email, email).first();
   if (!known) {
+    // A member's "bring a peer" link adds their code. Unknown or revoked codes are ignored, and the
+    // response is the same either way.
+    const code = clip(b.ref, 20);
+    const ref = code ? await d.prepare("SELECT id FROM members WHERE ref_code = ? AND status = 'active'").bind(code).first() : null;
     await d.prepare(
-      "INSERT INTO requests (name, email, firm, title, org_type, aum_band, note, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
-    ).bind(name, email, firm, clip(b.title, 120), b.org_type, b.aum_band, clip(b.note, 400), now).run();
+      `INSERT INTO requests (name, email, firm, title, org_type, aum_band, note, referred_by, ref_member_id, created_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    ).bind(name, email, firm, clip(b.title, 120), b.org_type, b.aum_band, clip(b.note, 400), clip(b.referred_by, 120), ref ? ref.id : null, now).run();
   }
   return json({ ok: true });
 });

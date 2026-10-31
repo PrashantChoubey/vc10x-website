@@ -18,9 +18,13 @@ const ACTIONS = {
                  FROM rounds r ORDER BY r.opens_at DESC LIMIT 30`).all(),
       d.prepare(`SELECT m.id, m.name, m.email, m.firm, m.title, m.org_type, m.aum_band, m.status, m.created_at, m.last_seen,
                    (SELECT COUNT(*) FROM responses x WHERE x.member_id = m.id) AS answered,
-                   EXISTS (SELECT 1 FROM responses x WHERE x.member_id = m.id AND x.round_id = ?) AS this_round
+                   EXISTS (SELECT 1 FROM responses x WHERE x.member_id = m.id AND x.round_id = ?) AS this_round,
+                   (SELECT COUNT(*) FROM requests q WHERE q.ref_member_id = m.id) AS referrals,
+                   (SELECT COUNT(*) FROM requests q WHERE q.ref_member_id = m.id AND q.status = 'approved') AS referrals_joined
                  FROM members m ORDER BY m.created_at DESC`).bind(round.id).all(),
-      d.prepare("SELECT * FROM requests WHERE status = 'pending' ORDER BY created_at DESC").all(),
+      d.prepare(`SELECT q.*, m.name AS ref_member_name, m.firm AS ref_member_firm FROM requests q
+                 LEFT JOIN members m ON m.id = q.ref_member_id
+                 WHERE q.status = 'pending' ORDER BY q.created_at DESC`).all(),
     ]);
     return { round: roundMeta(round, now), rounds: rounds.results.map((r) => roundMeta(r, now)),
       members: members.results, requests: requests.results, config: CONFIG };

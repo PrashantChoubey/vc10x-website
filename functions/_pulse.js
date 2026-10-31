@@ -59,10 +59,11 @@ const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS members (
     id INTEGER PRIMARY KEY, token_hash TEXT UNIQUE NOT NULL, name TEXT NOT NULL, email TEXT NOT NULL,
     firm TEXT NOT NULL, title TEXT, org_type TEXT NOT NULL, aum_band TEXT NOT NULL,
-    status TEXT NOT NULL DEFAULT 'active', created_at INTEGER NOT NULL, last_seen INTEGER)`,
+    status TEXT NOT NULL DEFAULT 'active', created_at INTEGER NOT NULL, last_seen INTEGER, ref_code TEXT)`,
   `CREATE TABLE IF NOT EXISTS requests (
     id INTEGER PRIMARY KEY, name TEXT NOT NULL, email TEXT NOT NULL, firm TEXT NOT NULL, title TEXT,
-    org_type TEXT, aum_band TEXT, note TEXT, status TEXT NOT NULL DEFAULT 'pending', created_at INTEGER NOT NULL)`,
+    org_type TEXT, aum_band TEXT, note TEXT, status TEXT NOT NULL DEFAULT 'pending', created_at INTEGER NOT NULL,
+    referred_by TEXT, ref_member_id INTEGER)`,
   `CREATE TABLE IF NOT EXISTS rounds (
     id TEXT PRIMARY KEY, kind TEXT NOT NULL, label TEXT NOT NULL, opens_at INTEGER NOT NULL, closes_at INTEGER NOT NULL)`,
   `CREATE TABLE IF NOT EXISTS responses (
@@ -72,11 +73,25 @@ const SCHEMA = [
   `CREATE INDEX IF NOT EXISTS responses_member ON responses (member_id)`,
   `CREATE INDEX IF NOT EXISTS rounds_opens ON rounds (opens_at)`,
 ];
+// Columns added after launch. Each runs on its own, since a batch would roll back on the first
+// "duplicate column" error from a database that already has them.
+const MIGRATIONS = [
+  "ALTER TABLE members ADD COLUMN ref_code TEXT",
+  "ALTER TABLE requests ADD COLUMN referred_by TEXT",
+  "ALTER TABLE requests ADD COLUMN ref_member_id INTEGER",
+];
 let ready = false;
 export async function getDb(env) {
   const d = env.PULSE_DB;
   if (!d) { console.error("Missing PULSE_DB binding"); throw new HttpError(500, "Server not configured"); }
-  if (!ready) { await d.batch(SCHEMA.map((s) => d.prepare(s))); ready = true; }
+  if (!ready) {
+    await d.batch(SCHEMA.map((s) => d.prepare(s)));
+    for (const m of MIGRATIONS) {
+      try { await d.prepare(m).run(); } catch (e) { if (!/duplicate column/i.test(String(e.message))) throw e; }
+    }
+    await d.prepare("CREATE UNIQUE INDEX IF NOT EXISTS members_ref ON members (ref_code)").run();
+    ready = true;
+  }
   return d;
 }
 
@@ -90,6 +105,16 @@ export async function sha256(s) {
   const h = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
   return [...new Uint8Array(h)].map((x) => x.toString(16).padStart(2, "0")).join("");
 }
+// Short code for a member's "bring a peer" link. It identifies the referrer to the admin only;
+// the public page never resolves it to a name, so it can't be used to look up who's a member.
+export const newRefCode = () => newToken().slice(0, 10);
+export async function refCode(d, m) {
+  if (m.ref_code) return m.ref_code;
+  const code = newRefCode();
+  await d.prepare("UPDATE members SET ref_code = ? WHERE id = ? AND ref_code IS NULL").bind(code, m.id).run();
+  return (await d.prepare("SELECT ref_code FROM members WHERE id = ?").bind(m.id).first()).ref_code;
+}
+
 const bearer = (req) => (req.headers.get("Authorization") || "").replace(/^Bearer\s+/i, "").trim();
 
 // The signed-in member, from the private link's token. Only a hash of the token is stored.
@@ -222,6 +247,14 @@ export function aggregate(rows, { segments = true } = {}) {
     out.bySize = seg("aum_band", AUM);
   }
   return out;
+}
+
+// Check-ins per organization type for one round, so members can see which groups are close to
+// unlocking. Counts only, never answers.
+export async function typeCounts(d, roundId) {
+  const rows = (await d.prepare("SELECT org_type, COUNT(*) AS n FROM responses WHERE round_id = ? GROUP BY org_type")
+    .bind(roundId).all()).results;
+  return Object.fromEntries(Object.keys(ORG_TYPES).map((k) => [k, rows.find((r) => r.org_type === k)?.n ?? 0]));
 }
 
 export const parseRow = (r) => ({ round_id: r.round_id, org_type: r.org_type, aum_band: r.aum_band, a: JSON.parse(r.answers) });

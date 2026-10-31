@@ -1,7 +1,7 @@
 // GET /api/pulse/me
 // The member's current round, whether they've checked in, and their latest answers to prefill the form.
 import { json } from "../../_shared.js";
-import { handle, requireMember, currentRound, roundMeta, accessSince, CONFIG } from "../../_pulse.js";
+import { handle, requireMember, currentRound, roundMeta, accessSince, refCode, typeCounts, CONFIG } from "../../_pulse.js";
 
 export const onRequestGet = handle(async ({ request, env }) => {
   const { d, m } = await requireMember(env, request);
@@ -15,9 +15,11 @@ export const onRequestGet = handle(async ({ request, env }) => {
   const latest = here || mine[0]; // prefill: this round's answers if any, else the most recent
   const canSeeResults = mine.some((x) => x.opens_at >= accessSince(now));
   await d.prepare("UPDATE members SET last_seen = ? WHERE id = ?").bind(now, m.id).run();
+  const [ref, byType] = await Promise.all([refCode(d, m), typeCounts(d, round.id)]);
   return json({
     member: { first: m.name.split(" ")[0], firm: m.firm, org_type: m.org_type, aum_band: m.aum_band },
-    round: { ...roundMeta(round, now), open: round.open, n: count.n },
+    round: { ...roundMeta(round, now), open: round.open, n: count.n, byType },
+    ref,
     submitted: !!here,
     answers: latest ? JSON.parse(latest.answers) : null,
     answersFrom: latest?.round_id ?? null,

@@ -64,6 +64,11 @@ How it runs:
   market-moving event, open an event round from the admin page (1 to 7 days);
   it replaces the weekly round on members' pages while it's open.
 - Members see results only after checking in (this week or last week).
+- Growing the group: members' pages show a "Bring a peer" note with their own
+  referral link (`/cio-pulse/?r=CODE`). Requests from that link, and anything
+  typed in "Referred by", show on the admin page, with a referral count per
+  member. The public page never turns a code into a name. Members also see how
+  many CIOs of each organization type have checked in (counts only, no answers).
 - No figure is shown for fewer than 8 answers (`MIN_N` in `functions/_pulse.js`),
   including segments and single asset classes. Segment tables also hide extra
   groups when the hidden remainder would be under 8, so it can't be worked out

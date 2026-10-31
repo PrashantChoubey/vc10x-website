@@ -2,7 +2,7 @@
 // Peer results for members who checked in this week or last week ("give to get").
 // Only groups of at least MIN_N answers are returned, and never anyone's individual answers.
 import { json } from "../../_shared.js";
-import { handle, requireMember, currentRound, roundMeta, aggregate, parseRow, accessSince, MIN_N, HttpError } from "../../_pulse.js";
+import { handle, requireMember, currentRound, roundMeta, aggregate, parseRow, accessSince, typeCounts, MIN_N, HttpError } from "../../_pulse.js";
 
 const HISTORY = 26;
 
@@ -26,7 +26,7 @@ export const onRequestGet = handle(async ({ request, env }) => {
   // Featured: the newest round with enough answers (this one once it reaches MIN_N), compared with the one before it.
   const shown = rounds.filter((r) => r.n >= MIN_N);
   const featured = shown[0], compare = shown[1];
-  const base = { round: { ...roundMeta(cur, now), open: cur.open, n: rounds[i]?.n ?? 0 }, minN: MIN_N };
+  const base = { round: { ...roundMeta(cur, now), open: cur.open, n: rounds[i]?.n ?? 0, byType: await typeCounts(d, cur.id) }, minN: MIN_N };
   if (!featured) return json({ ...base, featured: null }, 200, { "Cache-Control": "no-store" });
 
   const ids = shown.slice(0, HISTORY).map((r) => r.id);

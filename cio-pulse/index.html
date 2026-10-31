@@ -5,14 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The CIO Pulse: How Allocators Are Positioned This Week | VC10X</title>
 <meta name="description" content="A weekly, invite-only check-in for family office and institutional CIOs. Share your positioning and risk appetite in 90 seconds, and see where your peers are leaning.">
-<meta name="robots" content="noindex">
 <link rel="canonical" href="https://vc10x.com/cio-pulse/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="VC10X">
 <meta property="og:url" content="https://vc10x.com/cio-pulse/">
 <meta property="og:title" content="The CIO Pulse">
 <meta property="og:description" content="How family office and institutional CIOs are positioned this week, from a 90-second, invite-only check-in.">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://vc10x.com/cio-pulse/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The CIO Pulse">
+<meta name="twitter:description" content="How family office and institutional CIOs are positioned this week, from a 90-second, invite-only check-in.">
+<meta name="twitter:image" content="https://vc10x.com/cio-pulse/og.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -196,6 +201,15 @@ details.tv th,details.tv td{border-bottom:1px solid var(--line);padding:6px 8px 
 .locked{margin-top:28px;padding:28px;border:1px solid var(--line);border-radius:4px;background:var(--panel)}
 .meter{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:14px;max-width:420px}
 .meter i{display:block;height:100%;background:var(--brass)}
+.prog{margin-top:12px;max-width:560px}
+.prog>div{display:grid;grid-template-columns:minmax(0,1fr) 140px 76px;gap:12px;align-items:center;font-size:14px;padding:5px 0}
+.prog .meter{margin:0;max-width:none}
+.prog .v{color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+@media (max-width:560px){.prog>div{grid-template-columns:minmax(0,1fr) 70px 64px;font-size:13px}}
+.peer{margin-top:44px;padding:28px;border:1px solid var(--line);border-radius:4px}
+.peer textarea{width:100%;min-height:118px;margin:14px 0 12px;font:inherit;font-size:15px;line-height:1.5;padding:12px;border:1px solid var(--line);border-radius:4px;background:var(--panel);color:var(--ink);resize:vertical}
+.peer .row{display:flex;gap:10px;flex-wrap:wrap}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
 @media (forced-colors: active){.track .f,.hbar .t i,.dist div{background:CanvasText}}
 </style>
 </head>
@@ -216,6 +230,7 @@ details.tv th,details.tv td{border-bottom:1px solid var(--line);padding:6px 8px 
       <span><b>90 seconds</b> a week</span>
       <span><b>Verified</b> CIOs only</span>
       <span><b>Anonymous</b>, shown in groups of 8 or more</span>
+      <span><b>Free</b>, with nothing to buy</span>
     </div>
     <p style="margin-top:28px"><a class="btn" href="#join">Request an invite</a></p>
     <p id="linkerr" class="notice hidden" style="margin-top:28px" role="alert"></p>
@@ -275,6 +290,7 @@ details.tv th,details.tv td{border-bottom:1px solid var(--line);padding:6px 8px 
               <option value="l">Over $10B</option>
             </select></div>
         </div>
+        <div class="field"><label for="rq-ref">Referred by <span class="muted" style="font-weight:400">(optional)</span></label><input id="rq-ref" name="referred_by" maxlength="120" placeholder="Name of the CIO who told you about the Pulse"><p class="fine hidden" id="rq-refnote" style="margin-top:6px">You followed a member's link, so we'll know who referred you.</p></div>
         <div class="field"><label for="rq-note">Anything we should know? <span class="muted" style="font-weight:400">(optional)</span></label><textarea id="rq-note" name="note" maxlength="400"></textarea></div>
         <div class="hp" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off"></label></div>
         <p class="err" id="rqErr" role="alert"></p>
@@ -334,6 +350,11 @@ async function api(path, opts = {}) {
 }
 
 /* ---------- Public: invite request ---------- */
+// A member's "bring a peer" link adds ?r=CODE. The code goes back with the request so we can thank
+// the referrer; the page never looks it up, so it doesn't reveal who sent it.
+const REF = (new URLSearchParams(location.search).get("r") || "").match(/^[A-Za-z0-9_-]{6,20}$/)?.[0] || null;
+if (REF) $("#rq-refnote").classList.remove("hidden");
+
 $("#reqForm").addEventListener("submit", async (ev) => {
   ev.preventDefault();
   const f = ev.target, err = $("#rqErr"), btn = $("#rqBtn");
@@ -344,6 +365,7 @@ $("#reqForm").addEventListener("submit", async (ev) => {
   if (!data.firm.trim()) return (err.textContent = "Add your organization", f.firm.focus());
   if (!data.org_type) return (err.textContent = "Choose your organization type", f.org_type.focus());
   if (!data.aum_band) return (err.textContent = "Choose your assets under management", f.aum_band.focus());
+  if (REF) data.ref = REF;
   btn.disabled = true;
   try {
     await api("request", { method: "POST", body: JSON.stringify(data) });
@@ -502,6 +524,41 @@ async function submitCheckin(ev) {
   btn.disabled = false;
 }
 
+/* ---------- Growing the group ---------- */
+// Check-ins so far per organization type in the open round. Counts only: no answers are shown below 8.
+function typeProgress(round, minN, onlyFilling) {
+  const rows = Object.entries(CFG.ORG_TYPES).map(([k, label]) => [label, round.byType?.[k] ?? 0])
+    .filter(([, n]) => !onlyFilling || n < minN);
+  if (!rows.length) return "";
+  return `<div class="prog">${rows.map(([label, n]) => `<div><span>${esc(label)}</span>
+    <div class="meter" role="img" aria-label="${esc(label)}: ${Math.min(n, minN)} of ${minN}"><i style="width:${Math.min(100, (n / minN) * 100)}%"></i></div>
+    <span class="v">${n >= minN ? "Unlocked" : `${n} of ${minN}`}</span></div>`).join("")}</div>`;
+}
+
+// A ready-made note members can send to other CIOs, with their own referral link.
+function peerBox() {
+  if (!ME.ref) return "";
+  const url = `${location.origin}/cio-pulse/?r=${encodeURIComponent(ME.ref)}#join`;
+  const note = `I've joined the CIO Pulse, a weekly 90-second check-in where CIOs share how they're positioned and see where peers stand. It's anonymous, nothing is shown for fewer than 8 CIOs, and it's free, with nothing to buy. The more CIOs in it, the better the data for all of us. You can request an invite here: ${url}`;
+  const mail = `mailto:?subject=${encodeURIComponent("The CIO Pulse")}&body=${encodeURIComponent(note)}`;
+  return `<section class="peer" aria-labelledby="peerH">
+    <h2 id="peerH">Bring a peer</h2>
+    <p>Every CIO who joins sharpens the picture, and comparisons by organization type and size unlock once ${CFG.MIN_N} CIOs in each group check in. Send this to a CIO you trust.</p>
+    <textarea readonly id="peerNote" aria-label="Note to send">${esc(note)}</textarea>
+    <div class="row"><button class="btn" type="button" id="peerCopy">Copy note</button><a class="btn ghost" href="${esc(mail)}">Email it</a></div>
+    <p class="fine">Your link only tells VC10X that you referred them. Your answers stay private, and we verify every request before sending an invite.</p>
+  </section>`;
+}
+function wirePeer() {
+  const b = $("#peerCopy");
+  if (!b) return;
+  b.onclick = async () => {
+    const t = $("#peerNote").value;
+    try { await navigator.clipboard.writeText(t); } catch { $("#peerNote").select(); document.execCommand("copy"); }
+    b.textContent = "Copied"; setTimeout(() => (b.textContent = "Copy note"), 1600);
+  };
+}
+
 /* ---------- Results ---------- */
 async function results() {
   showMember('<p class="muted">Loading results…</p>');
@@ -518,10 +575,14 @@ async function results() {
     ${r.open ? `<button class="link" onclick="checkin()">${ME.submitted ? "Update your answers" : "Check in for this round"}</button>` : ""}</div>`;
 
   if (!R.featured) {
-    return showMember(`${head}<p class="kicker">Results</p><h1>Results unlock at ${R.minN} check-ins</h1>
+    showMember(`${head}<p class="kicker">Results</p><h1>Results unlock at ${R.minN} check-ins</h1>
       <div class="locked"><p>${r.n} of ${R.minN} CIOs have checked in to ${esc(r.label.toLowerCase().startsWith("week") ? "this week's round" : "this round")}. Results appear as soon as the group is large enough that no one's answers can be picked out.</p>
       <div class="meter" aria-hidden="true"><i style="width:${Math.min(100, (r.n / R.minN) * 100)}%"></i></div>
-      <p class="fine">Know a CIO who should be here? Send them to vc10x.com/cio-pulse to request an invite.</p></div>`);
+      <h3 style="margin-top:24px">By organization type</h3>
+      <p class="fine" style="margin-top:4px">Each group gets its own comparison once ${R.minN} of its CIOs check in.</p>
+      ${typeProgress(r, R.minN, false)}</div>
+      ${peerBox()}`);
+    return wirePeer();
   }
 
   const F = R.featured, A = F.agg, P = R.compare && R.compare.agg, you = R.you && R.you.answers;
@@ -634,10 +695,13 @@ async function results() {
       <h2>By organization type and size</h2>
       <p>Average risk appetite and net positioning now, for each group with at least ${R.minN} CIOs this round.</p>
       ${segTable("Organization type", A.byType, CFG.ORG_TYPES)}
+      ${r.open && typeProgress(r, R.minN, true) ? `<p class="fine" style="margin-top:14px">Still filling in ${esc(r.label.toLowerCase().startsWith("week") ? "this week's round" : "this round")}:</p>${typeProgress(r, R.minN, true)}` : ""}
       ${segTable("Assets under management", A.bySize, CFG.AUM)}
     </section>
+    ${peerBox()}
     <p class="fine" style="margin-top:44px">Rounds run Monday to Sunday (UTC), with extra rounds after market-moving events. Every figure covers at least ${R.minN} CIOs. Self-reported and indicative, not investment advice.</p>`);
 
+  wirePeer();
   const sel = $("#trendSel");
   const draw = () => trend($("#trend"), R.history, sel.value, CFG);
   sel.addEventListener("change", draw);

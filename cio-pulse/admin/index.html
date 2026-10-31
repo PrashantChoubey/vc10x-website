@@ -93,6 +93,14 @@ $("#loginForm").addEventListener("submit", async (e) => {
 });
 $("#logout").onclick = () => { try { sessionStorage.removeItem(SKEY); } catch {} location.reload(); };
 
+// Who sent a request our way: a member's "bring a peer" link (verified), what the person typed, or both.
+const referrer = (q) => {
+  const parts = [];
+  if (q.ref_member_name) parts.push(`<span class="tag ok">member link</span> ${esc(q.ref_member_name)}<span class="muted">, ${esc(q.ref_member_firm)}</span>`);
+  if (q.referred_by && q.referred_by !== q.ref_member_name) parts.push(`<span class="muted">Typed:</span> ${esc(q.referred_by)}`);
+  return parts.length ? `<div style="margin-bottom:4px">${parts.join("<br>")}</div>` : "";
+};
+
 const inviteEmail = (name, link) => `Subject: Your invite to the CIO Pulse
 
 Hi ${name.split(" ")[0]},
@@ -102,7 +110,7 @@ ${link}
 
 Each week you share how you're positioned against your targets, your risk appetite and what's driving your decisions. It takes about 90 seconds, and your last answers are prefilled. Once you submit, you'll see where your peers stand.
 
-Nothing is shown for groups smaller than 8, and your answers are never shown individually or with your name. The link is personal, so please don't forward it. If you'd like a colleague to join, they can request an invite at vc10x.com/cio-pulse.
+Nothing is shown for groups smaller than 8, and your answers are never shown individually or with your name. The link is personal, so please don't forward it. To bring in other CIOs, use the "Bring a peer" note on your results page. Each CIO who joins makes the data better for everyone.
 
 Best,
 Prashant Choubey
@@ -156,11 +164,11 @@ async function load() {
       <p class="muted" style="font-size:13px;margin-top:6px">While it's open it replaces the weekly round on members' pages. Then email members to check in.</p>`}
 
     <h2>Invite requests (${O.requests.length})</h2>
-    ${O.requests.length ? `<div class="tw"><table><thead><tr><th>Name</th><th>Email</th><th>Organization</th><th>Type / AUM</th><th>Note</th><th>Received</th><th></th></tr></thead><tbody>${
+    ${O.requests.length ? `<div class="tw"><table><thead><tr><th>Name</th><th>Email</th><th>Organization</th><th>Type / AUM</th><th>Referred by and note</th><th>Received</th><th></th></tr></thead><tbody>${
       O.requests.map((q) => `<tr><td><b>${esc(q.name)}</b><br><span class="muted">${esc(q.title)}</span></td>
         <td>${esc(q.email)} ${FREEMAIL.test(q.email) ? '<span class="tag warn">personal email: verify</span>' : ""}</td>
         <td>${esc(q.firm)}</td><td>${esc(CFG.ORG_TYPES[q.org_type])}<br><span class="muted">${esc(CFG.AUM[q.aum_band])}</span></td>
-        <td style="max-width:220px">${esc(q.note)}</td><td>${when(q.created_at)}</td>
+        <td style="max-width:240px">${referrer(q)}${q.note ? `<div>${esc(q.note)}</div>` : ""}</td><td>${when(q.created_at)}</td>
         <td class="row" style="flex-wrap:nowrap"><button class="btn sm" data-approve="${q.id}">Approve</button><button class="btn sm ghost" data-decline="${q.id}">Decline</button></td></tr>`).join("")
     }</tbody></table></div><p class="muted" style="font-size:13px;margin-top:6px">Check each person on LinkedIn or their organization's site before approving.</p>` : `<p class="muted" style="margin-top:8px">None waiting.</p>`}
 
@@ -173,13 +181,13 @@ async function load() {
     </div><div class="row" style="margin-top:12px"><button class="btn">Create private link</button></div></form>
 
     <h2>Members (${O.members.length})</h2>
-    <div class="tw"><table><thead><tr><th>Name</th><th>Organization</th><th>Type / AUM</th><th>This round</th><th>Rounds</th><th>Last seen</th><th></th></tr></thead><tbody>${
+    <div class="tw"><table><thead><tr><th>Name</th><th>Organization</th><th>Type / AUM</th><th>This round</th><th>Rounds</th><th>Referrals</th><th>Last seen</th><th></th></tr></thead><tbody>${
       O.members.map((m) => `<tr${m.status !== "active" ? ' class="muted"' : ""}><td><b>${esc(m.name)}</b><br><span class="muted">${esc(m.email)}</span></td>
         <td>${esc(m.firm)}<br><span class="muted">${esc(m.title)}</span></td><td>${esc(CFG.ORG_TYPES[m.org_type])}<br><span class="muted">${esc(CFG.AUM[m.aum_band])}</span></td>
         <td>${m.status !== "active" ? '<span class="tag warn">revoked</span>' : m.this_round ? '<span class="tag ok">checked in</span>' : '<span class="muted">not yet</span>'}</td>
-        <td>${m.answered}</td><td>${when(m.last_seen)}</td>
+        <td>${m.answered}</td><td>${m.referrals ? `${m.referrals}<br><span class="muted">${m.referrals_joined} joined</span>` : '<span class="muted">0</span>'}</td><td>${when(m.last_seen)}</td>
         <td class="row" style="flex-wrap:nowrap"><button class="btn sm ghost" data-reissue="${m.id}">New link</button>
-          <button class="btn sm ghost" data-status="${m.id}" data-to="${m.status === "active" ? "revoked" : "active"}">${m.status === "active" ? "Revoke" : "Restore"}</button></td></tr>`).join("") || '<tr><td colspan="7" class="muted">No members yet.</td></tr>'
+          <button class="btn sm ghost" data-status="${m.id}" data-to="${m.status === "active" ? "revoked" : "active"}">${m.status === "active" ? "Revoke" : "Restore"}</button></td></tr>`).join("") || '<tr><td colspan="8" class="muted">No members yet.</td></tr>'
     }</tbody></table></div>
 
     <h2>Rounds</h2>

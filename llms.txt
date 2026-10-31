@@ -18,6 +18,10 @@ All tools are free. Audit answers and calculator inputs stay in the visitor's br
 - [The Liquidity Event Readiness Audit](https://vc10x.com/liquidity-event-audit/): Twenty questions for founders and family business owners selling a company, covering pre-sale tax and estate planning, advisors, a deployment plan, family, and privacy.
 - [Advisor Fee Calculator](https://vc10x.com/advisor-fee-calculator/): Shows the dollars paid to a wealth manager over time, the growth given up, and what a lower or flat fee would change.
 
+## Peer check-in
+
+- [The CIO Pulse](https://vc10x.com/cio-pulse/): A free, invite-only weekly check-in where verified CIOs at family offices, endowments, foundations, pensions and institutions share positioning against their own targets across ten asset classes, risk appetite and the drivers behind their decisions, then see anonymous peer results. Extra rounds follow market-moving events. Answers are stored by VC10X and shown only in groups of 8 or more; results are visible only to members who check in.
+
 ## Playbooks
 
 - [How LPs Evaluate Venture Fund Managers](https://vc10x.com/playbooks/how-lps-evaluate-venture-fund-managers/): The eight tests allocators run before committing to a venture fund, with techniques from on-record conversations with twelve LPs, and a 40-question due diligence question bank.
