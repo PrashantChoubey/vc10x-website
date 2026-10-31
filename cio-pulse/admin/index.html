@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CIO Pulse Admin | VC10X</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#FFFFFF;--panel:#F6F6F6;--ink:#000000;--muted:#5C5C5C;--line:#D9D9D9;--btn:#000;--on-btn:#fff;--brass:#3FDCFF;--flag:#C0392B;--ok:#0b7a3b;
+  --serif:"Newsreader",Georgia,serif;--sans:"Hanken Grotesk","Helvetica Neue",Arial,sans-serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--paper:#000;--panel:#111;--ink:#fff;--muted:#A6A6A6;--line:#2B2B2B;--btn:#fff;--on-btn:#000;--flag:#FF7A6B;--ok:#4cc38a}}
+:root[data-theme="dark"]{--paper:#000;--panel:#111;--ink:#fff;--muted:#A6A6A6;--line:#2B2B2B;--btn:#fff;--on-btn:#000;--flag:#FF7A6B;--ok:#4cc38a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5}
+a{color:inherit;text-underline-offset:3px}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 16px 64px}
+header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:28px}
+.mark{font-family:var(--serif);font-weight:500;font-size:20px;text-decoration:none}
+h1,h2,h3{font-family:var(--serif);font-weight:500;margin:0}
+h1{font-size:32px}h2{font-size:24px;margin-top:40px}h3{font-size:18px;margin-top:20px}
+p{margin:0}
+.muted{color:var(--muted)}
+button,input,select,textarea{font:inherit;color:inherit}
+.btn{background:var(--btn);color:var(--on-btn);border:0;border-radius:5px;padding:9px 16px;font-weight:600;cursor:pointer}
+.btn.sm{padding:5px 10px;font-size:13px;white-space:nowrap}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn:disabled{opacity:.5;cursor:wait}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px;box-shadow:0 0 0 4px var(--brass)}
+input,select,textarea{padding:8px 10px;border:1px solid var(--line);border-radius:4px;background:var(--paper);max-width:100%}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:18px;margin-top:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.form{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));margin-top:12px}
+.form label{display:grid;gap:4px;font-size:13px;font-weight:600}
+.tw{overflow-x:auto;margin-top:12px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:8px 10px 8px 0;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--ink)}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:1px 6px;border-radius:3px;border:1px solid var(--line);white-space:nowrap}
+.tag.warn{border-color:var(--flag);color:var(--flag)}
+.tag.ok{border-color:var(--ok);color:var(--ok)}
+.err{color:var(--flag);min-height:1em;margin-top:8px}
+.out{margin-top:12px;padding:14px;border:1px solid var(--brass);border-radius:6px;background:var(--paper)}
+.out textarea{width:100%;min-height:200px;margin-top:8px;font-size:13px;font-family:ui-monospace,Menlo,monospace}
+.stat{display:flex;gap:28px;flex-wrap:wrap;margin-top:8px}
+.stat b{display:block;font-family:var(--serif);font-size:30px;font-weight:500}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><a class="mark" href="/cio-pulse/">VC10X · CIO Pulse admin</a><button class="btn ghost sm hidden" id="logout">Lock</button></header>
+
+  <section id="login">
+    <h1>Admin</h1>
+    <form class="card" id="loginForm" style="max-width:460px">
+      <label for="key" style="font-weight:600;font-size:14px">Admin key</label>
+      <div class="row" style="margin-top:6px"><input id="key" type="password" autocomplete="current-password" style="flex:1"><button class="btn">Open</button></div>
+      <p class="muted" style="font-size:13px;margin-top:8px">The PULSE_ADMIN_KEY secret from Cloudflare. Kept in this tab only.</p>
+      <p class="err" id="loginErr" role="alert"></p>
+    </form>
+  </section>
+
+  <main id="app" class="hidden"></main>
+</div>
+<script>
+const $ = (s, el = document) => el.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const SKEY = "vc10x-pulse-admin";
+let KEY = (() => { try { return sessionStorage.getItem(SKEY); } catch { return null; } })();
+let O = null, CFG = null;
+const FREEMAIL = /@(gmail|googlemail|yahoo|hotmail|outlook|live|icloud|me|aol|proton|protonmail|gmx|yandex|mail)\./i;
+const when = (ms) => ms ? new Date(ms).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" }) : "–";
+const whenUtc = (ms) => new Date(ms).toLocaleDateString(undefined, { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" }) + " (UTC)";
+const sign = (v) => (v > 0 ? "+" + v : v < 0 ? "−" + Math.abs(v) : "0");
+
+async function api(body) {
+  const r = await fetch("/api/pulse/admin", { method: "POST", headers: { "Content-Type": "application/json", Authorization: "Bearer " + KEY }, body: JSON.stringify(body) });
+  let b = {}; try { b = await r.json(); } catch {}
+  if (!r.ok) { const e = new Error(b.error || "Request failed"); e.status = r.status; throw e; }
+  return b;
+}
+async function copy(text, btn) {
+  try { await navigator.clipboard.writeText(text); const t = btn.textContent; btn.textContent = "Copied"; setTimeout(() => (btn.textContent = t), 1500); }
+  catch { prompt("Copy:", text); }
+}
+
+$("#loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault(); KEY = $("#key").value.trim();
+  try { await load(); try { sessionStorage.setItem(SKEY, KEY); } catch {} }
+  catch (err) { $("#loginErr").textContent = err.message; }
+});
+$("#logout").onclick = () => { try { sessionStorage.removeItem(SKEY); } catch {} location.reload(); };
+
+const inviteEmail = (name, link) => `Subject: Your invite to the CIO Pulse
+
+Hi ${name.split(" ")[0]},
+
+Here's your private link to the CIO Pulse:
+${link}
+
+Each week you share how you're positioned against your targets, your risk appetite and what's driving your decisions. It takes about 90 seconds, and your last answers are prefilled. Once you submit, you'll see where your peers stand.
+
+Nothing is shown for groups smaller than 8, and your answers are never shown individually or with your name. The link is personal, so please don't forward it. If you'd like a colleague to join, they can request an invite at vc10x.com/cio-pulse.
+
+Best,
+Prashant Choubey
+Founder & Host, VC10X (https://vc10x.com)`;
+
+function showLink(res) {
+  const box = $("#linkOut");
+  box.classList.remove("hidden");
+  box.innerHTML = `<b>Private link for ${esc(res.name)}</b> <span class="muted">(shown once; issue a new one if lost)</span>
+    <div class="row" style="margin-top:8px"><input readonly value="${esc(res.link)}" style="flex:1;min-width:240px"><button class="btn sm" id="cpl">Copy link</button><button class="btn sm ghost" id="cpe">Copy invite email</button></div>
+    <textarea readonly>${esc(inviteEmail(res.name, res.link))}</textarea>`;
+  $("#cpl").onclick = (e) => copy(res.link, e.target);
+  $("#cpe").onclick = (e) => copy(inviteEmail(res.name, res.link), e.target);
+  box.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+async function act(body, btn) {
+  if (btn) btn.disabled = true;
+  try { const r = await api(body); if (r.link) { await load(); showLink(r); } else await load(); return r; }
+  catch (e) { alert(e.message); }
+  finally { if (btn) btn.disabled = false; }
+}
+
+async function load() {
+  O = await api({ action: "overview" });
+  CFG = O.config;
+  $("#login").classList.add("hidden"); $("#app").classList.remove("hidden"); $("#logout").classList.remove("hidden");
+  const r = O.round, active = O.members.filter((m) => m.status === "active");
+  const pending = active.filter((m) => !m.this_round);
+  const typeOpts = Object.entries(CFG.ORG_TYPES).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join("");
+  const aumOpts = Object.entries(CFG.AUM).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join("");
+  const openEvent = O.rounds.find((x) => x.kind === "event" && x.open);
+
+  $("#app").innerHTML = `
+    <h1>${esc(r.label)}</h1>
+    <div class="stat"><span><b>${active.length - pending.length} / ${active.length}</b>active members checked in</span>
+      <span><b>${r.open ? "Open" : "Closed"}</b>${r.kind === "event" ? "event round" : "weekly round"}, closes ${whenUtc(r.closes_at - 1)}</span>
+      <span><b>${O.requests.length}</b>pending requests</span></div>
+    <div class="row" style="margin-top:14px">
+      <button class="btn sm ghost" id="cpRem" ${pending.length ? "" : "disabled"}>Copy emails of ${pending.length} not checked in</button>
+      ${r.open ? `<button class="btn sm ghost" id="closeCur">Close this round now</button>` : ""}
+    </div>
+
+    <div class="out hidden" id="linkOut"></div>
+
+    <h2>Event round</h2>
+    ${openEvent ? `<p class="muted" style="margin-top:8px">"${esc(openEvent.label)}" is open until ${whenUtc(openEvent.closes_at - 1)}.</p>` :
+    `<form class="card row" id="evForm"><input name="label" placeholder="e.g. Fed decision, 4 Nov" maxlength="80" style="flex:1;min-width:220px">
+      <label class="row" style="font-size:14px">Days <select name="days">${[1, 2, 3, 4, 5, 6, 7].map((d) => `<option ${d === 3 ? "selected" : ""}>${d}</option>`).join("")}</select></label>
+      <button class="btn">Open event round</button></form>
+      <p class="muted" style="font-size:13px;margin-top:6px">While it's open it replaces the weekly round on members' pages. Then email members to check in.</p>`}
+
+    <h2>Invite requests (${O.requests.length})</h2>
+    ${O.requests.length ? `<div class="tw"><table><thead><tr><th>Name</th><th>Email</th><th>Organization</th><th>Type / AUM</th><th>Note</th><th>Received</th><th></th></tr></thead><tbody>${
+      O.requests.map((q) => `<tr><td><b>${esc(q.name)}</b><br><span class="muted">${esc(q.title)}</span></td>
+        <td>${esc(q.email)} ${FREEMAIL.test(q.email) ? '<span class="tag warn">personal email: verify</span>' : ""}</td>
+        <td>${esc(q.firm)}</td><td>${esc(CFG.ORG_TYPES[q.org_type])}<br><span class="muted">${esc(CFG.AUM[q.aum_band])}</span></td>
+        <td style="max-width:220px">${esc(q.note)}</td><td>${when(q.created_at)}</td>
+        <td class="row" style="flex-wrap:nowrap"><button class="btn sm" data-approve="${q.id}">Approve</button><button class="btn sm ghost" data-decline="${q.id}">Decline</button></td></tr>`).join("")
+    }</tbody></table></div><p class="muted" style="font-size:13px;margin-top:6px">Check each person on LinkedIn or their organization's site before approving.</p>` : `<p class="muted" style="margin-top:8px">None waiting.</p>`}
+
+    <h2>Add a member</h2>
+    <form class="card" id="addForm"><div class="form">
+      <label>Name<input name="name" required></label><label>Email<input name="email" type="email" required></label>
+      <label>Organization<input name="firm" required></label><label>Title<input name="title"></label>
+      <label>Type<select name="org_type" required><option value="">Choose</option>${typeOpts}</select></label>
+      <label>AUM<select name="aum_band" required><option value="">Choose</option>${aumOpts}</select></label>
+    </div><div class="row" style="margin-top:12px"><button class="btn">Create private link</button></div></form>
+
+    <h2>Members (${O.members.length})</h2>
+    <div class="tw"><table><thead><tr><th>Name</th><th>Organization</th><th>Type / AUM</th><th>This round</th><th>Rounds</th><th>Last seen</th><th></th></tr></thead><tbody>${
+      O.members.map((m) => `<tr${m.status !== "active" ? ' class="muted"' : ""}><td><b>${esc(m.name)}</b><br><span class="muted">${esc(m.email)}</span></td>
+        <td>${esc(m.firm)}<br><span class="muted">${esc(m.title)}</span></td><td>${esc(CFG.ORG_TYPES[m.org_type])}<br><span class="muted">${esc(CFG.AUM[m.aum_band])}</span></td>
+        <td>${m.status !== "active" ? '<span class="tag warn">revoked</span>' : m.this_round ? '<span class="tag ok">checked in</span>' : '<span class="muted">not yet</span>'}</td>
+        <td>${m.answered}</td><td>${when(m.last_seen)}</td>
+        <td class="row" style="flex-wrap:nowrap"><button class="btn sm ghost" data-reissue="${m.id}">New link</button>
+          <button class="btn sm ghost" data-status="${m.id}" data-to="${m.status === "active" ? "revoked" : "active"}">${m.status === "active" ? "Revoke" : "Restore"}</button></td></tr>`).join("") || '<tr><td colspan="7" class="muted">No members yet.</td></tr>'
+    }</tbody></table></div>
+
+    <h2>Rounds</h2>
+    <div class="tw"><table><thead><tr><th>Round</th><th>Type</th><th>Check-ins</th><th>Status</th><th></th></tr></thead><tbody>${
+      O.rounds.map((x) => `<tr><td>${esc(x.label)}<br><span class="muted">${esc(x.id)}</span></td><td>${x.kind}</td><td>${x.n}</td><td>${x.open ? "open" : "closed"}</td>
+        <td><button class="btn sm ghost" data-round="${esc(x.id)}">Summary</button></td></tr>`).join("") || '<tr><td colspan="5" class="muted">No rounds yet. The first weekly round starts when a member opens their link.</td></tr>'
+    }</tbody></table></div>
+    <div id="summary"></div>`;
+
+  $("#cpRem")?.addEventListener("click", (e) => copy(pending.map((m) => m.email).join(", "), e.target));
+  $("#closeCur")?.addEventListener("click", (e) => confirm(`Close ${r.label} now? Members can't check in again until the next round.`) && act({ action: "close_round", round_id: r.id }, e.target));
+  $("#evForm")?.addEventListener("submit", (e) => { e.preventDefault(); const f = new FormData(e.target); act({ action: "open_event", label: f.get("label"), days: +f.get("days") }, e.submitter); });
+  $("#addForm").addEventListener("submit", (e) => { e.preventDefault(); act({ action: "invite", ...Object.fromEntries(new FormData(e.target)) }, e.submitter); });
+  document.querySelectorAll("[data-approve]").forEach((b) => b.onclick = () => {
+    const q = O.requests.find((x) => x.id === +b.dataset.approve);
+    act({ action: "invite", request_id: q.id, name: q.name, email: q.email, firm: q.firm, title: q.title, org_type: q.org_type, aum_band: q.aum_band }, b);
+  });
+  document.querySelectorAll("[data-decline]").forEach((b) => b.onclick = () => confirm("Decline this request?") && act({ action: "decline", request_id: +b.dataset.decline }, b));
+  document.querySelectorAll("[data-reissue]").forEach((b) => b.onclick = () => confirm("Issue a new link? The old one stops working.") && act({ action: "reissue", member_id: +b.dataset.reissue }, b));
+  document.querySelectorAll("[data-status]").forEach((b) => b.onclick = () => act({ action: "set_status", member_id: +b.dataset.status, status: b.dataset.to }, b));
+  document.querySelectorAll("[data-round]").forEach((b) => b.onclick = () => summary(b.dataset.round, b));
+}
+
+// Plain-text round summary to start the weekly email from. Same 8+ rule as the members' page.
+async function summary(id, btn) {
+  btn.disabled = true;
+  let s; try { s = await api({ action: "round", round_id: id }); } catch (e) { alert(e.message); return; } finally { btn.disabled = false; }
+  const box = $("#summary"), A = s.agg;
+  if (A.locked) { box.innerHTML = `<div class="out"><b>${esc(s.round.label)}</b>: ${A.n} check-ins. Results need at least ${CFG.MIN_N}.</div>`; box.scrollIntoView({ behavior: "smooth" }); return; }
+  const name = (list, k) => (list.find((x) => x[0] === k) || [k, k])[1];
+  const cls = CFG.CLASSES.map(([k, l]) => ({ l, now: A.pos[k], next: A.next[k] })).filter((x) => !x.now.hidden).sort((a, b) => b.now.net - a.now.net);
+  const list = (xs, k) => xs.length ? xs.map((x) => `${x.l} (${sign(x[k].net)})`).join(", ") : "none";
+  const text = [
+    `CIO Pulse: ${s.round.label} (${A.n} CIOs)`,
+    ``,
+    `Average risk appetite: ${A.risk.avg.toFixed(1)} / 5`,
+    A.risk.chg.hidden ? "" : `Past month: ${A.risk.chg.up}% added risk, ${A.risk.chg.down}% reduced (net ${sign(A.risk.chg.net)})`,
+    ``,
+    `Most overweight: ${list(cls.filter((x) => x.now.net > 0).slice(0, 3), "now")}`,
+    `Most underweight: ${list(cls.filter((x) => x.now.net < 0).reverse().slice(0, 3), "now")}`,
+    `Most planning to add: ${list(cls.filter((x) => !x.next.hidden && x.next.net > 0).sort((a, b) => b.next.net - a.next.net).slice(0, 3), "next")}`,
+    `Most planning to reduce: ${list(cls.filter((x) => !x.next.hidden && x.next.net < 0).sort((a, b) => a.next.net - b.next.net).slice(0, 3), "next")}`,
+    ``,
+    `Top drivers: ${A.drivers.slice(0, 3).map((d) => `${name(CFG.DRIVERS, d.id)} ${d.pct}%`).join(", ")}`,
+    A.pacing.hidden ? "" : `Private-market pacing: ${A.pacing.down}% behind plan, ${A.pacing.mid}% on plan, ${A.pacing.up}% ahead`,
+  ].filter((x, i, arr) => x !== "" || arr[i - 1] !== "").join("\n");
+  box.innerHTML = `<div class="out"><div class="row"><b>${esc(s.round.label)}</b><button class="btn sm" id="cps">Copy summary</button></div>
+    <textarea readonly>${esc(text)}</textarea>
+    <h3>Anonymous notes (${s.notes.length})</h3>
+    ${s.notes.length ? `<ul>${s.notes.map((n) => `<li>${esc(n.note)} <span class="muted">(${esc(CFG.ORG_TYPES[n.org_type])})</span></li>`).join("")}</ul>
+      <p class="muted" style="font-size:13px">Before quoting, check that a note doesn't identify its author, and leave out the organization type if the group is small.</p>` : '<p class="muted">None this round.</p>'}</div>`;
+  $("#cps").onclick = (e) => copy(text, e.target);
+  box.scrollIntoView({ behavior: "smooth" });
+}
+
+if (KEY) load().catch(() => { try { sessionStorage.removeItem(SKEY); } catch {} });
+</script>
+</body>
+</html>

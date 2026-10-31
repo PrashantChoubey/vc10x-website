@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The CIO Pulse: How Allocators Are Positioned This Week | VC10X</title>
+<meta name="description" content="A weekly, invite-only check-in for family office and institutional CIOs. Share your positioning and risk appetite in 90 seconds, and see where your peers are leaning.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://vc10x.com/cio-pulse/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VC10X">
+<meta property="og:url" content="https://vc10x.com/cio-pulse/">
+<meta property="og:title" content="The CIO Pulse">
+<meta property="og:description" content="How family office and institutional CIOs are positioned this week, from a 90-second, invite-only check-in.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FFFFFF; --panel:#F6F6F6; --ink:#000000; --muted:#5C5C5C; --line:#D9D9D9;
+  --green:#000000; --green-soft:#F2F2F2; --brass:#3FDCFF; --flag:#C0392B; --flag-soft:#FBE9E7; --on-green:#FFFFFF;
+  /* Chart colors: diverging pair (under/over) with a neutral midpoint, and one sequential hue */
+  --neg:#e34948; --pos:#2a78d6; --mid:#e4e3df;
+  --serif:"Newsreader", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --sans:"Hanken Grotesk", "Helvetica Neue", Arial, system-ui, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#000000; --panel:#111111; --ink:#FFFFFF; --muted:#A6A6A6; --line:#2B2B2B;
+    --green:#FFFFFF; --green-soft:#1C1C1C; --flag:#FF7A6B; --flag-soft:#3A1512; --on-green:#000000;
+    --neg:#e66767; --pos:#3987e5; --mid:#383835;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#000000; --panel:#111111; --ink:#FFFFFF; --muted:#A6A6A6; --line:#2B2B2B;
+  --green:#FFFFFF; --green-soft:#1C1C1C; --flag:#FF7A6B; --flag-soft:#3A1512; --on-green:#000000;
+  --neg:#e66767; --pos:#3987e5; --mid:#383835;
+}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+.wrap{max-width:860px;margin:0 auto;padding:28px 22px 64px}
+header.bar{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:40px}
+.mark{font-family:var(--serif);font-weight:600;font-size:20px;letter-spacing:.01em;color:var(--ink);text-decoration:none}
+.bar small{color:var(--muted);font-size:14px}
+h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;margin:0}
+h1{font-size:clamp(38px,5.4vw,52px);line-height:1.04}
+h2{font-size:clamp(26px,4vw,34px);line-height:1.15}
+h3{font-size:21px;line-height:1.25}
+p{margin:0}
+.kicker{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.lede{font-family:var(--serif);font-size:21px;line-height:1.5;max-width:36em;margin-top:22px}
+.muted{color:var(--muted)}
+button,input,select,textarea{font:inherit;color:inherit}
+.btn{display:inline-block;background:var(--green);color:var(--on-green);border:0;border-radius:6px;padding:14px 26px;font-weight:600;font-size:16px;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.6;cursor:wait}
+.link{background:none;border:0;padding:4px 0;color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-size:15px}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;box-shadow:0 0 0 5px var(--brass)}
+.facts{display:flex;flex-wrap:wrap;gap:10px 28px;margin:28px 0 0;color:var(--muted);font-size:15px}
+.facts b{color:var(--ink);font-weight:600}
+section.block{margin-top:64px}
+section.block > p{margin-top:12px;max-width:40em}
+.steps{display:grid;gap:22px;margin-top:22px;counter-reset:s}
+.steps div{border-top:1px solid var(--ink);padding-top:10px}
+.steps b{display:block;font-family:var(--serif);font-weight:500;font-size:20px;margin-bottom:4px}
+@media (min-width:760px){.steps{grid-template-columns:repeat(3,1fr)}}
+ul.plain{margin:14px 0 0;padding-left:20px}
+ul.plain li{margin:6px 0;max-width:40em}
+.gate{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--brass);border-radius:4px;padding:28px;margin-top:22px}
+.grid2{display:grid;gap:0 16px}
+@media (min-width:640px){.grid2{grid-template-columns:1fr 1fr}}
+.field{display:grid;gap:6px;margin-bottom:14px;min-width:0}
+.field label{font-size:14px;font-weight:600}
+.field input,.field select,.field textarea{width:100%;max-width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.field textarea{min-height:80px;resize:vertical}
+.err{color:var(--flag);font-size:14px;min-height:1em;margin:6px 0 10px}
+.fine{font-size:13px;color:var(--muted);margin-top:14px}
+.notice{background:var(--panel);border-left:3px solid var(--brass);padding:12px 16px;font-size:15px;margin:0 0 28px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.hidden{display:none !important}
+.faq h3{font-size:20px;margin-top:26px;line-height:1.3}
+.faq p{margin-top:8px;max-width:40em;color:var(--muted)}
+footer{margin-top:64px;font-size:13px;color:var(--muted);max-width:44em}
+
+/* Check-in */
+.who{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;font-size:15px;color:var(--muted);margin-bottom:28px}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+legend{padding:0}
+.qblock{margin-top:44px}
+.qblock h2{font-size:clamp(24px,3.4vw,28px)}
+.qblock .hint{color:var(--muted);font-size:15px;margin-top:6px;max-width:40em}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--paper)}
+.seg label{position:relative;cursor:pointer}
+.seg input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.seg span{display:block;text-align:center;padding:8px 12px;font-size:14px;line-height:1.2;border-left:1px solid var(--line);white-space:nowrap;user-select:none}
+.seg label:first-child span{border-left:0}
+.seg input:checked + span{background:var(--green);color:var(--on-green);font-weight:600}
+.seg input:focus-visible + span{outline:2px solid var(--brass);outline-offset:-2px}
+.seg input:disabled + span{opacity:.35;cursor:default}
+.alloc{margin-top:18px;border-top:1px solid var(--ink)}
+.arow{display:grid;grid-template-columns:1fr;gap:8px 16px;padding:14px 0;border-bottom:1px solid var(--line);align-items:center}
+.arow .nm{font-weight:600;font-size:15px;display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.arow .nh{font-weight:400;font-size:13px;color:var(--muted);display:flex;gap:6px;align-items:center;cursor:pointer;white-space:nowrap}
+.arow .grp{display:flex;flex-direction:column;gap:4px;min-width:0}
+.arow .seg{display:flex}
+.arow .seg label{flex:1}
+.arow .cap{font-size:12px;color:var(--muted)}
+.arow.na .grp{opacity:.4}
+.ahead{display:none}
+@media (min-width:760px){
+  .arow{grid-template-columns:minmax(150px,1fr) 270px 210px}
+  .arow .cap{display:none}
+  .ahead{display:grid;grid-template-columns:minmax(150px,1fr) 270px 210px;gap:16px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:10px 0 8px}
+}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.chip span{display:block;padding:9px 14px;border:1px solid var(--line);border-radius:999px;font-size:15px;cursor:pointer;user-select:none}
+.chip input:checked + span{background:var(--green);color:var(--on-green);border-color:var(--green);font-weight:600}
+.chip input:focus-visible + span{outline:2px solid var(--brass);outline-offset:2px}
+.chip input:disabled + span{opacity:.4;cursor:default}
+.submitbar{margin-top:44px;padding-top:24px;border-top:1px solid var(--line);display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+
+/* Results */
+.tiles{display:grid;grid-template-columns:1fr;gap:12px;margin-top:28px}
+@media (min-width:640px){.tiles{grid-template-columns:repeat(3,1fr)}}
+.tile{border-top:3px solid var(--ink);padding-top:10px}
+.tile .lab{font-size:13px;color:var(--muted)}
+.tile .big{font-family:var(--serif);font-size:42px;line-height:1.05;font-weight:500;letter-spacing:-.02em;margin-top:4px;font-variant-numeric:tabular-nums}
+.tile .big small{font-size:18px;color:var(--muted);letter-spacing:0}
+.tile .sub{font-size:14px;color:var(--muted);margin-top:4px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--muted);margin-top:12px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.div{margin-top:16px;font-variant-numeric:tabular-nums}
+.drow{display:grid;grid-template-columns:1fr;gap:6px 18px;padding:12px 0;border-bottom:1px solid var(--line);align-items:center}
+.drow .nm{font-size:15px;font-weight:600;line-height:1.3}
+.drow .nm small{display:block;font-weight:400;color:var(--muted);font-size:13px}
+.dcol .cap{font-size:12px;color:var(--muted);margin-bottom:2px}
+.dhead{display:none}
+@media (min-width:760px){
+  .drow{grid-template-columns:minmax(160px,1fr) 2fr 2fr}
+  .dcol .cap{display:none}
+  .dhead{display:grid;grid-template-columns:minmax(160px,1fr) 2fr 2fr;gap:18px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-bottom:8px;border-bottom:1px solid var(--ink)}
+}
+.dbar{display:grid;grid-template-columns:1fr 64px;gap:10px;align-items:center}
+.track{position:relative;height:16px;cursor:default}
+.track::before{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:var(--muted)}
+.track .f{position:absolute;top:2px;bottom:2px;border-radius:0 4px 4px 0;background:var(--pos)}
+.track .f.neg{border-radius:4px 0 0 4px;background:var(--neg)}
+.track .you{position:absolute;top:-4px;bottom:-4px;width:0;border-left:2px dashed var(--ink)}
+.dval{font-size:14px;font-weight:600;text-align:right;white-space:nowrap}
+.dval small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+.hbar{display:grid;grid-template-columns:minmax(120px,1.2fr) 2fr 70px;gap:10px 14px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px;font-variant-numeric:tabular-nums}
+.hbar .t{height:12px;position:relative}
+.hbar .t i{position:absolute;left:0;top:0;bottom:0;border-radius:0 4px 4px 0;background:var(--pos);min-width:2px}
+.hbar .v{text-align:right;font-weight:600}
+.hbar .v small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+.stack{display:flex;height:28px;gap:2px;margin-top:14px}
+.stack div{display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;min-width:0;overflow:hidden;white-space:nowrap}
+.stack div:first-child{border-radius:4px 0 0 4px}.stack div:last-child{border-radius:0 4px 4px 0}
+.dist{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;margin-top:14px;align-items:end;height:110px}
+.dist div{background:var(--pos);border-radius:4px 4px 0 0;position:relative;min-height:2px}
+.dist div.me{outline:2px dashed var(--ink);outline-offset:2px}
+.distlab{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;font-size:12px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.3}
+.distlab b{display:block;color:var(--ink);font-size:14px}
+.chartbox{margin-top:14px;position:relative}
+.chartbox svg{display:block;width:100%;overflow:visible}
+.chartbox .axis{font-size:11px;fill:var(--muted)}
+.chartbox .grid{stroke:var(--line);stroke-width:1}
+.chartbox .zero{stroke:var(--muted);stroke-width:1}
+.chartbox .ln{fill:none;stroke:var(--pos);stroke-width:2}
+.chartbox .pt{fill:var(--pos);stroke:var(--paper);stroke-width:2}
+.chartbox .xh{stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3}
+.ctl{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px;font-size:14px}
+.ctl select{padding:8px 10px;border:1px solid var(--line);border-radius:4px;background:var(--paper);max-width:100%}
+.seg-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px;font-variant-numeric:tabular-nums}
+.tablewrap{overflow-x:auto;margin-top:6px}
+.seg-table th,.seg-table td{padding:8px 6px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap}
+.seg-table th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;border-bottom:1px solid var(--ink);white-space:normal;vertical-align:bottom;min-width:56px}
+.seg-table th:first-child,.seg-table td:first-child{text-align:left;white-space:normal;min-width:150px}
+.seg-table td.h{color:var(--muted);font-size:13px;text-align:left}
+.tip{position:fixed;z-index:10;pointer-events:none;background:var(--ink);color:var(--paper);font-size:13px;line-height:1.45;padding:8px 10px;border-radius:4px;max-width:260px;opacity:0;transition:opacity .1s}
+.tip.on{opacity:1}
+details.tv{margin-top:14px;font-size:14px}
+details.tv summary{cursor:pointer;color:var(--muted)}
+details.tv table{border-collapse:collapse;margin-top:10px;width:100%;font-variant-numeric:tabular-nums}
+details.tv th,details.tv td{border-bottom:1px solid var(--line);padding:6px 8px 6px 0;text-align:left}
+.locked{margin-top:28px;padding:28px;border:1px solid var(--line);border-radius:4px;background:var(--panel)}
+.meter{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:14px;max-width:420px}
+.meter i{display:block;height:100%;background:var(--brass)}
+@media (forced-colors: active){.track .f,.hbar .t i,.dist div{background:CanvasText}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <a class="mark" href="/">VC10X</a>
+    <small id="barnote">For allocators</small>
+  </header>
+
+  <main id="member" class="hidden" aria-live="polite"></main>
+
+  <div id="public">
+    <p class="kicker">Invite-only · Weekly</p>
+    <h1>The CIO Pulse</h1>
+    <p class="lede">Every week, CIOs at family offices, endowments, foundations and pensions spend 90 seconds sharing how they're positioned and how much risk they're taking. In return, they see where their peers are leaning now, without waiting for anyone's quarterly letter.</p>
+    <div class="facts">
+      <span><b>90 seconds</b> a week</span>
+      <span><b>Verified</b> CIOs only</span>
+      <span><b>Anonymous</b>, shown in groups of 8 or more</span>
+    </div>
+    <p style="margin-top:28px"><a class="btn" href="#join">Request an invite</a></p>
+    <p id="linkerr" class="notice hidden" style="margin-top:28px" role="alert"></p>
+
+    <section class="block">
+      <h2>How it works</h2>
+      <div class="steps">
+        <div><b>Check in weekly</b>Your positioning against your own targets in ten asset classes, your risk appetite, and what's driving your decisions. Last week's answers are prefilled, so you only change what moved.</div>
+        <div><b>See your peers</b>Submit and the results open: where CIOs are over- and underweight, which way they plan to move, and how risk appetite is shifting week to week.</div>
+        <div><b>React to events</b>After a market-moving event, such as a central bank decision or a geopolitical shock, a short extra round shows how peers responded within days.</div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>What you'll see</h2>
+      <ul class="plain">
+        <li>Net positioning in each asset class: the share of CIOs overweight minus the share underweight, against their own targets.</li>
+        <li>Where they plan to add or reduce over the next three months.</li>
+        <li>Risk appetite this week, how it has moved over the past month, and the trend over time.</li>
+        <li>The macro drivers CIOs say matter most right now, and how private-market commitments are pacing against plan.</li>
+        <li>Splits by organization type and size, and your own answers next to the group's.</li>
+      </ul>
+    </section>
+
+    <section class="block">
+      <h2>Your answers stay private</h2>
+      <ul class="plain">
+        <li>Results only appear for groups of 8 or more CIOs. A smaller group or segment stays hidden.</li>
+        <li>No individual answers, names or organizations are ever shown to other members or published.</li>
+        <li>Your answers are stored against your private link so you can update them during the week. Only VC10X can see who has checked in, never alongside what they answered.</li>
+        <li>Optional comments may be quoted in the weekly summary without your name, organization or anything that identifies you.</li>
+      </ul>
+    </section>
+
+    <section class="block" id="join">
+      <h2>Request an invite</h2>
+      <p>The Pulse is open to CIOs and heads of investment at family offices, endowments, foundations, pensions, insurers and OCIOs. We check each request, then email you a private link.</p>
+      <form class="gate" id="reqForm" novalidate>
+        <div class="grid2">
+          <div class="field"><label for="rq-name">Name</label><input id="rq-name" name="name" autocomplete="name" required></div>
+          <div class="field"><label for="rq-email">Work email</label><input id="rq-email" name="email" type="email" autocomplete="email" required></div>
+          <div class="field"><label for="rq-firm">Organization</label><input id="rq-firm" name="firm" autocomplete="organization" required></div>
+          <div class="field"><label for="rq-title">Title</label><input id="rq-title" name="title" autocomplete="organization-title"></div>
+          <div class="field"><label for="rq-type">Organization type</label>
+            <select id="rq-type" name="org_type" required>
+              <option value="">Choose one</option>
+              <option value="family">Family office</option>
+              <option value="endowment">Endowment or foundation</option>
+              <option value="pension">Pension or insurance</option>
+              <option value="institution">OCIO, fund of funds or other institution</option>
+            </select></div>
+          <div class="field"><label for="rq-aum">Assets under management</label>
+            <select id="rq-aum" name="aum_band" required>
+              <option value="">Choose one</option>
+              <option value="s">Under $1B</option>
+              <option value="m">$1B to $10B</option>
+              <option value="l">Over $10B</option>
+            </select></div>
+        </div>
+        <div class="field"><label for="rq-note">Anything we should know? <span class="muted" style="font-weight:400">(optional)</span></label><textarea id="rq-note" name="note" maxlength="400"></textarea></div>
+        <div class="hp" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off"></label></div>
+        <p class="err" id="rqErr" role="alert"></p>
+        <button class="btn" type="submit" id="rqBtn">Request my invite</button>
+        <p class="fine">We use these details only to verify you and send your link. A work email speeds up verification.</p>
+      </form>
+      <div class="gate hidden" id="reqDone" role="status"><h3>Thanks, we've got your request.</h3><p style="margin-top:8px">We'll check your details and email your private link, usually within two working days.</p></div>
+    </section>
+
+    <section class="block faq">
+      <h2>Questions</h2>
+      <h3>Why only 8 or more?</h3>
+      <p>Below that, a determined reader could start to guess who answered what. Every figure, including each segment and each asset class, needs at least 8 answers before it appears.</p>
+      <h3>What does "overweight" mean here?</h3>
+      <p>Against your own strategic or policy target, not against a benchmark or other members. A CIO at their target is neutral, whatever that target is.</p>
+      <h3>Why weekly, not daily?</h3>
+      <p>CIOs don't rebalance daily, and a daily survey wouldn't get answered. A weekly round with extra rounds after big events catches real shifts without wasting your time.</p>
+      <h3>Is this investment advice?</h3>
+      <p>No. The Pulse reports what participating CIOs say about their own portfolios. It isn't a recommendation to buy, sell or hold anything.</p>
+    </section>
+  </div>
+
+  <footer>Self-reported by participating CIOs and shown only in groups of 8 or more. Indicative, not a statistical sample of all allocators, and not investment advice. © VC10X</footer>
+</div>
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script>
+const KEY = "vc10x-pulse-k";
+const $ = (s, el = document) => el.querySelector(s);
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const store = {
+  get() { try { return localStorage.getItem(KEY); } catch { return null; } },
+  set(v) { try { v ? localStorage.setItem(KEY, v) : localStorage.removeItem(KEY); } catch {} },
+};
+let TOKEN = null, ME = null, CFG = null;
+
+// The private link carries the token after #k= so it never reaches server logs. Keep it, then tidy the URL.
+function readLink() {
+  const m = location.hash.match(/^#k=([A-Za-z0-9_-]{20,64})$/);
+  if (m) { store.set(m[1]); history.replaceState(null, "", location.pathname + location.search); }
+  TOKEN = store.get() || (m && m[1]); // works even where storage is blocked, for this visit
+  return !!m;
+}
+readLink();
+// A link pasted into a tab that already has this page open only changes the hash.
+window.addEventListener("hashchange", () => { if (readLink()) start(); });
+
+async function api(path, opts = {}) {
+  const r = await fetch("/api/pulse/" + path, {
+    ...opts,
+    headers: { "Content-Type": "application/json", ...(TOKEN ? { Authorization: "Bearer " + TOKEN } : {}) },
+  });
+  let body = {};
+  try { body = await r.json(); } catch {}
+  if (!r.ok) { const e = new Error(body.error || "Something went wrong. Please try again."); e.status = r.status; throw e; }
+  return body;
+}
+
+/* ---------- Public: invite request ---------- */
+$("#reqForm").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const f = ev.target, err = $("#rqErr"), btn = $("#rqBtn");
+  const data = Object.fromEntries(new FormData(f));
+  err.textContent = "";
+  if (!data.name.trim()) return (err.textContent = "Add your name", f.name.focus());
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) return (err.textContent = "Add a valid work email", f.email.focus());
+  if (!data.firm.trim()) return (err.textContent = "Add your organization", f.firm.focus());
+  if (!data.org_type) return (err.textContent = "Choose your organization type", f.org_type.focus());
+  if (!data.aum_band) return (err.textContent = "Choose your assets under management", f.aum_band.focus());
+  btn.disabled = true;
+  try {
+    await api("request", { method: "POST", body: JSON.stringify(data) });
+    f.classList.add("hidden"); $("#reqDone").classList.remove("hidden");
+  } catch (e) { err.textContent = e.message; }
+  btn.disabled = false;
+});
+
+/* ---------- Member area ---------- */
+const M = $("#member");
+function showMember(html) {
+  $("#public").classList.add("hidden");
+  M.classList.remove("hidden");
+  M.innerHTML = html;
+  window.scrollTo(0, 0);
+}
+function showPublic(msg) {
+  M.classList.add("hidden"); $("#public").classList.remove("hidden");
+  $("#barnote").textContent = "For allocators";
+  if (msg) { const n = $("#linkerr"); n.textContent = msg; n.classList.remove("hidden"); }
+}
+function signOut() { store.set(null); TOKEN = null; showPublic(); }
+
+const fmtDate = (ms) => new Date(ms).toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "short", timeZone: "UTC" });
+const sign = (v) => (v > 0 ? "+" + v : v < 0 ? "−" + Math.abs(v) : "0");
+const change = (now, before) => {
+  if (now == null || before == null) return "";
+  const d = Math.round((now - before) * 10) / 10;
+  return d === 0 ? "no change" : (d > 0 ? "▲ " : "▼ ") + Math.abs(d);
+};
+const name = (list, id) => (list.find((x) => x[0] === id) || [id, id])[1];
+
+async function start() {
+  if (!TOKEN) return;
+  showMember('<p class="muted">Loading your Pulse…</p>');
+  try { ME = await api("me"); }
+  catch (e) {
+    if (e.status === 401) { store.set(null); TOKEN = null; return showPublic("That private link has expired or been replaced. Request a new one below, or reply to your invite email."); }
+    return showMember(`<p class="err">${esc(e.message)}</p><p><button class="link" onclick="start()">Try again</button></p>`);
+  }
+  CFG = ME.config;
+  $("#barnote").innerHTML = `${esc(ME.member.firm)} · <button class="link" style="font-size:14px" onclick="signOut()">Sign out</button>`;
+  if (ME.submitted || !ME.round.open) return results();
+  checkin();
+}
+
+/* ---------- Check-in ---------- */
+function seg(name, opts, val, disabled) {
+  return `<div class="seg" role="radiogroup">${opts.map(([v, l]) =>
+    `<label><input type="radio" name="${name}" value="${v}" ${String(val) === String(v) ? "checked" : ""} ${disabled ? "disabled" : ""}><span>${l}</span></label>`).join("")}</div>`;
+}
+function chipRadio(name, opts, val) {
+  return `<div class="chips" role="radiogroup">${opts.map(([v, l]) =>
+    `<label class="chip"><input type="radio" name="${name}" value="${v}" ${String(val) === String(v) ? "checked" : ""}><span>${l}</span></label>`).join("")}</div>`;
+}
+function checkin() {
+  const a = ME.answers || {};
+  const prefilled = ME.answers && !ME.submitted;
+  const r = ME.round;
+  const rows = CFG.CLASSES.map(([id, label]) => {
+    const na = a.pos && a.pos[id] === null;
+    return `<div class="arow ${na ? "na" : ""}" data-id="${id}">
+      <div class="nm"><span id="l-${id}">${esc(label)}</span><label class="nh"><input type="checkbox" class="nacb" ${na ? "checked" : ""}> Don't hold</label></div>
+      <div class="grp" aria-labelledby="l-${id}"><span class="cap">Now, against your target</span>${seg("pos-" + id, [[-1, "Underweight"], [0, "Neutral"], [1, "Overweight"]], a.pos ? a.pos[id] : "", na)}</div>
+      <div class="grp" aria-labelledby="l-${id}"><span class="cap">Next three months</span>${seg("next-" + id, [[-1, "Reduce"], [0, "Hold"], [1, "Add"]], a.next ? a.next[id] : "", na)}</div>
+    </div>`;
+  }).join("");
+  const drivers = CFG.DRIVERS.map(([id, label]) =>
+    `<label class="chip"><input type="checkbox" name="drivers" value="${id}" ${(a.drivers || []).includes(id) ? "checked" : ""}><span>${esc(label)}</span></label>`).join("");
+  showMember(`
+    <div class="who"><span>Hi ${esc(ME.member.first)}. ${r.n} CIO${r.n === 1 ? " has" : "s have"} checked in so far.</span><span>${esc(r.label)} · closes ${fmtDate(r.closes_at - 1)}</span></div>
+    <p class="kicker">${r.kind === "event" ? "Event round" : "Weekly check-in"}</p>
+    <h1>${r.kind === "event" ? esc(r.label) : "How are you positioned this week?"}</h1>
+    ${prefilled ? `<p class="notice" style="margin-top:24px">We've prefilled your answers from your last check-in. Change anything that has moved, then submit.</p>` : `<p class="lede" style="font-size:19px">About 90 seconds. Your answers are never shown individually.</p>`}
+    <form id="ci" novalidate>
+      <fieldset class="qblock">
+        <legend><h2>Positioning against your target</h2></legend>
+        <p class="hint">Where you are now against your own strategic or policy target, and which way you expect to move over the next three months.</p>
+        <div class="alloc"><div class="ahead" aria-hidden="true"><span>Asset class</span><span>Now</span><span>Next 3 months</span></div>${rows}</div>
+      </fieldset>
+      <fieldset class="qblock">
+        <legend><h2>Risk appetite</h2></legend>
+        <p class="hint">Across the whole portfolio, right now.</p>
+        ${chipRadio("risk", [[1, "1 · Very defensive"], [2, "2 · Defensive"], [3, "3 · Neutral"], [4, "4 · Risk-on"], [5, "5 · Very risk-on"]], a.risk ?? "")}
+        <p class="hint" style="margin-top:20px">Over the past month, you have:</p>
+        ${chipRadio("riskChg", [[-1, "Reduced risk"], [0, "Held steady"], [1, "Added risk"]], a.riskChg ?? "")}
+      </fieldset>
+      <fieldset class="qblock">
+        <legend><h2>What's driving your decisions?</h2></legend>
+        <p class="hint">Pick up to two.</p>
+        <div class="chips" id="drv">${drivers}</div>
+      </fieldset>
+      <fieldset class="qblock">
+        <legend><h2>Private-market commitments</h2></legend>
+        <p class="hint">New commitments this year, against your plan.</p>
+        ${chipRadio("pacing", [[-1, "Behind plan"], [0, "On plan"], [1, "Ahead of plan"], ["na", "No private program"]], a.pacing === null && ME.answers ? "na" : a.pacing ?? "")}
+      </fieldset>
+      <div class="qblock field">
+        <label for="note"><h2 style="font-size:clamp(24px,3.4vw,28px)">One thing on your mind <span class="muted" style="font-family:var(--sans);font-size:15px;font-weight:400">(optional)</span></h2></label>
+        <p class="hint">May be quoted in the weekly summary, never with your name or organization.</p>
+        <textarea id="note" name="note" maxlength="280" style="margin-top:8px">${esc(ME.submitted ? a.note || "" : "")}</textarea>
+      </div>
+      <div class="submitbar">
+        <button class="btn" type="submit" id="ciBtn">${ME.submitted ? "Update my answers" : "Submit and see results"}</button>
+        ${ME.submitted ? '<button type="button" class="link" onclick="results()">Back to results</button>' : ME.canSeeResults ? '<button type="button" class="link" onclick="results()">See the latest results first</button>' : ""}
+        <p class="err" id="ciErr" role="alert" style="margin:0;flex-basis:100%"></p>
+      </div>
+    </form>`);
+
+  const f = $("#ci");
+  f.querySelectorAll(".nacb").forEach((cb) => cb.addEventListener("change", () => {
+    const row = cb.closest(".arow");
+    row.classList.toggle("na", cb.checked);
+    row.querySelectorAll('input[type="radio"]').forEach((x) => { x.disabled = cb.checked; });
+  }));
+  const limit = () => {
+    const boxes = [...f.querySelectorAll('input[name="drivers"]')];
+    const n = boxes.filter((b) => b.checked).length;
+    boxes.forEach((b) => { b.disabled = !b.checked && n >= 2; });
+  };
+  f.addEventListener("change", (e) => { if (e.target.name === "drivers") limit(); });
+  limit();
+  f.addEventListener("submit", submitCheckin);
+}
+
+async function submitCheckin(ev) {
+  ev.preventDefault();
+  const f = ev.target, err = $("#ciErr"), btn = $("#ciBtn");
+  const val = (n) => { const x = f.querySelector(`input[name="${n}"]:checked`); return x ? x.value : null; };
+  const pos = {}, next = {};
+  err.textContent = "";
+  for (const [id, label] of CFG.CLASSES) {
+    const row = f.querySelector(`.arow[data-id="${id}"]`);
+    if (row.querySelector(".nacb").checked) { pos[id] = null; next[id] = null; continue; }
+    const p = val("pos-" + id), n = val("next-" + id);
+    if (p === null || n === null) { err.textContent = `Add ${p === null ? "where you are now" : "your next three months"} in ${label}, or tick "Don't hold".`; row.scrollIntoView({ block: "center", behavior: "smooth" }); return; }
+    pos[id] = +p; next[id] = +n;
+  }
+  if (Object.values(pos).every((v) => v === null)) return (err.textContent = "Mark at least one asset class you hold.");
+  const risk = val("risk"), riskChg = val("riskChg"), pacing = val("pacing");
+  const drivers = [...f.querySelectorAll('input[name="drivers"]:checked')].map((x) => x.value);
+  if (risk === null) return (err.textContent = "Choose your risk appetite.");
+  if (riskChg === null) return (err.textContent = "Choose how your risk has changed over the past month.");
+  if (!drivers.length) return (err.textContent = "Pick at least one driver.");
+  if (pacing === null) return (err.textContent = "Choose how your private-market commitments are pacing.");
+  btn.disabled = true;
+  try {
+    await api("submit", { method: "POST", body: JSON.stringify({ answers: {
+      pos, next, risk: +risk, riskChg: +riskChg, drivers, pacing: pacing === "na" ? null : +pacing, note: f.note.value } }) });
+    ME = await api("me");
+    results();
+  } catch (e) {
+    err.textContent = e.message;
+    if (e.status === 401) setTimeout(signOut, 2500);
+  }
+  btn.disabled = false;
+}
+
+/* ---------- Results ---------- */
+async function results() {
+  showMember('<p class="muted">Loading results…</p>');
+  let R;
+  try { R = await api("results"); }
+  catch (e) {
+    if (e.status === 403 && ME.round.open) return checkin();
+    if (e.status === 401) return signOut();
+    return showMember(`<p class="kicker">${esc(ME.round.label)}</p><h1>This round has closed</h1>
+      <p class="lede">${esc(e.message)} The next round opens on Monday.</p>`);
+  }
+  const r = R.round;
+  const head = `<div class="who"><span>${esc(r.label)} · ${r.n} CIO${r.n === 1 ? "" : "s"} checked in${r.open ? "" : " · closed"}</span>
+    ${r.open ? `<button class="link" onclick="checkin()">${ME.submitted ? "Update your answers" : "Check in for this round"}</button>` : ""}</div>`;
+
+  if (!R.featured) {
+    return showMember(`${head}<p class="kicker">Results</p><h1>Results unlock at ${R.minN} check-ins</h1>
+      <div class="locked"><p>${r.n} of ${R.minN} CIOs have checked in to ${esc(r.label.toLowerCase().startsWith("week") ? "this week's round" : "this round")}. Results appear as soon as the group is large enough that no one's answers can be picked out.</p>
+      <div class="meter" aria-hidden="true"><i style="width:${Math.min(100, (r.n / R.minN) * 100)}%"></i></div>
+      <p class="fine">Know a CIO who should be here? Send them to vc10x.com/cio-pulse to request an invite.</p></div>`);
+  }
+
+  const F = R.featured, A = F.agg, P = R.compare && R.compare.agg, you = R.you && R.you.answers;
+  const youHere = R.you && R.you.round_id === F.id;
+  const youLbl = youHere ? "Your answer" : "Your latest answer";
+  const sameRound = F.id === r.id;
+  const topDriver = A.drivers[0];
+  const prevDriver = P && P.drivers.find((d) => d.id === topDriver.id);
+
+  // Diverging bar: net % from -100 to +100 around a centre line, with a dashed marker for your answer.
+  const dbar = (t, prevT, youV, what) => {
+    if (!t || t.hidden) return `<div class="dbar"><div class="muted" style="font-size:13px">Fewer than ${R.minN} answers</div><div></div></div>`;
+    const w = Math.abs(t.net) / 2;
+    const fill = t.net === 0 ? "" : `<div class="f ${t.net < 0 ? "neg" : ""}" style="${t.net < 0 ? `right:50%` : `left:50%`};width:${Math.max(w, 0.8)}%"></div>`;
+    const youMark = youV == null ? "" : `<div class="you" style="left:${50 + youV * 46}%" aria-hidden="true"></div>`;
+    const lbl = what === "now" ? ["Underweight", "Neutral", "Overweight"] : ["Reduce", "Hold", "Add"];
+    const tip = `${lbl[2]} ${t.up}% · ${lbl[1]} ${t.mid}% · ${lbl[0]} ${t.down}%<br>Net ${sign(t.net)} · ${t.count} answers${prevT && !prevT.hidden ? `<br>Previous round net ${sign(prevT.net)}` : ""}${youV != null ? `<br>${youLbl}: ${lbl[youV + 1]}` : ""}`;
+    const ch = prevT && !prevT.hidden ? change(t.net, prevT.net) : "";
+    return `<div class="dbar"><div class="track" tabindex="0" data-tip="${esc(tip)}" aria-label="${esc(tip.replace(/<br>/g, ". "))}">${fill}${youMark}</div>
+      <div class="dval">${sign(t.net)}${ch ? `<small>${ch}</small>` : ""}</div></div>`;
+  };
+  const posRows = CFG.CLASSES.map(([id, label]) => {
+    const yp = you && you.pos[id], yn = you && you.next[id];
+    const youTxt = you ? (yp === null ? "You: don't hold" : `You: ${["Under", "Neutral", "Over"][yp + 1]}, ${["reduce", "hold", "add"][yn + 1]}`) : "";
+    return `<div class="drow"><div class="nm">${esc(label)}${youTxt ? `<small>${youTxt}</small>` : ""}</div>
+      <div class="dcol"><div class="cap">Now</div>${dbar(A.pos[id], P && P.pos[id], yp, "now")}</div>
+      <div class="dcol"><div class="cap">Next 3 months</div>${dbar(A.next[id], P && P.next[id], yn, "next")}</div></div>`;
+  }).join("");
+  const posTable = `<details class="tv"><summary>View as a table</summary><div class="tablewrap"><table><thead><tr><th>Asset class</th><th>Over</th><th>Neutral</th><th>Under</th><th>Net now</th><th>Add</th><th>Hold</th><th>Reduce</th><th>Net next</th></tr></thead><tbody>${
+    CFG.CLASSES.map(([id, label]) => { const t = A.pos[id], n = A.next[id];
+      const c = (x) => (x.hidden ? `<td colspan="4" class="muted">Fewer than ${R.minN}</td>` : `<td>${x.up}%</td><td>${x.mid}%</td><td>${x.down}%</td><td>${sign(x.net)}</td>`);
+      return `<tr><td>${esc(label)}</td>${c(t)}${c(n)}</tr>`; }).join("")}</tbody></table></div></details>`;
+
+  const drv = A.drivers.filter((d) => d.pct > 0).map((d) => {
+    const pd = P && P.drivers.find((x) => x.id === d.id);
+    const label = name(CFG.DRIVERS, d.id);
+    return `<div class="hbar"><span>${esc(label)}</span><div class="t" tabindex="0" data-tip="${esc(`${label}: ${d.pct}% of CIOs${pd ? `<br>Previous round ${pd.pct}%` : ""}`)}"><i style="width:${d.pct}%"></i></div><span class="v">${d.pct}%${pd ? `<small>${change(d.pct, pd.pct)}</small>` : ""}</span></div>`;
+  }).join("");
+
+  const pc = A.pacing;
+  const pacing = pc.hidden ? `<p class="muted" style="margin-top:12px">Fewer than ${R.minN} CIOs with a private program answered.</p>` :
+    `<div class="stack" role="img" aria-label="Behind plan ${pc.down}%, on plan ${pc.mid}%, ahead of plan ${pc.up}%">
+      ${[["Behind", pc.down, "var(--neg)", "#fff"], ["On plan", pc.mid, "var(--mid)", "var(--ink)"], ["Ahead", pc.up, "var(--pos)", "#fff"]].filter((x) => x[1] > 0)
+        .map(([l, v, bg, fg]) => `<div style="flex:${v};background:${bg};color:${fg}" tabindex="0" data-tip="${l}: ${v}%">${v >= 12 ? `${v}%` : ""}</div>`).join("")}
+    </div><div class="legend"><span><i style="background:var(--neg)"></i>Behind plan ${pc.down}%</span><span><i style="background:var(--mid)"></i>On plan ${pc.mid}%</span><span><i style="background:var(--pos)"></i>Ahead of plan ${pc.up}%</span><span>${pc.count} with a private program</span></div>`;
+
+  const dist = A.risk.dist;
+  const maxD = Math.max(...dist, 1);
+  const distHtml = `<div class="dist" role="img" aria-label="Risk appetite distribution: ${dist.map((v, i) => `${i + 1}: ${v}%`).join(", ")}">${dist.map((v, i) =>
+    `<div class="${you && you.risk === i + 1 ? "me" : ""}" style="height:${(v / maxD) * 100}%" tabindex="0" data-tip="${i + 1}: ${v}% of CIOs${you && you.risk === i + 1 ? "<br>" + youLbl : ""}"></div>`).join("")}</div>
+    <div class="distlab">${dist.map((v, i) => `<span><b>${v}%</b>${["Very defensive", "Defensive", "Neutral", "Risk-on", "Very risk-on"][i]}</span>`).join("")}</div>`;
+
+  const segTable = (title, list, labels) => {
+    const vis = list.filter((s) => !s.hidden);
+    const rows = list.map((s) => s.hidden
+      ? `<tr><td>${esc(labels[s.id])}</td><td colspan="${CFG.CLASSES.length + 1}" class="h">${s.small ? `Fewer than ${R.minN} CIOs this round` : "Hidden this round to protect a smaller group"}</td></tr>`
+      : `<tr><td>${esc(labels[s.id])} <span class="muted">(${s.n})</span></td><td>${s.risk.toFixed(1)}</td>${CFG.CLASSES.map(([id, l]) => {
+          const v = s.pos[id];
+          if (v == null) return `<td class="muted">–</td>`;
+          const bg = `color-mix(in srgb, ${v < 0 ? "var(--neg)" : "var(--pos)"} ${Math.round(Math.abs(v) * 0.45)}%, transparent)`;
+          return `<td style="background:${bg}" tabindex="0" data-tip="${esc(`${labels[s.id]}, ${l}: net ${sign(v)}`)}">${sign(v)}</td>`;
+        }).join("")}</tr>`).join("");
+    return `<h3 style="margin-top:28px">${title}</h3>${vis.length ? "" : `<p class="muted" style="margin-top:8px;font-size:15px">Each group appears once ${R.minN} of its CIOs check in.</p>`}
+      <div class="tablewrap"><table class="seg-table"><thead><tr><th></th><th>Risk (1–5)</th>${CFG.CLASSES.map(([, l]) => `<th>${esc(l)}</th>`).join("")}</tr></thead><tbody>${rows}</tbody></table></div>`;
+  };
+
+  const trendOpts = [["risk", "Risk appetite (1 to 5)"], ...CFG.CLASSES.map(([id, l]) => [id, `${l}: net positioning`])];
+
+  showMember(`${head}
+    <p class="kicker">${esc(F.label)}${F.open ? " · in progress" : ""}${F.kind === "event" ? " · event round" : ""}</p>
+    <h1>Where ${A.n} CIOs stand</h1>
+    ${sameRound ? "" : `<p class="notice" style="margin-top:24px">Showing ${esc(F.label)}. ${esc(r.label)} unlocks at ${R.minN} check-ins (${r.n} so far).</p>`}
+    <p class="lede" style="font-size:19px">${R.compare ? `Compared with ${esc(R.compare.label)} (${R.compare.agg.n} CIOs).` : "The first round with enough answers. Week-on-week changes appear from the next one."}</p>
+    <div class="tiles">
+      <div class="tile"><div class="lab">Average risk appetite</div><div class="big">${A.risk.avg.toFixed(1)}<small> / 5</small></div><div class="sub">${P ? change(A.risk.avg, P.risk.avg) + " on the previous round" : "1 is very defensive, 5 very risk-on"}</div></div>
+      <div class="tile"><div class="lab">Adding minus reducing risk, past month</div><div class="big">${A.risk.chg.hidden ? "–" : sign(A.risk.chg.net)}</div><div class="sub">${A.risk.chg.hidden ? "" : `${A.risk.chg.up}% added, ${A.risk.chg.down}% reduced`}</div></div>
+      <div class="tile"><div class="lab">Most-cited driver</div><div class="big" style="font-size:28px;line-height:1.15;margin-top:8px">${esc(name(CFG.DRIVERS, topDriver.id))}</div><div class="sub">${topDriver.pct}% of CIOs${prevDriver ? `, ${change(topDriver.pct, prevDriver.pct)}` : ""}</div></div>
+    </div>
+
+    <section class="block">
+      <h2>Positioning against target</h2>
+      <p>Net = share overweight minus share underweight, from −100 to +100, against each CIO's own target. "Next 3 months" is the share planning to add minus the share planning to reduce. CIOs who don't hold an asset class are left out of it.</p>
+      <div class="legend"><span><i style="background:var(--neg)"></i>Net underweight / reducing</span><span><i style="background:var(--pos)"></i>Net overweight / adding</span>${you ? `<span><i style="background:none;border-left:2px dashed var(--ink);border-radius:0;width:2px"></i>${youLbl}</span>` : ""}<span>▲▼ change on the previous round</span></div>
+      <div class="div"><div class="dhead"><span>Asset class</span><span>Now</span><span>Next 3 months</span></div>${posRows}</div>
+      ${posTable}
+    </section>
+
+    <section class="block">
+      <h2>Risk appetite</h2>
+      <p>Where CIOs put their whole portfolio this round${you ? `, with ${youLbl.toLowerCase()} outlined` : ""}.</p>
+      ${distHtml}
+      <h3 style="margin-top:36px">Over time</h3>
+      <div class="ctl"><label for="trendSel">Show</label><select id="trendSel">${trendOpts.map(([v, l]) => `<option value="${v}">${esc(l)}</option>`).join("")}</select></div>
+      <div class="chartbox" id="trend"></div>
+    </section>
+
+    <section class="block">
+      <h2>What's driving decisions</h2>
+      <p>Share of CIOs naming each as one of their top two drivers this round.</p>
+      <div style="margin-top:14px">${drv}</div>
+    </section>
+
+    <section class="block">
+      <h2>Private-market pacing</h2>
+      <p>New commitments this year against plan, among CIOs with a private-markets program.</p>
+      ${pacing}
+    </section>
+
+    <section class="block">
+      <h2>By organization type and size</h2>
+      <p>Average risk appetite and net positioning now, for each group with at least ${R.minN} CIOs this round.</p>
+      ${segTable("Organization type", A.byType, CFG.ORG_TYPES)}
+      ${segTable("Assets under management", A.bySize, CFG.AUM)}
+    </section>
+    <p class="fine" style="margin-top:44px">Rounds run Monday to Sunday (UTC), with extra rounds after market-moving events. Every figure covers at least ${R.minN} CIOs. Self-reported and indicative, not investment advice.</p>`);
+
+  const sel = $("#trendSel");
+  const draw = () => trend($("#trend"), R.history, sel.value, CFG);
+  sel.addEventListener("change", draw);
+  draw();
+  window.onresize = draw;
+}
+
+/* Line chart of one measure across rounds, with a crosshair tooltip. */
+function trend(box, hist, key, cfg) {
+  const pts = hist.map((h) => ({ h, v: key === "risk" ? h.risk : h.pos[key] })).filter((p) => p.v != null);
+  if (pts.length < 2) { box.innerHTML = `<p class="muted" style="font-size:15px">The trend appears once there are two rounds with enough answers.</p>`; return; }
+  const W = Math.max(280, box.clientWidth), H = 220, L = 34, Rg = 12, T = 12, B = 30;
+  const [lo, hi] = key === "risk" ? [1, 5] : [-100, 100];
+  const x = (i) => L + (pts.length === 1 ? 0 : (i / (pts.length - 1)) * (W - L - Rg));
+  const y = (v) => T + (1 - (v - lo) / (hi - lo)) * (H - T - B);
+  const ticks = key === "risk" ? [1, 2, 3, 4, 5] : [-100, -50, 0, 50, 100];
+  const short = (h) => h.kind === "event" ? h.label : new Date(h.opens_at).toLocaleDateString(undefined, { day: "numeric", month: "short", timeZone: "UTC" });
+  const every = Math.ceil(pts.length / Math.max(2, Math.floor((W - L) / 70)));
+  const label = key === "risk" ? "Average risk appetite" : `${cfg.CLASSES.find((c) => c[0] === key)[1]}, net positioning`;
+  box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" height="${H}" role="img" aria-label="${esc(label)} by round: ${pts.map((p) => `${short(p.h)} ${key === "risk" ? p.v.toFixed(1) : sign(p.v)}`).join(", ")}">
+    ${ticks.map((t) => `<line class="${t === 0 && key !== "risk" ? "zero" : "grid"}" x1="${L}" x2="${W - Rg}" y1="${y(t)}" y2="${y(t)}"/><text class="axis" x="${L - 6}" y="${y(t) + 4}" text-anchor="end">${key === "risk" ? t : sign(t)}</text>`).join("")}
+    ${pts.map((p, i) => ((i % every === 0 && pts.length - 1 - i >= every) || i === pts.length - 1) ? `<text class="axis" x="${x(i)}" y="${H - 8}" text-anchor="${i === 0 ? "start" : i === pts.length - 1 ? "end" : "middle"}">${esc(short(p.h))}</text>` : "").join("")}
+    <polyline class="ln" points="${pts.map((p, i) => `${x(i)},${y(p.v)}`).join(" ")}"/>
+    <line class="xh" id="xh" y1="${T}" y2="${H - B}" x1="${L}" x2="${L}" visibility="hidden"/>
+    ${pts.map((p, i) => `<circle class="pt" cx="${x(i)}" cy="${y(p.v)}" r="4"/>`).join("")}
+    <rect x="${L}" y="0" width="${W - L - Rg}" height="${H - B}" fill="transparent" id="hit"/>
+  </svg>`;
+  const svg = box.querySelector("svg"), xh = box.querySelector("#xh"), tip = $("#tip");
+  const near = (ev) => {
+    const rect = svg.getBoundingClientRect();
+    const px = ((ev.clientX - rect.left) / rect.width) * W;
+    let best = 0;
+    pts.forEach((p, i) => { if (Math.abs(x(i) - px) < Math.abs(x(best) - px)) best = i; });
+    return best;
+  };
+  box.querySelector("#hit").addEventListener("mousemove", (ev) => {
+    const i = near(ev), p = pts[i];
+    xh.setAttribute("x1", x(i)); xh.setAttribute("x2", x(i)); xh.setAttribute("visibility", "visible");
+    tip.innerHTML = `<b>${esc(p.h.label)}</b><br>${esc(label)}: ${key === "risk" ? p.v.toFixed(1) : sign(p.v)}<br>${p.h.n} CIOs`;
+    placeTip(ev.clientX, ev.clientY);
+  });
+  box.querySelector("#hit").addEventListener("mouseleave", () => { xh.setAttribute("visibility", "hidden"); tip.classList.remove("on"); });
+}
+
+/* Shared tooltip for elements with data-tip (hover and keyboard focus). */
+function placeTip(cx, cy) {
+  const tip = $("#tip");
+  tip.classList.add("on");
+  const w = tip.offsetWidth, h = tip.offsetHeight;
+  tip.style.left = Math.min(window.innerWidth - w - 8, Math.max(8, cx - w / 2)) + "px";
+  tip.style.top = (cy - h - 14 < 8 ? cy + 18 : cy - h - 14) + "px";
+}
+const tipFor = (el) => el.closest && el.closest("[data-tip]");
+document.addEventListener("mouseover", (e) => { const el = tipFor(e.target); if (!el) return; $("#tip").innerHTML = el.dataset.tip; const r = el.getBoundingClientRect(); placeTip(e.clientX, r.top); });
+document.addEventListener("mouseout", (e) => { if (tipFor(e.target)) $("#tip").classList.remove("on"); });
+document.addEventListener("focusin", (e) => { const el = tipFor(e.target); if (!el) return; $("#tip").innerHTML = el.dataset.tip; const r = el.getBoundingClientRect(); placeTip(r.left + r.width / 2, r.top); });
+document.addEventListener("focusout", (e) => { if (tipFor(e.target)) $("#tip").classList.remove("on"); });
+document.addEventListener("scroll", () => $("#tip").classList.remove("on"), { passive: true });
+
+start();
+</script>
+</body>
+</html>

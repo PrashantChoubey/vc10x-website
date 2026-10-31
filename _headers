@@ -9,3 +9,7 @@
 /playbooks/*.pdf
   X-Robots-Tag: noindex
   Cache-Control: public, max-age=3600
+
+/cio-pulse/admin/*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-store
