@@ -1,5 +1,12 @@
-# Used only for local testing and CLI deploys (npx wrangler pages dev / deploy).
-# Deploying through the Cloudflare dashboard with Git doesn't need this file.
+# Cloudflare Pages config. Because this file sets pages_build_output_dir, the dashboard
+# treats it as the source of truth for bindings (they're greyed out there), so add them here.
+# Secrets such as PULSE_ADMIN_KEY still go in the dashboard: Settings > Variables and secrets.
 name = "vc10x-website"
 pages_build_output_dir = "."
 compatibility_date = "2026-09-01"
+
+# CIO Pulse answers. Top-level, so it applies to both Production and Preview deployments.
+[[d1_databases]]
+binding = "PULSE_DB"
+database_name = "vc10x-pulse"
+database_id = "43a29c97-500b-4246-a40c-c118cdefb1bb"

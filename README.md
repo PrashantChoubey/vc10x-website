@@ -11,7 +11,7 @@ functions/api/subscribe.js    newsletter + audit signups -> beehiiv
 functions/api/issues.js       "Latest from the newsletter" feed from beehiiv
 functions/api/popular.js      titles for the Popular episodes videos (YouTube)
 _redirects, _headers          Cloudflare Pages routing and headers
-wrangler.toml                 Cloudflare Pages config
+wrangler.toml                 Cloudflare Pages config and bindings (D1)
 ```
 
 ## 1. beehiiv setup (free Launch plan works)
@@ -51,10 +51,9 @@ A weekly, invite-only check-in for CIOs. Members get a private link, answer in
 about 90 seconds, and then see peer results. Answers live in a Cloudflare D1
 database; tables are created automatically on first use.
 1. Workers & Pages > D1 SQL Database > Create: name it `vc10x-pulse`.
-2. Pages project > Settings > Bindings > Add > D1 database: variable name
-   `PULSE_DB`, database `vc10x-pulse`. Do it for Preview and Production.
-   (If the dashboard says bindings are managed by `wrangler.toml`, add a
-   `[[d1_databases]]` block there with `binding = "PULSE_DB"` and the database ID.)
+2. The `PULSE_DB` binding is declared in `wrangler.toml` (`[[d1_databases]]`),
+   which applies to Preview and Production. The dashboard's Bindings panel is
+   read-only because of that file, so change the binding there, not in the dashboard.
 3. Settings > Variables and Secrets: `PULSE_ADMIN_KEY` (type: Secret), any
    random string of 16+ characters. Redeploy.
 4. Open /cio-pulse/admin/, enter the key, and add members or approve requests.
