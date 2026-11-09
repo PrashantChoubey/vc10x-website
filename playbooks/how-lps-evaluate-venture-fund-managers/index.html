@@ -178,6 +178,35 @@ footer a{margin-right:16px}
 .play h3{margin:0 0 10px;font-size:22px}
 .play ol.steps, .play ul{margin-top:12px}
 .play figure.q{margin:18px 0 0}
+/* Diagrams: plain HTML so they reflow on phones and follow the light and dark themes */
+.dg{margin:24px 0 0}
+.dg .cap{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 0 10px}
+.dg figcaption{font-size:14px;color:var(--muted);margin-top:10px;line-height:1.5}
+.dg b{font-weight:600}
+.dg small{display:block;font-size:13.5px;line-height:1.45;color:var(--muted);margin-top:2px}
+.flow{display:flex;align-items:stretch;gap:0;list-style:none;padding:0;margin:0}
+.flow > li{flex:1 1 0;min-width:0;background:var(--panel);border-radius:4px;padding:12px 14px;font-size:15px;line-height:1.4;margin:0}
+.flow > li.ar{flex:0 0 26px;background:none;padding:0;display:grid;place-items:center;color:var(--muted);font-size:18px}
+.flow > li.ar::before{content:"→"}
+.loop{margin-top:8px;border:1px dashed var(--line);border-top:0;border-radius:0 0 6px 6px;height:14px;margin-left:12%;margin-right:12%}
+.loopnote{text-align:center;font-size:13.5px;color:var(--muted);margin-top:4px}
+@media (max-width:640px){.flow{flex-direction:column}.flow > li.ar{flex-basis:24px}.flow > li.ar::before{content:"↓"}.loop{display:none}}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13.5px;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-1px;margin-right:6px}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.cols2 > div{background:var(--panel);border-radius:4px;padding:14px 16px;font-size:15px;line-height:1.45}
+.cols2 > div.weak{background:none;border:1px dashed var(--line)}
+.cols2 .big{font-family:var(--serif);font-size:30px;line-height:1.1;margin:4px 0 6px}
+.cols2 ul{margin:6px 0 0;padding-left:18px}.cols2 li{margin:3px 0}
+@media (max-width:640px){.cols2{grid-template-columns:1fr}}
+.cl{display:grid;grid-template-columns:130px minmax(0,1fr);gap:10px 14px;align-items:center;font-size:14px}
+.cl .bar{position:relative;height:22px}
+.cl .bar i{position:absolute;top:0;bottom:0;border-radius:3px}
+.cl .lp{background:var(--ink)}
+.cl .loan{background:repeating-linear-gradient(45deg,var(--line) 0 4px,transparent 4px 8px);border:1px solid var(--line)}
+.cl .ax{grid-column:2;position:relative;height:18px;font-size:13px;color:var(--muted)}
+.cl .ax span{position:absolute;top:0;white-space:nowrap}
+@media (max-width:640px){.cl{grid-template-columns:1fr;gap:4px}.cl .ax{grid-column:1;height:36px}.cl .ax span.mid{top:18px}.cl .rl{margin-top:8px}}
 figure.q figcaption.spk{margin:0 0 10px;font-size:13px;letter-spacing:.03em;color:var(--muted)}
 figure.q figcaption.spk b{color:var(--ink);font-weight:600}
 figure.q blockquote::before{content:"“";font-family:var(--serif);font-size:44px;line-height:0;vertical-align:-.38em;margin-right:4px;color:var(--muted)}
@@ -378,12 +407,17 @@ ol.stages .src{font-size:14px;color:var(--muted);margin-top:4px}
             <p class="who">Framework · Iren Reznikov, Vintage Investment Partners</p>
             <h3>Follow the chain: access, picking, winning, value creation</h3>
             <p>Reznikov breaks a venture manager's job into four linked skills and tests each one:</p>
-            <ol class="steps">
-              <li><b>Access:</b> do they see the best deals? Now the minimum.</li>
-              <li><b>Picking:</b> do they choose the right ones?</li>
-              <li><b>Winning:</b> when the founder has options, why do they choose this fund?</li>
-              <li><b>Value creation:</b> do they help after investing? She says this feeds the other three. A manager close to customers spots the teams solving real problems, and help offered before a round closes is how competitive deals are won.</li>
-            </ol>
+            <figure class="dg">
+              <ol class="flow">
+                <li><b>Access</b><small>Do they see the best deals? Now the minimum.</small></li><li class="ar" aria-hidden="true"></li>
+                <li><b>Picking</b><small>Do they choose the right ones?</small></li><li class="ar" aria-hidden="true"></li>
+                <li><b>Winning</b><small>When the founder has options, why this fund?</small></li><li class="ar" aria-hidden="true"></li>
+                <li><b>Value creation</b><small>Do they help after investing?</small></li>
+              </ol>
+              <div class="loop" aria-hidden="true"></div>
+              <p class="loopnote">Value creation feeds the other three</p>
+            </figure>
+            <p>Value creation, she says, feeds the other three: a manager close to customers spots the teams solving real problems, and help offered before a round closes is how competitive deals are won.</p>
           </div>
 
           <div class="play">
@@ -514,6 +548,13 @@ ol.stages .src{font-size:14px;color:var(--muted);margin-top:4px}
               <figcaption class="spk"><b>Hunter Somerville</b> · Partner, StepStone Group</figcaption>
               <blockquote>People just get tempted by doing companies that there's a lot of buzz around and they throw in two to three percent ownerships and it doesn't matter. They get no information. They have no relationship with founders. It's a logo collection exercise.</blockquote>
             </figure>
+            <figure class="dg">
+              <div class="cols2">
+                <div><b>Earned ownership</b><p class="big">7–10%</p>A stake that matters, a relationship with the founders, and real information on the company.</div>
+                <div class="weak"><b>A logo collection</b><p class="big">2–3%</p>A small check into a buzzy round, with no information and no relationship with the founders.</div>
+              </div>
+              <figcaption>Hunter Somerville's expectation for seed managers, against what he calls a logo collection.</figcaption>
+            </figure>
           </div>
 
           <div class="play">
@@ -600,6 +641,15 @@ ol.stages .src{font-size:14px;color:var(--muted);margin-top:4px}
             <p class="who">Technique · Ned Brines, Arnel &amp; Affiliates</p>
             <h3>Recalculate the IRR without the credit line</h3>
             <p>Many funds borrow on a subscription credit line to make investments and call capital from LPs months later. The LP's money is at work for a shorter time, so IRR rises, but the actual multiple doesn't change.</p>
+            <figure class="dg" role="img" aria-label="The same investment and exit, with and without a credit line. Without one, LP money is at work from the investment date to the exit. With one, the fund borrows first and calls LP money later, so LP money is at work for a shorter time. The multiple and DPI are the same; the IRR is higher.">
+              <div class="cl" aria-hidden="true">
+                <span class="rl"><b>No credit line</b></span><div class="bar"><i class="lp" style="left:0;width:100%"></i></div>
+                <span class="rl"><b>With a credit line</b></span><div class="bar"><i class="loan" style="left:0;width:22%"></i><i class="lp" style="left:23%;width:77%"></i></div>
+                <div class="ax"><span style="left:0">Investment made</span><span class="mid" style="left:23%">↑ Capital called later</span><span style="right:0">Exit</span></div>
+              </div>
+              <div class="legend"><span><i style="background:var(--ink)"></i>LP money at work</span><span><i style="background:repeating-linear-gradient(45deg,var(--line) 0 3px,transparent 3px 6px);border:1px solid var(--line)"></i>Fund borrows on the credit line</span></div>
+              <figcaption>Same investment, same exit: the multiple and DPI don't change, but the shorter period makes IRR look higher. An illustration, not to scale.</figcaption>
+            </figure>
             <figure class="q">
               <figcaption class="spk"><b>Ned Brines</b> · Chief of Investment Strategy, Arnel &amp; Affiliates</figcaption>
               <blockquote>My IRR got better because I didn't have to deploy capital until six months later. But in reality, my multiple of money, which is what I care about because that's what I can spend, and my DPI, that doesn't change.</blockquote>
