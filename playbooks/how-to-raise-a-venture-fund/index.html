@@ -148,6 +148,52 @@ footer a{margin-right:16px}
 .play .who{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
 .play h3{margin:0 0 10px;font-size:22px}
 .play ol.steps, .play ul{margin-top:12px}
+/* Diagrams: plain HTML so they reflow on phones and follow the light and dark themes */
+.dg{margin:24px 0 0}
+.dg .cap{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 0 10px}
+.dg figcaption{font-size:14px;color:var(--muted);margin-top:10px;line-height:1.5}
+.dg b{font-weight:600}
+.dg small{display:block;font-size:13.5px;line-height:1.45;color:var(--muted);margin-top:2px}
+.flow{display:flex;align-items:stretch;gap:0;list-style:none;padding:0;margin:0}
+.flow > li{flex:1 1 0;min-width:0;background:var(--panel);border-radius:4px;padding:12px 14px;font-size:15px;line-height:1.4;margin:0}
+.flow > li.ar{flex:0 0 26px;background:none;padding:0;display:grid;place-items:center;color:var(--muted);font-size:18px}
+.flow > li.ar::before{content:"→"}
+.flow > li.end{background:var(--ink);color:var(--paper)}
+.flow > li.end small{color:inherit;opacity:.8}
+.flow.trap > li:not(.ar){background:none;border:1px dashed var(--line)}
+.flow.trap > li.end{border-color:var(--ink);background:none;color:var(--ink)}
+@media (max-width:640px){.flow{flex-direction:column}.flow > li.ar{flex-basis:24px}.flow > li.ar::before{content:"↓"}}
+.funnel{list-style:none;padding:0;margin:0;display:grid;gap:6px}
+.funnel li{margin:0 auto;background:var(--panel);border-radius:4px;padding:11px 16px;text-align:center;font-size:15px;line-height:1.4;width:100%}
+.funnel li:nth-child(2){width:86%}.funnel li:nth-child(3){width:72%}
+.funnel li:nth-child(4){width:58%;background:var(--ink);color:var(--paper)}
+.funnel li:nth-child(4) small{color:inherit;opacity:.8}
+@media (max-width:640px){.funnel li:nth-child(n){width:100%}}
+.spectrum{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;list-style:none;padding:0;margin:0}
+.spectrum li{margin:0;background:var(--panel);border-radius:4px;padding:12px 12px;font-size:15px;line-height:1.35;border-top:3px solid var(--ink)}
+.spectrum li:nth-child(2){border-top-color:color-mix(in srgb,var(--ink) 65%,var(--paper))}
+.spectrum li:nth-child(3){border-top-color:color-mix(in srgb,var(--ink) 40%,var(--paper))}
+.spectrum li:nth-child(4){border-top-color:var(--line)}
+.axis{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;color:var(--muted);margin-top:8px}
+@media (max-width:640px){.spectrum{grid-template-columns:1fr}.axis{flex-direction:column;gap:2px}}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.cols2 > div{background:var(--panel);border-radius:4px;padding:14px 16px;font-size:15px;line-height:1.45}
+.cols2 > div.later{background:none;border:1px dashed var(--line)}
+.cols2 ul{margin:8px 0 0;padding-left:18px}.cols2 li{margin:3px 0}
+@media (max-width:640px){.cols2{grid-template-columns:1fr}}
+.weeks{display:grid;grid-template-columns:120px repeat(10,minmax(0,1fr));gap:4px 4px;align-items:end;font-size:13px}
+.weeks .rl{font-size:14px;line-height:1.3;align-self:center;padding-right:8px}
+.weeks .wk{display:flex;flex-wrap:wrap-reverse;gap:3px;align-content:flex-start;min-height:46px;padding:4px;background:var(--panel);border-radius:3px}
+.weeks .wk i{width:7px;height:7px;border-radius:50%;background:var(--ink);display:block}
+.weeks .wl{color:var(--muted);text-align:center;font-size:12px}
+@media (max-width:640px){.weeks{grid-template-columns:repeat(10,minmax(0,1fr))}.weeks .rl{grid-column:1/-1;padding:6px 0 0}.weeks .sp{display:none}}
+.span{margin-top:6px;border-top:2px solid var(--ink);padding-top:6px;font-size:13.5px;color:var(--muted);text-align:center}
+.closes{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;position:relative}
+.closes li{margin:0;padding:22px 14px 0 0;position:relative;font-size:15px;line-height:1.4;border-top:2px solid var(--ink)}
+.closes li::before{content:"";position:absolute;top:-8px;left:0;width:14px;height:14px;border-radius:50%;background:var(--paper);border:2px solid var(--ink)}
+.closes li.hard{border-top-style:dashed}
+.closes li.go::before{background:var(--brass);border-color:var(--ink)}
+@media (max-width:640px){.closes{grid-template-columns:1fr}.closes li{border-top:0;border-left:2px solid var(--ink);padding:0 0 18px 20px}.closes li.hard{border-left-style:dashed}.closes li::before{top:2px;left:-8px}}
 .play figure.q{margin:18px 0 0}
 figure.q figcaption.spk{margin:0 0 10px;font-size:13px;letter-spacing:.03em;color:var(--muted)}
 figure.q figcaption.spk b{color:var(--ink);font-weight:600}
@@ -296,6 +342,16 @@ ol.stages .src{font-size:14px;color:var(--muted);margin-top:4px}
               <figcaption class="spk"><b>Kevin Moore</b> · Founder &amp; GP, Serac Ventures</figcaption>
               <blockquote>An aspiring fund manager should spend 6 to 12 months researching their network and getting buy in, even soft commitments… and then doing a probability analysis of their potential commitments to understand what the potential fund size will be.</blockquote>
             </figure>
+            <figure class="dg">
+              <p class="cap">The network test, before you resign</p>
+              <ol class="funnel">
+                <li><b>Everyone who might back you</b><small>Your full list, before any filtering</small></li>
+                <li><b>Soft commitments</b><small>"If I do this, would you back me?"</small></li>
+                <li><b>A realistic estimate</b><small>Weight each name by how likely it is to convert</small></li>
+                <li><b>Your likely first close</b><small>Is there a fund here?</small></li>
+              </ol>
+              <figcaption>The steps Kevin Moore took over 6 to 12 months before launching.</figcaption>
+            </figure>
           </div>
 
           <div class="play">
@@ -432,18 +488,29 @@ ol.stages .src{font-size:14px;color:var(--muted);margin-top:4px}
               <blockquote>I don't want to try to convert skeptics. I want to figure out who the people who already have a preexisting relationship or bias to lean in, rather than I have to convince them.</blockquote>
             </figure>
             <p>A $25 million Fund I is unlikely to get a check from a sovereign fund or an insurer, he says: large LPs have annual budgets and limits on how much of a fund they'll own. "The larger LPs are good to talk to now for future fundraises just so they can get to know you." Funds I and II have usually been backed by funds of funds, family offices and individuals, plus a few endowments with emerging-manager programs.</p>
+            <figure class="dg">
+              <div class="cols2">
+                <div><b>Usually back Funds I and II</b><ul><li>Individuals</li><li>Family offices</li><li>Funds of funds</li><li>Endowments with emerging-manager programs</li></ul></div>
+                <div class="later"><b>Meet now, for later funds</b><ul><li>Sovereign funds</li><li>Insurers</li><li>Other large institutions with annual budgets and ownership limits</li></ul></div>
+              </div>
+              <figcaption>Where Matt Curtolo says first funds usually raise, and which LPs to get to know early.</figcaption>
+            </figure>
           </div>
 
           <div class="play">
             <p class="who">Framework · Nolan Bean, FEG Investment Advisors</p>
             <h3>Know each LP type's appetite for risk</h3>
             <p>Nolan advises endowments, foundations and healthcare systems. On average, he ranks risk appetite, and tolerance for locking money up for a decade, in this order:</p>
-            <ol class="steps">
-              <li>Family offices</li>
-              <li>University endowments</li>
-              <li>Other nonprofits, such as community and private foundations</li>
-              <li>Pension plans and healthcare systems, the most conservative</li>
-            </ol>
+            <figure class="dg">
+              <ol class="spectrum">
+                <li><b>Family offices</b></li>
+                <li><b>University endowments</b></li>
+                <li><b>Other nonprofits</b><small>Community and private foundations</small></li>
+                <li><b>Pension plans and healthcare systems</b></li>
+              </ol>
+              <div class="axis" aria-hidden="true"><span>← Most appetite for risk and long lock-ups</span><span>Most conservative →</span></div>
+              <figcaption>Nolan Bean's ranking, on average. Individual LPs within each type vary.</figcaption>
+            </figure>
             <figure class="q">
               <figcaption class="spk"><b>Nolan Bean</b> · CIO, FEG Investment Advisors</figcaption>
               <blockquote>Some folks like Coke, some like Pepsi, some like emerging managers, some like established managers. So you're not going to sell something they don't want.</blockquote>
@@ -497,6 +564,15 @@ ol.stages .src{font-size:14px;color:var(--muted);margin-top:4px}
               <figcaption class="spk"><b>Amber Illig</b> · Founding GP, The Council</figcaption>
               <blockquote>If you get intros to like 20 LPs at the same time versus two every week, then you're talking to 20 LPs the next week or two weeks from then. They feel that momentum, you feel that momentum.</blockquote>
             </figure>
+            <figure class="dg" role="img" aria-label="Two ways to start the same 20 LP conversations. In a batch, all 20 begin in weeks 1 and 2. In a drip of two a week, the last ones begin in week 10.">
+              <p class="cap">The same 20 introductions, started two ways</p>
+              <div class="weeks" aria-hidden="true">
+                <div class="rl"><b>In a batch</b></div><div class="wk"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="wk"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="wk"></div><div class="wk"></div><div class="wk"></div><div class="wk"></div><div class="wk"></div><div class="wk"></div><div class="wk"></div><div class="wk"></div>
+                <div class="rl"><b>Two a week</b></div><div class="wk"><i></i><i></i></div><div class="wk"><i></i><i></i></div><div class="wk"><i></i><i></i></div><div class="wk"><i></i><i></i></div><div class="wk"><i></i><i></i></div><div class="wk"><i></i><i></i></div><div class="wk"><i></i><i></i></div><div class="wk"><i></i><i></i></div><div class="wk"><i></i><i></i></div><div class="wk"><i></i><i></i></div>
+                <div class="rl sp"></div><div class="wl">1</div><div class="wl">2</div><div class="wl">3</div><div class="wl">4</div><div class="wl">5</div><div class="wl">6</div><div class="wl">7</div><div class="wl">8</div><div class="wl">9</div><div class="wl">10</div>
+              </div>
+              <figcaption>Each dot is a new LP conversation; columns are weeks. An illustration of Amber Illig's example, not data.</figcaption>
+            </figure>
             <p>Send your target list to everyone you know and ask who they can introduce you to, then mine your own connections for paths to the rest.</p>
           </div>
 
@@ -543,6 +619,22 @@ ol.stages .src{font-size:14px;color:var(--muted);margin-top:4px}
               <blockquote>There's no incentive for the LP to reach back out. They have everything they need.</blockquote>
             </figure>
             <p>Instead, add context in the second meeting and deeper information in the third, so each conversation earns the next. He calls the place where many raises die "this mid-funnel sort of trap," where LPs have had two meetings and nothing prompts them to decide.</p>
+            <figure class="dg">
+              <p class="cap">Each meeting earns the next</p>
+              <ol class="flow">
+                <li><b>Meeting 1</b><small>Establish fit. Listen more than you talk.</small></li><li class="ar" aria-hidden="true"></li>
+                <li><b>Meeting 2</b><small>Add context.</small></li><li class="ar" aria-hidden="true"></li>
+                <li><b>Meeting 3</b><small>Share deeper information.</small></li><li class="ar" aria-hidden="true"></li>
+                <li class="end"><b>A decision</b><small>Yes, or a clear no.</small></li>
+              </ol>
+              <p class="cap" style="margin-top:18px">What stalls a raise</p>
+              <ol class="flow trap">
+                <li><b>Meeting 1</b><small>Followed by the whole data room.</small></li><li class="ar" aria-hidden="true"></li>
+                <li><b>The LP has everything</b><small>No reason to reach back out.</small></li><li class="ar" aria-hidden="true"></li>
+                <li class="end"><b>The mid-funnel trap</b><small>Two meetings, and nothing prompts a decision.</small></li>
+              </ol>
+              <figcaption>Based on Matt Curtolo's advice.</figcaption>
+            </figure>
           </div>
 
           <div class="play">
@@ -562,6 +654,14 @@ ol.stages .src{font-size:14px;color:var(--muted);margin-top:4px}
             <figure class="q">
               <figcaption class="spk"><b>Kevin Moore</b> · Founder &amp; GP, Serac Ventures</figcaption>
               <blockquote>Before people invest in you, they need to know you, like you, trust you, in that order.</blockquote>
+            </figure>
+            <figure class="dg">
+              <ol class="flow">
+                <li><b>Know you</b><small>Events, writing and podcasts</small></li><li class="ar" aria-hidden="true"></li>
+                <li><b>Like you</b><small>Good conversations</small></li><li class="ar" aria-hidden="true"></li>
+                <li class="end"><b>Trust you</b><small>Investment updates, and seeing how you work</small></li>
+              </ol>
+              <div class="span">Often 12 to 18 months, unless it's a strong referral</div>
             </figure>
             <p>They know you through events, writing and podcasts; like you through good conversations; and trust you as you send investment updates and show how you work. Unless it's a strong referral, he expects that to take 12 to 18 months, and has met Fund I prospects he expects to invest in Fund III. Looking back at his first ten LP calls, he'd "just get to the point faster": ask early what they invest in, whether they're deploying, and whether they've backed managers like him.</p>
           </div>
@@ -608,6 +708,14 @@ ol.stages .src{font-size:14px;color:var(--muted);margin-top:4px}
             <figure class="q">
               <figcaption class="spk"><b>Amber Illig</b> · Founding GP, The Council</figcaption>
               <blockquote>That second close, it's almost impossible to… have any real urgency, and LPs know that.</blockquote>
+            </figure>
+            <figure class="dg">
+              <p class="cap">Amber Illig's three closes</p>
+              <ol class="closes">
+                <li class="go"><b>First close</b><small>Exciting. Early LPs keen to be first in, and you can start investing.</small></li>
+                <li class="hard"><b>Second close</b><small>The hardest. Little real urgency, and LPs know it.</small></li>
+                <li><b>Final close</b><small>LPs sprint in before the gate shuts: about 18 in her last two weeks.</small></li>
+              </ol>
             </figure>
             <p>Raising from many individuals and smaller funds is more like selling to consumers than to enterprises, she adds: more checks, smaller ones, and each takes time. She closed at least one LP every week of 2023.</p>
           </div>
