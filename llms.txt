@@ -20,6 +20,7 @@ All tools are free. Audit answers and calculator inputs stay in the visitor's br
 
 ## Playbooks
 
+- [All playbooks](https://vc10x.com/playbooks/): Index of VC10X playbooks, each with a free PDF.
 - [How LPs Evaluate Venture Fund Managers](https://vc10x.com/playbooks/how-lps-evaluate-venture-fund-managers/): The eight tests allocators run before committing to a venture fund, with techniques from on-record conversations with twelve LPs, and a 40-question due diligence question bank.
 - [How to Raise a Venture Fund](https://vc10x.com/playbooks/how-to-raise-a-venture-fund/): The seven stages of a first-time venture fund raise, from testing demand before quitting to the final close, with techniques from on-record conversations with emerging managers, a fundraising adviser and allocators, and a 35-step fundraising checklist.
 
