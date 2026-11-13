@@ -300,6 +300,27 @@ ol.stages .src{font-size:14px;color:var(--muted);margin-top:4px}
           <p class="note">Raising a first fund? Start with <a href="/playbooks/how-to-raise-a-venture-fund/">How to Raise a Venture Fund</a>, then come back here once you've closed.</p>
         </section>
 
+        <aside class="grab" id="grab" aria-labelledby="grab-h">
+          <h2 id="grab-h">Download the Fund II checklist</h2>
+          <p class="muted">All 35 steps, grouped by the seven stages, in a PDF with tick boxes and a quarterly tracker for the years between funds. Tell us which side of the table you're on and download it right here.</p>
+          <form id="grabForm" novalidate>
+            <fieldset class="side">
+              <legend class="sr">I am</legend>
+              <label><input type="radio" name="side" value="General or managing partner"><span><b>I run a fund</b>GP or managing partner. Start it the day Fund I closes.</span></label>
+              <label><input type="radio" name="side" value="LP or allocator"><span><b>I allocate to funds</b>LP, family office, endowment or adviser. See what your managers should be doing between funds.</span></label>
+            </fieldset>
+            <div class="hp" aria-hidden="true"><label>Leave this empty <input name="website" tabindex="-1" autocomplete="off"></label></div>
+            <div class="grabrow">
+              <input name="nm" autocomplete="given-name" placeholder="First name" aria-label="First name">
+              <input name="em" type="email" autocomplete="email" placeholder="Your email" aria-label="Your email">
+              <button class="btn" type="submit">Download the PDF</button>
+            </div>
+            <p class="err" id="grabErr" role="alert"></p>
+            <label class="optin"><input type="checkbox" name="ok" checked> Also send me the VC10X newsletter and new playbooks. Unsubscribe any time.</label>
+          </form>
+          <div id="grabDone" hidden><p id="grabMsg">Your download has started. You can also <a href="#checklist">read the checklist on the page</a>.</p><button class="btn ghost" type="button" id="grabPrint" style="margin-top:12px">Download again</button></div>
+        </aside>
+
         <section id="odds">
           <h2>The odds of a next fund</h2>
           <p class="answer"><b>Short answer</b>Most first funds never get a successor. Fund II is usually judged on how the portfolio is marking up; by Fund III, LPs want to see cash coming back.</p>
@@ -716,10 +737,10 @@ ol.stages .src{font-size:14px;color:var(--muted);margin-top:4px}
 
         <section id="checklist">
           <h2>The Fund II checklist</h2>
-          <p>Thirty-five steps drawn from this playbook, grouped by stage. Most belong in Fund I, years before the next raise.</p>
+          <p>Thirty-five steps drawn from this playbook, grouped by stage. Most belong in Fund I, years before the next raise. The PDF adds tick boxes and a quarterly tracker.</p>
           <div class="bank" id="bank">
             <p class="kicker noprint" style="margin-bottom:8px">VC10X · Fund II and Beyond</p>
-            <div id="bankBody">
+            <div id="bankBody" class="fade">
               <h3>Stage 1: During Fund I</h3>
               <ol start="1">
                 <li>Write down what Fund I must prove for Fund II.</li>
@@ -776,6 +797,26 @@ ol.stages .src{font-size:14px;color:var(--muted);margin-top:4px}
                 <li>Write a one-page plan for what the firm is, and isn't, by Fund IV.</li>
                 <li>Name the values the firm runs on, and use them to decide.</li>
               </ol>
+            </div>
+            <div class="noprint" id="bankCta" style="margin-top:18px">
+              <button class="btn" type="button" id="getBank">Get the full checklist</button>
+              <p class="fine">Free. Read all 35 steps here and download the PDF, with tick boxes and a quarterly tracker.</p>
+            </div>
+            <div class="noprint" id="bankDone" hidden style="margin-top:18px">
+              <button class="btn ghost" type="button" id="printBank">Download the PDF</button>
+            </div>
+            <div class="gate noprint" id="gate" hidden>
+              <h3 style="font-size:19px;margin:0">Download the checklist</h3>
+              <p class="muted" style="font-size:15px;margin-top:4px">Your download starts right after. You'll only be asked once.</p>
+              <div class="hp" aria-hidden="true"><label>Leave this empty <input id="website" tabindex="-1" autocomplete="off"></label></div>
+              <div class="row" style="margin-top:14px">
+                <label>First name<input id="nm" autocomplete="given-name"></label>
+                <label>Email<input id="em" type="email" autocomplete="email"></label>
+                <label>You are<select id="rl"><option value="">Choose one</option><option>General or managing partner</option><option>Emerging manager, Fund I or II</option><option>Operations, finance or IR at a fund</option><option>Investment team member</option><option>LP or allocator</option><option>Placement agent or advisor</option></select></label>
+              </div>
+              <label class="check"><input type="checkbox" id="ok" checked> Send me the VC10X newsletter and new playbooks. Unsubscribe any time.</label>
+              <p class="err" id="gerr" role="alert"></p>
+              <button class="btn" type="button" id="unlock">Download the PDF</button>
             </div>
           </div>
         </section>
@@ -834,6 +875,119 @@ ol.stages .src{font-size:14px;color:var(--muted);margin-top:4px}
     </span>
   </footer>
 </div>
-<script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+<script>
+const SUBSCRIBE_ENDPOINT = "/api/subscribe";
+const FORM_NAME = "playbook-fund-ii";
+const LEAD_KEY = "vc10x-lead";
+const $ = id => document.getElementById(id);
+$("yr").textContent = new Date().getFullYear();
+
+const UTM = (() => {
+  try {
+    const q = new URLSearchParams(location.search), u = {};
+    ["utm_source","utm_medium","utm_campaign","utm_content"].forEach(k => { if (q.get(k)) u[k] = q.get(k).slice(0,100); });
+    if (!Object.keys(u).length && document.referrer && !document.referrer.includes(location.host)) u.referrer = document.referrer.slice(0,200);
+    return u;
+  } catch(e) { return {}; }
+})();
+
+const lead = () => { try { return JSON.parse(localStorage.getItem(LEAD_KEY)); } catch(e) { return null; } };
+
+function openBank() {
+  $("bankBody").classList.remove("fade");
+  $("bankCta").hidden = true;
+  $("gate").hidden = true;
+  $("bankDone").hidden = false;
+}
+
+// Top-of-page signup for both sides of the table; opens the question bank too.
+function grabDone() { $("grabForm").hidden = true; $("grabDone").hidden = false; }
+if (lead()) {
+  // Already on the list from another VC10X page: skip the form and offer the file directly.
+  grabDone();
+  $("grabMsg").innerHTML = 'You\'re already on the VC10X list, so it\'s yours. You can also <a href="#checklist">read the checklist on the page</a>.';
+  $("grabPrint").textContent = "Download the PDF"; $("grabPrint").classList.remove("ghost");
+}
+$("grabForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const f = e.target, er = $("grabErr"), btn = f.querySelector("button");
+  const side = (f.querySelector('input[name="side"]:checked') || {}).value, nm = f.nm.value.trim(), em = f.em.value.trim();
+  if (!side) { er.textContent = "Choose which side of the table you're on."; return; }
+  if (!nm) { er.textContent = "Add your first name to continue."; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { er.textContent = "Enter a valid email address, like name@example.com."; return; }
+  er.textContent = "";
+  if (f.ok.checked) {
+    btn.disabled = true; const label = btn.textContent; btn.textContent = "One moment";
+    try {
+      await fetch(SUBSCRIBE_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({form: FORM_NAME + "-top", email: em, firstName: nm, role: side, website: f.website.value, ...UTM})});
+    } catch(err) { /* never block the download on a network error */ }
+    btn.disabled = false; btn.textContent = label;
+  }
+  try { localStorage.setItem(LEAD_KEY, JSON.stringify({nm, em, rl: side, ok: f.ok.checked, t: Date.now()})); } catch(e) {}
+  window.__tagged = true; grabDone(); openBank(); downloadPdf();
+});
+$("grabPrint").addEventListener("click", () => {
+  const known = lead();
+  // Record interest in this playbook once for people who signed up elsewhere on VC10X.
+  if (known && known.ok && known.em && !window.__tagged) { window.__tagged = true; fetch(SUBSCRIBE_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({form: FORM_NAME, email: known.em, firstName: known.nm, role: known.rl, ...UTM})}).catch(() => {}); }
+  downloadPdf();
+});
+
+$("getBank").addEventListener("click", () => {
+  const known = lead();
+  if (known) {
+    // Already gave us an email on another VC10X page: no form, but record interest in this playbook once.
+    if (known.ok && known.em && !window.__tagged) { window.__tagged = true; fetch(SUBSCRIBE_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({form: FORM_NAME, email: known.em, firstName: known.nm, role: known.rl, ...UTM})}).catch(() => {}); }
+    return openBank();
+  }
+  $("bankCta").hidden = true;
+  $("gate").hidden = false;
+  $("nm").focus();
+});
+
+$("unlock").addEventListener("click", async () => {
+  const nm = $("nm").value.trim(), em = $("em").value.trim(), rl = $("rl").value, er = $("gerr"), btn = $("unlock");
+  if (!nm) { er.textContent = "Add your first name to continue."; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { er.textContent = "Enter a valid email address, like name@example.com."; return; }
+  if (!rl) { er.textContent = "Choose the option that describes you best."; return; }
+  er.textContent = "";
+  const ok = $("ok").checked;
+  if (ok) {
+    btn.disabled = true; const label = btn.textContent; btn.textContent = "One moment";
+    try {
+      await fetch(SUBSCRIBE_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({form: FORM_NAME, email: em, firstName: nm, role: rl, website: $("website").value, ...UTM})});
+    } catch(e) { /* never block the content on a network error */ }
+    btn.disabled = false; btn.textContent = label;
+  }
+  try { localStorage.setItem(LEAD_KEY, JSON.stringify({nm, em, rl, ok, t: Date.now()})); } catch(e) {}
+  window.__tagged = true; openBank(); downloadPdf();
+});
+
+const PDF_URL = "vc10x-fund-ii-checklist-r7p3.pdf";
+function downloadPdf() {
+  const a = document.createElement("a");
+  a.href = PDF_URL; a.download = "VC10X Fund II Checklist.pdf";
+  document.body.appendChild(a); a.click(); a.remove();
+}
+$("printBank").addEventListener("click", downloadPdf);
+window.addEventListener("afterprint", () => document.documentElement.classList.remove("print-bank"));
+
+document.getElementById("nl") && $("nl").addEventListener("submit", async e => {
+  e.preventDefault();
+  const f = e.target, msg = f.nextElementSibling, btn = f.querySelector("button"), email = f.email.value.trim();
+  msg.classList.remove("err");
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = "Enter a valid email address, like name@example.com."; msg.classList.add("err"); return; }
+  btn.disabled = true;
+  try {
+    const r = await fetch(SUBSCRIBE_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({form: FORM_NAME + "-footer", email, website: f.website.value, ...UTM})});
+    if (!r.ok) throw new Error(r.status);
+    msg.textContent = "Subscribed. New issues will land in your inbox."; f.email.value = "";
+  } catch(err) { msg.textContent = "That didn't go through. Try again in a moment."; msg.classList.add("err"); }
+  btn.disabled = false;
+});
+</script>
 </body>
 </html>
