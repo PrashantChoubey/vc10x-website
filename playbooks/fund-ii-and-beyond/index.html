@@ -269,7 +269,7 @@ ol.stages .src{font-size:14px;color:var(--muted);margin-top:4px}
           <li><a href="#stage-raise">Stage 5: Run the raise</a></li>
           <li><a href="#stage-team">Stage 6: Grow the team</a></li>
           <li><a href="#stage-partnership">Stage 7: Run the partnership</a></li>
-          <li><a href="#checklist">Fund II checklist</a></li>
+          <li><a href="#checklist">Fund II and Beyond checklist</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="#sources">Sources</a></li>
         </ol>
@@ -294,14 +294,14 @@ ol.stages .src{font-size:14px;color:var(--muted);margin-top:4px}
             </table>
           </div>
           <div class="howto">
-            <div><b>If you're a GP</b>Start with the stage you're in. Each ends with what to do and what LPs will check. The <a href="#checklist">Fund II checklist</a> turns the stages into a working list.</div>
+            <div><b>If you're a GP</b>Start with the stage you're in. Each ends with what to do and what LPs will check. The <a href="#checklist">Fund II and Beyond checklist</a> turns the stages into a working list.</div>
             <div><b>If you're an LP</b>This is what the managers you re-up with should be doing between funds. It pairs with <a href="/playbooks/how-lps-evaluate-venture-fund-managers/">How LPs Evaluate Venture Fund Managers</a>.</div>
           </div>
           <p class="note">Raising a first fund? Start with <a href="/playbooks/how-to-raise-a-venture-fund/">How to Raise a Venture Fund</a>, then come back here once you've closed.</p>
         </section>
 
         <aside class="grab" id="grab" aria-labelledby="grab-h">
-          <h2 id="grab-h">Download the Fund II checklist</h2>
+          <h2 id="grab-h">Download the Fund II and Beyond checklist</h2>
           <p class="muted">All 35 steps, grouped by the seven stages, in a PDF with tick boxes and a quarterly tracker for the years between funds. Tell us which side of the table you're on and download it right here.</p>
           <form id="grabForm" novalidate>
             <fieldset class="side">
@@ -737,7 +737,7 @@ ol.stages .src{font-size:14px;color:var(--muted);margin-top:4px}
         </aside>
 
         <section id="checklist">
-          <h2>The Fund II checklist</h2>
+          <h2>The Fund II and Beyond checklist</h2>
           <p>Thirty-five steps drawn from this playbook, grouped by stage. Most belong in Fund I, years before the next raise. The PDF adds tick boxes and a quarterly tracker.</p>
           <div class="bank" id="bank">
             <p class="kicker noprint" style="margin-bottom:8px">VC10X · Fund II and Beyond</p>
@@ -968,7 +968,7 @@ $("unlock").addEventListener("click", async () => {
 const PDF_URL = "vc10x-fund-ii-checklist-r7p3.pdf";
 function downloadPdf() {
   const a = document.createElement("a");
-  a.href = PDF_URL; a.download = "VC10X Fund II Checklist.pdf";
+  a.href = PDF_URL; a.download = "VC10X Fund II and Beyond Checklist.pdf";
   document.body.appendChild(a); a.click(); a.remove();
 }
 $("printBank").addEventListener("click", downloadPdf);
