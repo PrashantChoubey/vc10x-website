@@ -589,7 +589,8 @@ const POPULAR = [
   const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   // Issues that have a richer home on the site: link there instead of the beehiiv post.
   const ON_SITE = {
-    "12-allocators-on-how-they-pick-venture-managers": "/playbooks/how-lps-evaluate-venture-fund-managers/"
+    "12-allocators-on-how-they-pick-venture-managers": "/playbooks/how-lps-evaluate-venture-fund-managers/",
+    "how-to-raise-a-venture-fund-vc10x-playbook": "/playbooks/how-to-raise-a-venture-fund/"
   };
   const dest = url => { const m = Object.keys(ON_SITE).find(k => String(url).includes("/p/" + k)); return m ? ON_SITE[m] : null; };
   const link = (it, inner) => { const d = dest(it.url); return d ? `<a href="${esc(d)}">${inner}</a>` : `<a href="${esc(it.url)}" target="_blank" rel="noopener">${inner}</a>`; };
