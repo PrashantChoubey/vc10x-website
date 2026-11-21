@@ -81,7 +81,8 @@ nav a.here{color:var(--ink);font-weight:600}
 
 .hero{padding:88px 0 80px;max-width:820px}
 .hero h1{font-size:clamp(44px,7.4vw,86px);line-height:1;letter-spacing:-.025em}
-.stats{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:16px clamp(28px,6vw,64px);margin:36px 0 0;padding:26px 0 0;border-top:1px solid var(--line);max-width:640px}
+.stats{display:grid;grid-template-columns:repeat(4,auto);justify-content:start;gap:16px clamp(24px,5vw,56px);margin:36px 0 0;padding:26px 0 0;border-top:1px solid var(--line);max-width:860px}
+@media (max-width:640px){.stats{grid-template-columns:repeat(2,auto);gap:22px 36px}}
 .stats div{display:flex;flex-direction:column;gap:8px;margin:0}
 .stats dt{font-size:14px;line-height:1.35;color:var(--muted);max-width:11em}
 .stats dd{order:-1;margin:0;font-family:var(--serif);font-weight:500;font-size:clamp(34px,5vw,48px);line-height:1;letter-spacing:-.02em}
@@ -271,6 +272,7 @@ footer a{margin-right:16px}
     <dl class="stats">
       <div><dt>published episodes</dt><dd>300+</dd></div>
       <div><dt>managed by our guests' firms</dt><dd>$3T+</dd></div>
+      <div><dt>managed by our newsletter subscribers</dt><dd>$5T+</dd></div>
       <div><dt>average newsletter open rate</dt><dd>55%+</dd></div>
     </dl>
     <form class="sub" data-form="home-hero" novalidate>
@@ -480,6 +482,21 @@ footer a{margin-right:16px}
   </div>
 </section>
 
+<section id="about">
+  <div class="wrap about">
+    <h2>About VC10X</h2>
+    <div>
+      <p>VC10X is built for the quality of its conversations, not the size of its reach. A podcast can chase big audience numbers, or it can go deep with the people who actually allocate capital. Those are two different paths, and we deliberately chose the second.</p>
+      <p>We measure success by who listens to VC10X, not how many. Our listeners are fund managers of every shape and size, institutional CIOs managing multi-billion-dollar portfolios, private wealth CIOs overseeing hundreds of billions in assets, and family office principals and CIOs. Everything we make is for them. Our newsletter subscribers collectively manage more than $5 trillion in assets, and our issues consistently see open rates above 55%.</p>
+      <p>Guests join our community of past guests, with continued opportunities to feature in our playbooks, roundtables and more.</p>
+      <p>Our goal is to build the highest-quality asset management and wealth creation podcast in the world. If big viewership numbers come along the way, we'll welcome them, but that's not the goal we have in mind as we build VC10X.</p>
+      <p>VC10X is hosted by Prashant Choubey, its Founder &amp; Host. He also runs <a href="https://podcast10x.com" target="_blank" rel="noopener">Podcast10x</a>, which produces podcasts for investment firms.</p>
+      <p class="muted">Follow him on <a href="https://www.linkedin.com/in/choubeysahab" target="_blank" rel="noopener">LinkedIn</a> and <a href="https://x.com/ChoubeySahab" target="_blank" rel="noopener">X</a>.</p>
+      <p><a href="/about/">More about VC10X and how guests are selected</a></p>
+    </div>
+  </div>
+</section>
+
 <section id="newsletter">
   <div class="wrap news">
     <div>
@@ -501,20 +518,6 @@ footer a{margin-right:16px}
   </div>
 </section>
 
-<section id="about">
-  <div class="wrap about">
-    <h2>About VC10X</h2>
-    <div>
-      <p>VC10X is built for the quality of its conversations, not the size of its reach. A podcast can chase big audience numbers, or it can go deep with the people who actually allocate capital. Those are two different paths, and we deliberately chose the second.</p>
-      <p>We measure success by who listens to VC10X, not how many. Our listeners are fund managers of every shape and size, institutional CIOs managing multi-billion-dollar portfolios, private wealth CIOs overseeing hundreds of billions in assets, and family office principals and CIOs. Everything we make is for them. Our newsletter subscribers collectively manage more than $5 trillion in assets, and our issues consistently see open rates above 55%.</p>
-      <p>Guests join our community of past guests, with continued opportunities to feature in our playbooks, roundtables and more.</p>
-      <p>Our goal is to build the highest-quality asset management and wealth creation podcast in the world. If big viewership numbers come along the way, we'll welcome them, but that's not the goal we have in mind as we build VC10X.</p>
-      <p>VC10X is hosted by Prashant Choubey, its Founder &amp; Host. He also runs <a href="https://podcast10x.com" target="_blank" rel="noopener">Podcast10x</a>, which produces podcasts for investment firms.</p>
-      <p class="muted">Follow him on <a href="https://www.linkedin.com/in/choubeysahab" target="_blank" rel="noopener">LinkedIn</a> and <a href="https://x.com/ChoubeySahab" target="_blank" rel="noopener">X</a>.</p>
-      <p><a href="/about/">More about VC10X and how guests are selected</a></p>
-    </div>
-  </div>
-</section>
 
 <div class="wrap">
   <footer>
