@@ -120,6 +120,9 @@ section.firms{padding:32px 0}
 
 /* Popular episodes */
 .uploads{display:grid;gap:36px}
+.rts{display:grid;grid-template-columns:1fr;gap:36px}
+@media (min-width:760px){.rts{grid-template-columns:1fr 1fr}}
+.rts .vid h3{min-height:0}
 .vid{text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:14px}
 .thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;border:1px solid var(--ink)}
 .thumb img{width:100%;height:100%;object-fit:cover;display:block}
@@ -251,6 +254,7 @@ footer a{margin-right:16px}
       <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-list"><span></span><span></span><span></span></button>
       <ul id="nav-list">
         <li><a href="#popular">Popular episodes</a></li>
+        <li><a href="#roundtables">Roundtables</a></li>
         <li><a href="#latest">Latest</a></li>
         <li><a href="#playbooks">Playbooks</a></li>
         <li><a href="#start">Tools</a></li>
@@ -299,6 +303,25 @@ footer a{margin-right:16px}
       <p><a href="https://www.youtube.com/@VC10X" target="_blank" rel="noopener">All videos on YouTube</a></p>
     </div>
     <div class="uploads" id="uploads"></div>
+  </div>
+</section>
+
+<section id="roundtables">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Roundtables</h2>
+      <p>Allocators in conversation with each other, on the record.</p>
+    </div>
+    <div class="rts">
+      <a class="vid" href="https://www.youtube.com/watch?v=BeumkA2C_hQ" target="_blank" rel="noopener" data-id="BeumkA2C_hQ">
+        <div class="thumb"><img src="https://i.ytimg.com/vi/BeumkA2C_hQ/hqdefault.jpg" alt="" loading="lazy"><span class="play" aria-hidden="true"></span></div>
+        <div><h3 class="t">LP Roundtable 2025/26</h3><p class="meta">Watch on YouTube</p></div>
+      </a>
+      <a class="vid" href="https://www.youtube.com/watch?v=-_Gc69_gsNQ" target="_blank" rel="noopener" data-id="-_Gc69_gsNQ">
+        <div class="thumb"><img src="https://i.ytimg.com/vi/-_Gc69_gsNQ/hqdefault.jpg" alt="" loading="lazy"><span class="play" aria-hidden="true"></span></div>
+        <div><h3 class="t">Family Office Roundtable 2026</h3><p class="meta">Watch on YouTube</p></div>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -566,8 +589,8 @@ const POPULAR = [
     </a>`;
   box.innerHTML = card(ids[0], true) + (ids.length > 1 ? `<div class="grid6">${ids.slice(1).map(id => card(id, false)).join("")}</div>` : "");
 
-  // Upgrade to the sharper thumbnail where YouTube has one.
-  box.querySelectorAll(".vid").forEach(a => {
+  // Upgrade to the sharper thumbnail where YouTube has one (roundtables too).
+  document.querySelectorAll("#uploads .vid, #roundtables .vid").forEach(a => {
     const img = a.querySelector("img"), hi = new Image();
     hi.onload = () => { if (hi.naturalWidth > 200) img.src = hi.src; };
     hi.src = `https://i.ytimg.com/vi/${a.dataset.id}/maxresdefault.jpg`;
