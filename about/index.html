@@ -21,7 +21,7 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
- {"@type":"AboutPage","@id":"https://vc10x.com/about/#page","url":"https://vc10x.com/about/","name":"About VC10X","dateModified":"2026-10-03","about":{"@id":"https://vc10x.com/#org"},"mainEntity":{"@id":"https://vc10x.com/#org"}},
+ {"@type":"AboutPage","@id":"https://vc10x.com/about/#page","url":"https://vc10x.com/about/","name":"About VC10X","dateModified":"2026-11-22","about":{"@id":"https://vc10x.com/#org"},"mainEntity":{"@id":"https://vc10x.com/#org"}},
  {"@type":"Organization","@id":"https://vc10x.com/#org","name":"VC10X","url":"https://vc10x.com/","logo":"https://vc10x.com/apple-touch-icon.png","foundingDate":"2022","slogan":"How capital actually gets allocated, from the people doing it.","description":"Podcast, newsletter and free tools built on 300+ on-record conversations with asset managers, allocators and family office principals about how capital is raised, allocated and protected.","founder":{"@id":"https://vc10x.com/#prashant"},"sameAs":["https://www.youtube.com/@VC10X","https://podcasts.apple.com/us/podcast/id1632806986","https://open.spotify.com/show/7F7KEhXNhTx1bKTBFgzv3k"]},
  {"@type":"Person","@id":"https://vc10x.com/#prashant","name":"Prashant Choubey","jobTitle":"Founder & Host, VC10X","url":"https://vc10x.com/about/","worksFor":{"@id":"https://vc10x.com/#org"},"sameAs":["https://www.linkedin.com/in/choubeysahab","https://x.com/ChoubeySahab","https://podcast10x.com"]}
 ]}
@@ -58,7 +58,8 @@ p{margin:0}
 .hero .kicker{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .hero h1{font-size:clamp(40px,6.4vw,72px);line-height:1.02;letter-spacing:-.025em;margin-top:14px}
 .hero .lede{font-family:var(--serif);font-size:clamp(20px,2.3vw,24px);line-height:1.45;margin-top:24px;max-width:34em}
-.stats{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:16px clamp(28px,6vw,64px);margin:36px 0 0;padding:26px 0 0;border-top:1px solid var(--line);max-width:640px}
+.stats{display:grid;grid-template-columns:repeat(4,auto);justify-content:start;gap:16px clamp(24px,5vw,56px);margin:36px 0 0;padding:26px 0 0;border-top:1px solid var(--line);max-width:860px}
+@media (max-width:640px){.stats{grid-template-columns:repeat(2,auto);gap:22px 36px}}
 .stats div{display:flex;flex-direction:column;gap:8px}
 .stats dt{font-size:14px;line-height:1.35;color:var(--muted);max-width:11em}
 .stats dd{order:-1;margin:0;font-family:var(--serif);font-weight:500;font-size:clamp(34px,5vw,48px);line-height:1;letter-spacing:-.02em}
@@ -92,11 +93,12 @@ footer a{margin-right:16px}
     <div class="hero">
       <p class="kicker">About VC10X</p>
       <h1>How capital actually gets allocated, from the people doing it.</h1>
-      <p class="lede">VC10X puts the people who allocate capital on the record: asset managers, allocators and family office principals explaining how they really decide. Then it turns what they say into a newsletter and tools other allocators can use.</p>
+      <p class="lede">VC10X is a premier asset management and wealth creation podcast platform. It features fund managers, asset allocators, family office CIOs and wealth creators, and turns what they say into a newsletter, playbooks, roundtables and tools.</p>
       <dl class="stats">
         <div><dt>conversations since 2022</dt><dd>300+</dd></div>
         <div><dt>managed by our guests' firms</dt><dd>$3T+</dd></div>
-        <div><dt>free audits and calculators</dt><dd>10</dd></div>
+        <div><dt>managed by our newsletter subscribers</dt><dd>$5T+</dd></div>
+        <div><dt>average newsletter open rate</dt><dd>55%+</dd></div>
       </dl>
     </div>
 
@@ -109,11 +111,22 @@ footer a{margin-right:16px}
     </section>
 
     <section>
+      <h2>Who listens</h2>
+      <div class="body">
+        <p>VC10X is built for the quality of its conversations, not the size of its reach. A podcast can chase big audience numbers, or it can go deep with the people who actually allocate capital. Those are two different paths, and we deliberately chose the second.</p>
+        <p>We measure success by who listens to VC10X, not how many. Our listeners are fund managers of every shape and size, institutional CIOs managing multi-billion-dollar portfolios, private wealth CIOs overseeing hundreds of billions in assets, and family office principals and CIOs. Everything we make is for them. Our newsletter subscribers collectively manage more than $5 trillion in assets, and our issues consistently see open rates above 55%.</p>
+        <p>Our goal is to build the highest-quality asset management and wealth creation podcast in the world. If big viewership numbers come along the way, we'll welcome them, but that's not the goal we have in mind as we build VC10X.</p>
+      </div>
+    </section>
+
+    <section>
       <h2>What VC10X is</h2>
       <div class="body">
         <div class="pillars">
           <div class="pillar"><h3>Conversations</h3><p>More than 300 long-form interviews with asset managers, allocators and family office principals. On <a href="https://www.youtube.com/@VC10X" target="_blank" rel="noopener">YouTube</a>, <a href="https://podcasts.apple.com/us/podcast/id1632806986" target="_blank" rel="noopener">Apple Podcasts</a> and <a href="https://open.spotify.com/show/7F7KEhXNhTx1bKTBFgzv3k" target="_blank" rel="noopener">Spotify</a>.</p></div>
           <div class="pillar"><h3>The newsletter</h3><p>Every week, what we learned from those conversations, distilled for the people making the same decisions. Our issues average a 55%+ open rate. <a href="/#newsletter">Subscribe</a>.</p></div>
+          <div class="pillar"><h3>Playbooks</h3><p>Long-form guides built from our conversations, each turning what allocators and managers told us into techniques you can use, with a free PDF. <a href="/playbooks/">See all playbooks</a>.</p></div>
+          <div class="pillar"><h3>Roundtables</h3><p>Allocators in conversation with each other, on the record, from LPs to family offices. <a href="/#roundtables">Watch the roundtables</a>.</p></div>
           <div class="pillar"><h3>Tools</h3><p>Free audits and calculators for fund managers, CIOs and families, from fundraising readiness and LP fit to commitment pacing and fund performance. <a href="/#start">See all tools</a>.</p></div>
         </div>
       </div>
@@ -138,8 +151,9 @@ footer a{margin-right:16px}
           <li><b>Something to teach.</b> Every conversation should leave a listener with something they can use.</li>
           <li><b>Editorial only.</b> Guests never pay to appear.</li>
         </ul>
+        <p style="margin-top:16px">Guests join our community of past guests, with continued opportunities to feature in our playbooks, roundtables and more.</p>
         <p style="margin-top:16px">To suggest a guest, or yourself, reach Prashant on <a href="https://www.linkedin.com/in/choubeysahab" target="_blank" rel="noopener">LinkedIn</a> or <a href="https://x.com/ChoubeySahab" target="_blank" rel="noopener">X</a>.</p>
-        <p class="updated">Updated <time datetime="2026-10-03">3 October 2026</time>.</p>
+        <p class="updated">Updated <time datetime="2026-11-22">22 November 2026</time>.</p>
       </div>
     </section>
   </main>
