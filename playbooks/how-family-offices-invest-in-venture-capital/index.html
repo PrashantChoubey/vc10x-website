@@ -275,6 +275,7 @@ ol.stages .src{font-size:14px;color:var(--muted);margin-top:4px}
 
       <article>
         <section id="contributors" class="sources">
+          <style>@media (max-width:640px){#contributors:not(.all) li:nth-child(n+7){display:none}}#contributors .ctog{display:none;margin-top:14px}@media (max-width:640px){#contributors:not(.all) .ctog{display:inline-block}}</style>
           <h2>Who contributed</h2>
           <p>This playbook is built from on-record conversations on the VC10X podcast with the people below. Whenever you see one of their names, the technique or quote comes from that conversation, lightly edited to remove spoken filler. The views and figures are theirs.</p>
           <ul>
@@ -292,6 +293,7 @@ ol.stages .src{font-size:14px;color:var(--muted);margin-top:4px}
             <li><b>Slava Darkhaev</b><span>Head of VC Allocations, Single-Family Office</span></li>
             <li><b>Vishal Verma</b><span>Principal, Edgewood Ventures (Single-Family Office)</span></li>
           </ul>
+          <button class="btn ghost ctog" type="button" onclick="this.closest('section').classList.add('all')">See all 13 contributors</button>
         </section>
 
         <section id="at-a-glance">
