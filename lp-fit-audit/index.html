@@ -335,7 +335,8 @@ const TOPICS = [...new Set(QUESTIONS.map(q => q.t))];
 // Hard limits that a high raw score can't overcome. Each rule returns {cap, why} when it applies; the lowest cap wins.
 const RULES = {
   inst: [a => (a[0] === 0 || a[1] <= 1) && {cap:25, why:"Most pensions and sovereign funds need a larger fund and several funds of history before they invest directly. Reach them later, or through a fund of funds."},
-         a => (a[10] >= 2 || a[2] === 3) && {cap:25, why:"Pensions and sovereign funds need an attributable track record and fully institutional operations before they'll start diligence."}],
+         a => (a[10] >= 2 || a[2] === 3) && {cap:25, why:"Pensions and sovereign funds need an attributable track record and fully institutional operations before they'll start diligence."},
+         a => a[1] === 2 && {cap:45, why:"Their checks often start around $25M, which would be too large a share of a $75M to $200M fund. Many reach funds this size through a fund of funds or separate account instead."}],
   endow: [a => a[0] === 0 && a[2] !== 0 && {cap:45, why:"Endowments rarely back a Fund I without realized results you can be credited for. Start the relationship now for Fund II or III."},
           a => a[10] >= 2 && {cap:45, why:"Endowments expect institutional operations: a fund administrator, auditor, compliance policies and a completed due diligence questionnaire."}],
   fof: [a => a[10] === 3 && {cap:50, why:"Funds of funds run an institutional diligence process. Without a fund administrator, auditor and due diligence questionnaire in place, most won't proceed."}],
@@ -358,6 +359,14 @@ const FIT = [
 const KEY = "vc10x-lp-fit-audit";
 let S = {stage:"intro", i:0, a:Array(QUESTIONS.length).fill(null), lead:null};
 try { const saved = JSON.parse(localStorage.getItem(KEY)); if (saved && saved.a && saved.a.length===QUESTIONS.length) S = saved; } catch(e){}
+(function sanitize(){
+  const done = () => S.a.every(x => x != null);
+  S.a = S.a.map((x, k) => Number.isInteger(x) && x >= 0 && x <= 3 ? x : null);
+  if (!(Number.isInteger(S.i) && S.i >= 0 && S.i < QUESTIONS.length)) S.i = 0;
+  if (!["intro","q","teaser","report"].includes(S.stage)) S.stage = "intro";
+  if ((S.stage === "teaser" || S.stage === "report") && !done()) { S.stage = "q"; S.i = Math.max(0, S.a.findIndex(x => x == null)); }
+  if (S.stage === "report" && !(S.lead && S.lead.nm)) S.stage = "teaser";
+})();
 (function captureUTM(){
   try {
     const q = new URLSearchParams(location.search), u = {};
@@ -447,7 +456,7 @@ function question(){
   document.querySelectorAll(".opt").forEach(b => b.onclick = () => {
     S.a[S.i] = +b.dataset.k; save();
     document.querySelectorAll(".opt").forEach(x => x.setAttribute("aria-checked", x === b));
-    setTimeout(advance, 260);
+    clearTimeout(window.__adv); window.__adv = setTimeout(advance, 260);
   });
   document.getElementById("back").onclick = () => { if (S.i > 0) { S.i--; save(); render(); } };
   const n = document.getElementById("next"); if (n) n.onclick = advance;
@@ -455,6 +464,7 @@ function question(){
   first && first.focus({preventScroll:true});
 }
 function advance(){
+  clearTimeout(window.__adv);
   if (S.i < QUESTIONS.length - 1) { S.i++; }
   else { const m = S.a.findIndex(x => x == null); if (m >= 0) { S.i = m; } else { S.stage = S.lead ? "report" : "teaser"; } }
   save(); render(); window.scrollTo(0, 0);

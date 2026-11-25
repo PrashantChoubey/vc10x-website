@@ -174,6 +174,7 @@ table.cmp td.tot{font-weight:700}
 table.cmp td.low{background:var(--brass);color:#000;font-weight:600}
 table.cmp tr.cur th[scope=row]{box-shadow:inset 3px 0 0 var(--ink)}
 .actions a.btn{text-decoration:none}
+.flags.soft li{border-left-color:var(--line);color:var(--muted)}.flags.soft li b{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -360,6 +361,15 @@ const KEY = "vc10x-manager-scorecard", SAVED = "vc10x-scorecards";
 const fresh = (mode=null, name="") => ({stage:"intro", mode, name, i:0, a:Array(QUESTIONS.length).fill(null), lead:null});
 let S = fresh();
 try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && s.a && s.a.length===QUESTIONS.length) S = s; } catch(e){}
+(function sanitize(){
+  const done = () => S.a.every(x => x != null);
+  S.a = S.a.map((x, k) => Number.isInteger(x) && x >= 0 && x <= (S.mode === "lp" ? UNKNOWN : 3) ? x : null);
+  if (!(Number.isInteger(S.i) && S.i >= 0 && S.i < QUESTIONS.length)) S.i = 0;
+  if (!["intro","q","teaser","report","compare"].includes(S.stage)) S.stage = "intro";
+  if (!["lp","gp"].includes(S.mode)) { if (S.stage !== "compare") S.stage = "intro"; S.mode = null; }
+  if ((S.stage === "teaser" || S.stage === "report") && !done()) { S.stage = "q"; S.i = Math.max(0, S.a.findIndex(x => x == null)); }
+  if (S.stage === "report" && !(S.lead && S.lead.nm)) S.stage = "teaser";
+})();
 (function captureUTM(){
   try {
     const q = new URLSearchParams(location.search), u = {};
@@ -400,7 +410,8 @@ function results(){
   // With fewer than half the questions known, any verdict would rest on too little evidence.
   if (answered < QUESTIONS.length / 2) { tier = EARLY; cap = ""; }
   const ranked = TESTS.filter(t => pct[t.id] != null && pct[t.id] < 80).sort((x,y) => pct[x.id] - pct[y.id]);
-  return {pct, total, tier, cap, flags, weakest: ranked.slice(0,2), open:[...open], coverage: Math.round(answered / QUESTIONS.length * 100)};
+  const near = flags.length ? [] : QUESTIONS.filter((q, k) => q.flag && S.a[k] === 2).map(q => ({q: isLP() ? q.lp : q.gp, a: q.o[2]}));
+  return {pct, total, tier, cap, flags, near, weakest: ranked.slice(0,2), open:[...open], coverage: Math.round(answered / QUESTIONS.length * 100)};
 }
 
 function cardHTML(pct, {labels=true, mark=[], note=""} = {}){
@@ -474,7 +485,7 @@ function question(){
   document.querySelectorAll(".opt").forEach(b => b.onclick = () => {
     S.a[S.i] = +b.dataset.k; save();
     document.querySelectorAll(".opt").forEach(x => x.setAttribute("aria-checked", x===b));
-    setTimeout(advance, 260);
+    clearTimeout(window.__adv); window.__adv = setTimeout(advance, 260);
   });
   document.getElementById("back").onclick = () => { if (S.i>0){ S.i--; save(); render(); } };
   const n = document.getElementById("next"); if (n) n.onclick = advance;
@@ -482,6 +493,7 @@ function question(){
   first && first.focus({preventScroll:true});
 }
 function advance(){
+  clearTimeout(window.__adv);
   if (S.i < QUESTIONS.length-1) S.i++;
   else { const m = S.a.findIndex(x=>x==null); if (m>=0) S.i = m; else { S.stage = S.lead ? "report" : "teaser"; if (S.lead) storeScorecard(); } }
   save(); render(); window.scrollTo(0,0);
@@ -577,7 +589,8 @@ function report(){
     <section class="block">
       <h3>Red flags</h3>
       ${R.flags.length ? `<ul class="flags">${R.flags.map(f=>`<li>${esc(f)}</li>`).join("")}</ul>`
-        : `<p class="muted" style="margin-top:12px">None of the answers hit a red flag that would end the conversation on its own.</p>`}
+        : R.near.length ? `<p class="muted" style="margin-top:12px">None of the answers hit a red flag that would end the conversation on its own. These came closest:</p><ul class="flags soft">${R.near.map(n => `<li><b>${esc(n.q)}</b> Answer: ${esc(n.a)}</li>`).join("")}</ul>`
+        : `<p class="muted" style="margin-top:12px">None of the answers hit a red flag that would end the conversation on its own, or came close to one.</p>`}
     </section>
     <section class="block">
       <h3>${isLP() ? "Where to dig next" : "What to fix first"}</h3>

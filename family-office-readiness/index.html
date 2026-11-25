@@ -171,6 +171,7 @@ table.costs{width:100%;border-collapse:collapse;font-size:15px;font-variant-nume
 table.costs th,table.costs td{text-align:left;padding:10px 12px 10px 0;border-bottom:1px solid var(--line);vertical-align:top}
 table.costs th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;border-bottom-color:var(--ink)}
 table.costs tr.best td{font-weight:600}
+.capnote{margin-top:14px;color:var(--muted);font-size:15px;font-weight:600}
 </style>
 </head>
 <body>
@@ -319,6 +320,14 @@ const FIT = [
 const KEY = "vc10x-family-office-readiness";
 let S = {stage:"intro", i:0, a:Array(QUESTIONS.length).fill(null), lead:null};
 try { const saved = JSON.parse(localStorage.getItem(KEY)); if (saved && saved.a && saved.a.length===QUESTIONS.length) S = saved; } catch(e){}
+(function sanitize(){
+  const done = () => S.a.every(x => x != null);
+  S.a = S.a.map((x, k) => Number.isInteger(x) && x >= 0 && x <= 3 ? x : null);
+  if (!(Number.isInteger(S.i) && S.i >= 0 && S.i < QUESTIONS.length)) S.i = 0;
+  if (!["intro","q","teaser","report"].includes(S.stage)) S.stage = "intro";
+  if ((S.stage === "teaser" || S.stage === "report") && !done()) { S.stage = "q"; S.i = Math.max(0, S.a.findIndex(x => x == null)); }
+  if (S.stage === "report" && !(S.lead && S.lead.nm)) S.stage = "teaser";
+})();
 (function captureUTM(){
   try {
     const q = new URLSearchParams(location.search), u = {};
@@ -416,7 +425,7 @@ function question(){
   document.querySelectorAll(".opt").forEach(b => b.onclick = () => {
     S.a[S.i] = +b.dataset.k; save();
     document.querySelectorAll(".opt").forEach(x => x.setAttribute("aria-checked", x === b));
-    setTimeout(advance, 260);
+    clearTimeout(window.__adv); window.__adv = setTimeout(advance, 260);
   });
   document.getElementById("back").onclick = () => { if (S.i > 0) { S.i--; save(); render(); } };
   const n = document.getElementById("next"); if (n) n.onclick = advance;
@@ -424,6 +433,7 @@ function question(){
   first && first.focus({preventScroll:true});
 }
 function advance(){
+  clearTimeout(window.__adv);
   if (S.i < QUESTIONS.length - 1) { S.i++; }
   else { const m = S.a.findIndex(x => x == null); if (m >= 0) { S.i = m; } else { S.stage = S.lead ? "report" : "teaser"; } }
   save(); render(); window.scrollTo(0, 0);
@@ -436,7 +446,8 @@ function headline(R){
     <div class="score-row">
       <div class="score">${R.fit[t.id]}<small>/100</small></div>
       <div class="tier"><h2>${esc(t.name)}</h2><p>${esc(t.why)}</p></div>
-    </div>`;
+    </div>
+    ${R.fit[t.id] < 45 ? `<p class="capnote">No option is a strong fit on your answers, often because they pull in different directions. Treat this as the least-bad option, and talk it through with an independent adviser.</p>` : ""}`;
 }
 
 function teaser(){

@@ -310,6 +310,8 @@ const LEAD_KEY = "vc10x-lead";
 const IDS = ["port","ret","years","fee","exp","alt","flat"];
 const LIMITS = {port:[0.01,100000],ret:[-10,30],years:[1,50],fee:[0,5],exp:[0,5],alt:[0,5],flat:[0,100000]};
 const $ = id => document.getElementById(id);
+const fieldName = k => { const l = document.querySelector(`label[for="${k}"]`); return l ? l.childNodes[0].textContent.trim() : k; };
+const fmtN = n => String(+n.toFixed(4));
 $("yr").textContent = new Date().getFullYear();
 
 const UTM = (() => {
@@ -342,7 +344,8 @@ function read(){
   IDS.forEach(k => {
     let n = parseFloat(String($(k).value).replace(/[, $%]/g,""));
     const [lo, hi] = LIMITS[k];
-    if (!isFinite(n)) { n = lo; errs.push(k); }
+    if (!isFinite(n)) { n = Math.min(hi, Math.max(lo, parseFloat($(k).defaultValue) || 0)); errs.push(`${fieldName(k)} isn't a number, so we used ${fmtN(n)}.`); }
+    else if (n < lo || n > hi) errs.push(`${fieldName(k)} must be between ${fmtN(lo)} and ${fmtN(hi)}, so we used ${fmtN(Math.min(hi, Math.max(lo, n)))}.`);
     v[k] = Math.min(hi, Math.max(lo, n));
   });
   v.years = Math.round(v.years);
@@ -412,7 +415,7 @@ function altLabel(v){ return v.mode === "pct" ? `A ${v.alt}% fee` : v.mode === "
 
 function render(){
   const {v, errs} = read();
-  $("inerr").textContent = errs.length ? "Some fields aren't numbers, so we used the lowest allowed value." : "";
+  $("inerr").textContent = errs.join(" ");
   $("altrow").classList.toggle("hide", v.mode !== "pct");
   $("flatrow").classList.toggle("hide", v.mode !== "flat");
   const M = model(v), lost = M.gross - M.cur.end, y1 = M.cur.rows[1], yl = M.cur.rows[v.years];
@@ -425,8 +428,9 @@ function render(){
   $("k-yr-p").innerHTML = `Rising to <b>${money(yl.fee)}</b> a year by year ${v.years}, as fees grow with the portfolio.`;
   const diff = M.alt.end - M.cur.end;
   $("k-alt-t").textContent = altLabel(v);
-  $("k-alt").textContent = (diff >= 0 ? "+" : "") + money(diff);
-  $("k-alt-p").innerHTML = diff >= 0
+  const same = Math.abs(diff) < 0.0005;
+  $("k-alt").textContent = same ? "$0" : (diff > 0 ? "+" : "") + money(diff);
+  $("k-alt-p").innerHTML = same ? `The same after ${v.years} years: the alternative costs what you pay now.` : diff > 0
     ? `More after ${v.years} years. You'd pay <b>${money(M.alt.total)}</b> in total fees instead of ${money(M.cur.total)}.`
     : `Less after ${v.years} years. The alternative costs more than what you pay now at this portfolio size.`;
   $("lg-alt").textContent = altLabel(v);

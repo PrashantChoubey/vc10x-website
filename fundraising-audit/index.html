@@ -151,6 +151,7 @@ footer{margin-top:64px;font-size:13px;color:var(--muted)}
 .faq p{margin-top:8px;max-width:38em;color:var(--muted)}
 .updated{margin-top:44px;font-size:14px;color:var(--muted)}
 .updated a{color:inherit}
+.flags.soft li{border-left-color:var(--line);color:var(--muted)}.flags.soft li b{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -319,6 +320,14 @@ const TIERS = [
 const KEY = "vc10x-fundraising-audit";
 let S = {stage:"intro", i:0, a:Array(QUESTIONS.length).fill(null), lead:null};
 try { const saved = JSON.parse(localStorage.getItem(KEY)); if (saved && saved.a && saved.a.length===QUESTIONS.length) S = saved; } catch(e){}
+(function sanitize(){
+  const done = () => S.a.every(x => x != null);
+  S.a = S.a.map((x, k) => Number.isInteger(x) && x >= 0 && x <= 3 ? x : null);
+  if (!(Number.isInteger(S.i) && S.i >= 0 && S.i < QUESTIONS.length)) S.i = 0;
+  if (!["intro","q","teaser","report"].includes(S.stage)) S.stage = "intro";
+  if ((S.stage === "teaser" || S.stage === "report") && !done()) { S.stage = "q"; S.i = Math.max(0, S.a.findIndex(x => x == null)); }
+  if (S.stage === "report" && !(S.lead && S.lead.nm)) S.stage = "teaser";
+})();
 (function captureUTM(){
   try {
     const q = new URLSearchParams(location.search), u = {};
@@ -350,7 +359,8 @@ function results(){
   if (failed.length && ti < 2) { ti = 2; cap = `Capped because ${failed.map(p => p.name).join(" and ")} ${failed.length > 1 ? "score" : "scores"} below 34. LPs will find that gap whatever the total.`; }
   else if (flags.length && ti < 1) { ti = 1; cap = "Capped because of the red flag" + (flags.length > 1 ? "s" : "") + " in your answers, despite the high total."; }
   const ranked = [...PILLARS].sort((x,y) => pct[x.id] - pct[y.id]);
-  return {pct, total, tier: TIERS[ti], cap, flags, weakest: ranked.filter(p => pct[p.id] < 80).slice(0,2), lowest: ranked[0]};
+  const near = flags.length ? [] : QUESTIONS.filter((q, k) => q.flag && S.a[k] === 2).map(q => ({q: q.q, a: q.o[2]}));
+  return {pct, total, tier: TIERS[ti], cap, flags, near, weakest: ranked.filter(p => pct[p.id] < 80).slice(0,2), lowest: ranked[0]};
 }
 
 function pillarsHTML(pct, {labels=true, mark=[], note=""} = {}){
@@ -408,7 +418,7 @@ function question(){
   document.querySelectorAll(".opt").forEach(b => b.onclick = () => {
     S.a[S.i] = +b.dataset.k; save();
     document.querySelectorAll(".opt").forEach(x => x.setAttribute("aria-checked", x===b));
-    setTimeout(advance, 260);
+    clearTimeout(window.__adv); window.__adv = setTimeout(advance, 260);
   });
   document.getElementById("back").onclick = () => { if (S.i>0){ S.i--; save(); render(); } };
   const n = document.getElementById("next"); if (n) n.onclick = advance;
@@ -416,6 +426,7 @@ function question(){
   first && first.focus({preventScroll:true});
 }
 function advance(){
+  clearTimeout(window.__adv);
   if (S.i < QUESTIONS.length-1){ S.i++; }
   else { const m = S.a.findIndex(x=>x==null); if (m>=0){ S.i=m; } else { S.stage = S.lead ? "report" : "teaser"; } }
   save(); render(); window.scrollTo(0,0);
@@ -499,7 +510,7 @@ function report(){
       <h3>Red flags</h3>
       ${R.flags.length
         ? `<ul class="flags">${R.flags.map(f=>`<li>${esc(f)}</li>`).join("")}</ul>`
-        : `<p class="muted" style="margin-top:12px">None of your answers hit a critical red flag. Your gaps are about depth, not exposure.</p>`}
+        : (R.near.length ? `<p class="muted" style="margin-top:12px">None of your answers hit a critical red flag. These came closest:</p><ul class="flags soft">${R.near.map(n => `<li><b>${esc(n.q)}</b> You answered: ${esc(n.a)}</li>`).join("")}</ul>` : `<p class="muted" style="margin-top:12px">None of your answers hit a critical red flag, or came close to one. Your gaps are about depth, not exposure.</p>`)}
     </section>
     <section class="block">
       <h3>Where to start</h3>

@@ -324,6 +324,8 @@ footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);font-si
 const SUBSCRIBE_ENDPOINT = "/api/subscribe";
 const LEAD_KEY = "vc10x-lead";
 const $ = id => document.getElementById(id);
+const fieldName = k => { const l = document.querySelector(`label[for="${k}"]`); return l ? l.childNodes[0].textContent.trim() : k; };
+const fmtN = n => String(+n.toFixed(4));
 $("yr").textContent = new Date().getFullYear();
 const UTM = (() => {
   try {
@@ -349,7 +351,8 @@ function readNums(ids, limits){
   ids.forEach(k => {
     let n = parseFloat(String($(k).value).replace(/[, $%]/g,""));
     const [lo, hi] = limits[k];
-    if (!isFinite(n)) { n = lo; errs.push(k); }
+    if (!isFinite(n)) { n = Math.min(hi, Math.max(lo, parseFloat($(k).defaultValue) || 0)); errs.push(`${fieldName(k)} isn't a number, so we used ${fmtN(n)}.`); }
+    else if (n < lo || n > hi) errs.push(`${fieldName(k)} must be between ${fmtN(lo)} and ${fmtN(hi)}, so we used ${fmtN(Math.min(hi, Math.max(lo, n)))}.`);
     v[k] = Math.min(hi, Math.max(lo, n));
   });
   return {v, errs};
@@ -509,7 +512,7 @@ function render(){
   v.years = Math.round(v.years); v.life = Math.round(v.life);
   v.mode = $("mode").value;
   const navCapped = v.nav > v.total; if (navCapped) v.nav = v.total;
-  $("inerr").textContent = (errs.length ? "Some fields aren't numbers, so we used the lowest allowed value. " : "") + (navCapped ? "Private NAV can't be larger than the total portfolio, so we capped it." : "");
+  $("inerr").textContent = (errs.length ? errs.join(" ") + " " : "") + (navCapped ? "Private NAV can't be larger than the total portfolio, so we capped it." : "");
   $("crow").classList.toggle("hide", v.mode !== "fixed");
   const S = v.mode === "solve" ? solve(v) : {c:v.commit/100, reachable:true};
   const rows = simulate(v, S.c), last = rows[rows.length - 1], t = v.target/100;

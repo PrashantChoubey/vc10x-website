@@ -327,6 +327,8 @@ footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);font-si
 const SUBSCRIBE_ENDPOINT = "/api/subscribe";
 const LEAD_KEY = "vc10x-lead";
 const $ = id => document.getElementById(id);
+const fieldName = k => { const l = document.querySelector(`label[for="${k}"]`); return l ? l.childNodes[0].textContent.trim() : k; };
+const fmtN = n => String(+n.toFixed(4));
 $("yr").textContent = new Date().getFullYear();
 const UTM = (() => {
   try {
@@ -352,7 +354,8 @@ function readNums(ids, limits){
   ids.forEach(k => {
     let n = parseFloat(String($(k).value).replace(/[, $%]/g,""));
     const [lo, hi] = limits[k];
-    if (!isFinite(n)) { n = lo; errs.push(k); }
+    if (!isFinite(n)) { n = Math.min(hi, Math.max(lo, parseFloat($(k).defaultValue) || 0)); errs.push(`${fieldName(k)} isn't a number, so we used ${fmtN(n)}.`); }
+    else if (n < lo || n > hi) errs.push(`${fieldName(k)} must be between ${fmtN(lo)} and ${fmtN(hi)}, so we used ${fmtN(Math.min(hi, Math.max(lo, n)))}.`);
     v[k] = Math.min(hi, Math.max(lo, n));
   });
   return {v, errs};
@@ -475,7 +478,9 @@ const LIMITS = {total:[1,1e7],cash:[0,100],bonds:[0,100],eq:[0,100],priv:[0,100]
 loadHash(IDS);
 
 function model(v){
-  const sum = v.cash + v.bonds + v.eq + v.priv || 1, f = k => v.total * v[k] / sum;
+  const raw = v.cash + v.bonds + v.eq + v.priv;
+  if (raw <= 0) { v.cash = 100; }  // nothing entered: treat the portfolio as cash rather than divide by zero
+  const sum = raw > 0 ? raw : 100, f = k => v.total * v[k] / sum;
   const before = {C:f("cash"), B:f("bonds"), E:f("eq"), P:f("priv")};
   let C = before.C, B = before.B * (1 - v.sbond/100), E = before.E * (1 - v.seq/100), P = before.P * (1 - v.spriv/100), U = v.unf;
   const after = {C, B, E, P};
@@ -497,15 +502,15 @@ function model(v){
     if (left > 0) { sold = Math.min(E, left); E -= sold; left -= sold; soldTotal += sold; if (firstSale == null) firstSale = y; }
     rows.push({y, C, B, E, P, U, T:C+B+E+P, calls, dist, spend, need, sold, short:left});
   }
-  return {before, after, rows, soldTotal, firstSale, sum};
+  return {before, after, rows, soldTotal, firstSale, sum: raw};
 }
 
 function render(){
   const {v, errs} = readNums(IDS, LIMITS);
   v.years = Math.round(v.years); v.syears = Math.round(v.syears);
   const M = model(v), r1 = M.rows[1], T0 = v.total, Ta = M.after.C + M.after.B + M.after.E + M.after.P;
-  const off = Math.abs(M.sum - 100) > 0.5;
-  $("inerr").textContent = (errs.length ? "Some fields aren't numbers, so we used the lowest allowed value. " : "") + (off ? `Your allocation adds up to ${M.sum.toFixed(1)}%, so we scaled it to 100%.` : "");
+  const off = M.sum > 0 && Math.abs(M.sum - 100) > 0.5;
+  $("inerr").textContent = (errs.length ? errs.join(" ") + " " : "") + (off ? `Your allocation adds up to ${M.sum.toFixed(1)}%, so we scaled it to 100%.` : "") + (M.sum <= 0 ? "Your allocation adds up to 0%, so we treated the whole portfolio as cash." : "");
 
   const pb = M.before.P / T0, pa = M.after.P / Ta, lim = v.limit/100;
   $("k-p").textContent = pct(pa);

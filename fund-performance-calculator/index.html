@@ -314,6 +314,8 @@ footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);font-si
 const SUBSCRIBE_ENDPOINT = "/api/subscribe";
 const LEAD_KEY = "vc10x-lead";
 const $ = id => document.getElementById(id);
+const fieldName = k => { const l = document.querySelector(`label[for="${k}"]`); return l ? l.childNodes[0].textContent.trim() : k; };
+const fmtN = n => String(+n.toFixed(4));
 $("yr").textContent = new Date().getFullYear();
 const UTM = (() => {
   try {
@@ -339,7 +341,8 @@ function readNums(ids, limits){
   ids.forEach(k => {
     let n = parseFloat(String($(k).value).replace(/[, $%]/g,""));
     const [lo, hi] = limits[k];
-    if (!isFinite(n)) { n = lo; errs.push(k); }
+    if (!isFinite(n)) { n = Math.min(hi, Math.max(lo, parseFloat($(k).defaultValue) || 0)); errs.push(`${fieldName(k)} isn't a number, so we used ${fmtN(n)}.`); }
+    else if (n < lo || n > hi) errs.push(`${fieldName(k)} must be between ${fmtN(lo)} and ${fmtN(hi)}, so we used ${fmtN(Math.min(hi, Math.max(lo, n)))}.`);
     v[k] = Math.min(hi, Math.max(lo, n));
   });
   return {v, errs};
@@ -478,12 +481,26 @@ function drawRows(){
 $("add").addEventListener("click", () => { if (C.length < 40) { C.push(0); D.push(0); drawRows(); render(); } });
 $("del").addEventListener("click", () => { if (C.length > 1) { C.pop(); D.pop(); drawRows(); render(); } });
 
+// Cash flows that change sign more than once can have several IRRs. Find every root between -99% and 1,000%,
+// then report the one that agrees with the actual gain or loss, and say when there was more than one.
 function irr(flows){
   const npv = r => flows.reduce((s, f, t) => s + f / Math.pow(1 + r, t + 1), 0);
-  let lo = -0.99, hi = 10, flo = npv(lo), fhi = npv(hi);
-  if (!isFinite(flo) || !isFinite(fhi) || flo * fhi > 0) return NaN;
-  for (let i = 0; i < 200; i++) { const m = (lo + hi) / 2, fm = npv(m); if (flo * fm <= 0) { hi = m; } else { lo = m; flo = fm; } }
-  return (lo + hi) / 2;
+  const grid = []; for (let i = 0; i <= 600; i++) grid.push(-0.99 + 10.99 * Math.pow(i / 600, 2));
+  const roots = [];
+  for (let i = 1; i < grid.length; i++) {
+    let lo = grid[i-1], hi = grid[i], flo = npv(lo), fhi = npv(hi);
+    if (!isFinite(flo) || !isFinite(fhi)) continue;
+    if (flo === 0) { roots.push(lo); continue; }
+    if (flo * fhi > 0) continue;
+    for (let k = 0; k < 100; k++) { const m = (lo + hi) / 2, fm = npv(m); if (flo * fm <= 0) hi = m; else { lo = m; flo = fm; } }
+    roots.push((lo + hi) / 2);
+  }
+  if (!roots.length) return {r: NaN, multi: false};
+  const net = flows.reduce((a, b) => a + b, 0);
+  const fit = roots.filter(r => net > 0 ? r > 0 : net < 0 ? r < 0 : true);
+  if (!fit.length) return {r: NaN, multi: true};  // the only roots contradict the actual gain or loss
+  const pick = fit.reduce((a, b) => Math.abs(b) < Math.abs(a) ? b : a);
+  return {r: pick, multi: roots.length > 1};
 }
 function metrics(nav, idx){
   const N = C.length, PI = C.reduce((a, b) => a + b, 0), DI = D.reduce((a, b) => a + b, 0);
@@ -492,19 +509,20 @@ function metrics(nav, idx){
   const fvC = C.reduce((s, c, i) => s + c * g(i + 1), 0), fvD = D.reduce((s, d, i) => s + d * g(i + 1), 0);
   let cum = 0; const path = [{x:0, y:0, z:0}];
   C.forEach((c, i) => { cum += D[i] - c; path.push({x:i + 1, y:cum}); });
-  return {N, PI, DI, nav, dpi:DI / PI, rvpi:nav / PI, tvpi:(DI + nav) / PI, irr:irr(flows), pme:(fvD + nav) / fvC, path, net:DI + nav - PI};
+  const I = irr(flows);
+  return {N, PI, DI, nav, dpi:DI / PI, rvpi:nav / PI, tvpi:(DI + nav) / PI, irr:I.r, irrMulti:I.multi, pme:(fvD + nav) / fvC, path, net:DI + nav - PI};
 }
 
 function render(){
   const {v, errs} = readNums(["nav","idx"], {nav:[0,1e7], idx:[-50,50]});
   const M = metrics(v.nav, v.idx);
-  $("inerr").textContent = (errs.length ? "Some fields aren't numbers, so we used the lowest allowed value. " : "") + (M.PI <= 0 ? "Add at least one capital call to calculate the metrics." : "");
+  $("inerr").textContent = (errs.length ? errs.join(" ") + " " : "") + (M.PI <= 0 ? "Add at least one capital call to calculate the metrics." : "") + (() => { const f = C.findIndex(c => c > 0), e = D.findIndex((d, i) => d > 0 && (f < 0 || i < f)); return e >= 0 && M.PI > 0 ? `There's a distribution in year ${e + 1}, before any capital was called. Check the years: IRR isn't meaningful until money goes in first.` : ""; })();
   $("k-tvpi").textContent = mult(M.tvpi);
   $("k-tvpi-p").innerHTML = `<b>${money(M.DI + M.nav)}</b> of total value on <b>${money(M.PI)}</b> paid in: ${M.net >= 0 ? money(M.net) + " of gains" : money(-M.net) + " below cost"}.`;
   $("k-dpi").textContent = mult(M.dpi);
   $("k-dpi-p").innerHTML = `<b>${money(M.DI)}</b> returned in cash. RVPI is <b>${mult(M.rvpi)}</b>, so ${M.tvpi > 0 ? pct(M.dpi / M.tvpi, 0) : "n/a"} of total value is realized.`;
   $("k-irr").textContent = pct(M.irr);
-  $("k-irr-p").innerHTML = isFinite(M.irr) ? `On annual cash flows over ${M.N} years, with today's NAV counted at the end of year ${M.N}.` : `Can't be calculated for these cash flows. IRR needs both money in and money out.`;
+  $("k-irr-p").innerHTML = isFinite(M.irr) ? `On annual cash flows over ${M.N} years, with today's NAV counted at the end of year ${M.N}.` + (M.irrMulti ? " These cash flows change direction more than once, so they have more than one IRR. This is the one that matches the overall gain or loss; lean on TVPI and PME here." : "") : (M.PI > 0 && M.DI + M.nav > 0 ? `Can't be pinned down for these cash flows: it's either above 1,000% a year or the flows have no single answer. Use TVPI and PME instead.` : `Can't be calculated for these cash flows. IRR needs both money in and money out.`);
   $("k-pme").textContent = isFinite(M.pme) ? M.pme.toFixed(2) : "n/a";
   $("k-pme-p").innerHTML = isFinite(M.pme) ? (M.pme >= 1 ? `<b>Beat</b> an index returning ${v.idx}% a year by ${pct(M.pme - 1, 0)} on the same cash flows.` : `<b>Trailed</b> an index returning ${v.idx}% a year by ${pct(1 - M.pme, 0)} on the same cash flows.`) : "";
 

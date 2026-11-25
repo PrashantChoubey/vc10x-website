@@ -326,6 +326,8 @@ const IDS = ["size","life","ip","fee1","fee2","carry","hurdle","hyears","gp","pa
 const LIMITS = {size:[0.1,100000],life:[1,20],ip:[1,20],fee1:[0,10],fee2:[0,10],carry:[0,50],hurdle:[0,30],hyears:[0,20],gp:[0,50],partners:[1,50]};
 const MULTIPLES = [1, 1.5, 2, 3, 4, 5];
 const $ = id => document.getElementById(id);
+const fieldName = k => { const l = document.querySelector(`label[for="${k}"]`); return l ? l.childNodes[0].textContent.trim() : k; };
+const fmtN = n => String(+n.toFixed(4));
 document.getElementById("yr").textContent = new Date().getFullYear();
 
 const UTM = (() => {
@@ -359,11 +361,12 @@ function read(){
   IDS.forEach(k => {
     let n = parseFloat(String($(k).value).replace(/[, $%]/g,""));
     const [lo, hi] = LIMITS[k];
-    if (!isFinite(n)) { n = lo; errs.push(k); }
+    if (!isFinite(n)) { n = Math.min(hi, Math.max(lo, parseFloat($(k).defaultValue) || 0)); errs.push(`${fieldName(k)} isn't a number, so we used ${fmtN(n)}.`); }
+    else if (n < lo || n > hi) errs.push(`${fieldName(k)} must be between ${fmtN(lo)} and ${fmtN(hi)}, so we used ${fmtN(Math.min(hi, Math.max(lo, n)))}.`);
     v[k] = Math.min(hi, Math.max(lo, n));
   });
   v.life = Math.round(v.life); v.ip = Math.round(v.ip); v.partners = Math.round(v.partners);
-  if (v.ip > v.life) v.ip = v.life;
+  if (v.ip > v.life) { v.ip = v.life; errs.push("The investment period can't be longer than the fund life, so we used " + v.life + " years."); }
   v.waiver = $("gpfund").value === "waiver";
   return {v, errs};
 }
@@ -445,7 +448,7 @@ function niceStep(x){ const p = Math.pow(10, Math.floor(Math.log10(x || 1))); co
 
 function render(){
   const {v, errs} = read();
-  $("inerr").textContent = errs.length ? "Some fields aren't numbers, so we used the lowest allowed value." : "";
+  $("inerr").textContent = errs.join(" ");
   $("hyrow").classList.toggle("hide", v.hurdle <= 0);
   const M = model(v);
 
